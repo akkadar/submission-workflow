@@ -8,29 +8,84 @@
   /* ── Reset & Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --ai:       #1A73E8;
-    --ai-light: #E8F0FE;
-    --ai-mid:   #4285F4;
-    --inn:      #0F9D58;
-    --inn-light:#E6F4EA;
-    --inn-mid:  #34A853;
-    --dark:     #1A1A2E;
-    --grey:     #F8F9FA;
-    --border:   #E0E0E0;
-    --text:     #333;
-    --muted:    #666;
-    --white:    #fff;
-    --shadow:   0 2px 12px rgba(0,0,0,.10);
-    --shadow-lg:0 6px 28px rgba(0,0,0,.14);
-    --radius:   12px;
+    --ai:        #1A73E8;
+    --ai-light:  #E8F0FE;
+    --ai-mid:    #4285F4;
+    --inn:       #0F9D58;
+    --inn-light: #E6F4EA;
+    --inn-mid:   #34A853;
+    --dark:      #1A1A2E;
+    --grey:      #F8F9FA;
+    --border:    #E0E0E0;
+    --text:      #333;
+    --muted:     #666;
+    --white:     #fff;
+    --bg:        #F0F2F5;
+    --card-bg:   #fff;
+    --shadow:    0 2px 12px rgba(0,0,0,.10);
+    --shadow-lg: 0 6px 28px rgba(0,0,0,.14);
+    --radius:    12px;
     --transition: .25s ease;
   }
+
+  /* ── Dark Mode ── */
+  body.dark {
+    --grey:     #1E2130;
+    --border:   #2E3347;
+    --text:     #E2E8F0;
+    --muted:    #94A3B8;
+    --white:    #151824;
+    --bg:       #0F1117;
+    --card-bg:  #1A1F2E;
+    --ai-light: #1A2744;
+    --inn-light:#0D2820;
+    --shadow:   0 2px 12px rgba(0,0,0,.4);
+    --shadow-lg:0 6px 28px rgba(0,0,0,.5);
+  }
+  body.dark .header  { background: #0D0F1A; }
+  body.dark .nav-wrap { background: #151824; border-color: #2E3347; }
+  body.dark .card, body.dark .rules-body { background: var(--card-bg); }
+  body.dark .track-card-body { background: var(--card-bg); }
+  body.dark .modal  { background: var(--card-bg); }
+  body.dark .sf-input, body.dark .sf-select, body.dark .sf-textarea { background: #1E2130; color: var(--text); border-color: var(--border); }
+  body.dark .sf-input::placeholder, body.dark .sf-textarea::placeholder { color: #4A5568; }
+  body.dark .member-row { background: #1E2130; }
+  body.dark .tl-edit-item { background: #1E2130; }
+  body.dark .deliv-item { background: #1E2130; }
+  body.dark .agree-banner { background: #2D2006; border-color: #78350F; }
+  body.dark .agree-banner p { color: #FCD34D; }
+  body.dark .success-details { background: #1E2130; }
+  body.dark .review-block { color: var(--text); }
+  body.dark .crit-card { background: #1E2130; }
+  body.dark .sf-check-item { background: #1E2130; }
+  body.dark .sf-check-item.checked { background: var(--inn-light); }
+  body.dark .track-select-card { background: #1E2130; border-color: var(--border); }
+  body.dark .track-select-card.selected-ai  { background: var(--ai-light); }
+  body.dark .track-select-card.selected-inn { background: var(--inn-light); }
+  body.dark .btn-cancel { background: #1E2130; color: var(--text); border-color: var(--border); }
+  body.dark .btn-sf-back { background: #1E2130; color: var(--text); border-color: var(--border); }
+  body.dark .rules-table th { background: #1E2130; }
+  body.dark .rules-table tr:hover td { background: #1E2130; }
+  body.dark .meta-row { border-color: var(--border); }
+  body.dark .tl-date-row .tl-field { background: #151824; }
+
+  /* ── Dark mode toggle button ── */
+  .dark-toggle {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; border-radius: 20px; padding: 5px 14px;
+    font-size: .82rem; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: var(--transition); margin-left: auto;
+  }
+  .dark-toggle:hover { background: rgba(255,255,255,.2); }
+
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: #F0F2F5;
+    background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    transition: background .3s, color .3s;
   }
 
   /* ── Header ── */
@@ -634,21 +689,115 @@
   .success-details .sd-val { font-weight: 600; color: var(--dark); }
   .btn-new-sub { background: var(--dark); color: var(--white); padding: 10px 24px; margin-top: 8px; }
 
+  /* ── Step pane transitions ── */
+  .sf-pane { animation: fadeSlide .28s ease; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section { animation: fadeSlide .22s ease; }
+
+  /* ── Form Progress Bar ── */
+  .sf-progress-wrap {
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sf-progress-bar {
+    flex: 1; height: 6px; background: var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .sf-progress-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--ai), var(--inn));
+    transition: width .4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .sf-progress-label {
+    font-size: .75rem; font-weight: 700; color: var(--muted);
+    white-space: nowrap; min-width: 36px; text-align: right;
+  }
+
+  /* ── Print / PDF ── */
+  .print-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--grey); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 14px; font-size: .82rem;
+    font-weight: 600; cursor: pointer; color: var(--text);
+    transition: var(--transition); margin-left: 8px;
+  }
+  .print-btn:hover { background: var(--border); }
+
+  @media print {
+    .nav-wrap, .header .dark-toggle, .header .track-pills,
+    .tl-toolbar, .sf-pane, #sec-submit, .print-btn,
+    .btn, .modal-overlay { display: none !important; }
+    .header { padding: 20px 24px; }
+    .header h1 { font-size: 1.4rem; }
+    body { background: #fff !important; color: #000 !important; }
+    .card, .rules-body { box-shadow: none !important; border: 1px solid #ddd; }
+    .section { display: block !important; page-break-before: always; }
+    .section:first-of-type { page-break-before: avoid; }
+    .main { padding: 0 !important; }
+    .track-card { break-inside: avoid; }
+    .tl-item  { break-inside: avoid; }
+    .rules-table { font-size: .8rem; }
+    a { text-decoration: none; color: inherit; }
+  }
+
   /* ── Responsive ── */
   @media (max-width: 780px) {
     .track-select-grid { grid-template-columns: 1fr; }
+    .compare-grid, .deliverables-grid, .criteria-grid,
+    .sf-row.cols-2, .sf-row.cols-3, .review-grid { grid-template-columns: 1fr; }
+    .branch-row, .branch-label-row { grid-template-columns: 1fr; }
+    .center-col { display: none; }
+    .header { padding: 20px 16px 18px; }
+    .header h1 { font-size: 1.4rem; }
+    .header p  { font-size: .82rem; }
+    .track-pills { flex-wrap: wrap; gap: 8px; }
+    .dark-toggle { margin-left: 0; align-self: flex-start; }
+    .nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .nav-btn { padding: 12px 14px; font-size: .8rem; white-space: nowrap; }
+    .main { padding: 16px 12px 60px; }
+    .card { padding: 16px 14px; }
+    .card-title { font-size: .95rem; flex-wrap: wrap; gap: 8px; }
+    .rules-table { font-size: .8rem; }
+    .rules-table th, .rules-table td { padding: 8px 10px; }
+    .sf-label { display: none; }
+    .sf-circle { width: 30px; height: 30px; font-size: .75rem; }
+    .member-row { grid-template-columns: 1fr 1fr; }
+    .tl-dates { flex-direction: column; gap: 6px; }
+    .diamond { width: 140px; height: 140px; }
+    .d-label { font-size: .75rem; }
+    .sf-nav { flex-wrap: wrap; gap: 10px; }
+    .success-details { min-width: unset; width: 100%; }
+    .criteria-grid { grid-template-columns: 1fr 1fr; }
+    .tl-date-row { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .criteria-grid { grid-template-columns: 1fr !important; }
+    .header h1 { font-size: 1.15rem; }
+    .member-row { grid-template-columns: 1fr; }
+    .diamond { width: 110px; height: 110px; }
+  }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
-  <div class="header-inner">
-    <h1>📋 Project Submission Workflow</h1>
-    <p>Official process & submission rules — Version 1.0 · April 2026</p>
-    <div class="track-pills">
-      <span class="pill pill-ai"><span class="dot"></span> AI Track</span>
-      <span class="pill pill-inn"><span class="dot"></span> Innovation Track</span>
+  <div class="header-inner" style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;">
+    <div style="flex:1;min-width:200px;">
+      <h1>📋 Project Submission Workflow</h1>
+      <p>Official process & submission rules — Version 1.0 · May 2026</p>
+      <div class="track-pills">
+        <span class="pill pill-ai"><span class="dot"></span> AI Track</span>
+        <span class="pill pill-inn"><span class="dot"></span> Innovation Track</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;padding-top:4px;flex-wrap:wrap;">
+      <button class="dark-toggle" onclick="toggleDark()" id="darkBtn" title="Toggle dark mode">🌙 Dark</button>
+      <button class="dark-toggle" onclick="window.print()" title="Print / Save as PDF" style="background:rgba(255,255,255,.08);">🖨️ Print</button>
     </div>
   </div>
 </div>
@@ -1022,6 +1171,12 @@
         <span class="icon" style="background:#DCFCE7;">🚀</span>
         Project Submission Form
         <span style="margin-left:auto;font-size:.78rem;font-weight:400;color:var(--muted);">Fields marked <span style="color:#EF4444;">*</span> are required</span>
+      </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="sf-progress-wrap">
+        <div class="sf-progress-bar"><div class="sf-progress-fill" id="sfProgressFill"></div></div>
+        <div class="sf-progress-label" id="sfProgressLabel">0%</div>
       </div>
 
       <!-- STEPPER -->
@@ -1705,6 +1860,26 @@ function closeModalDirect() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
 /* ══════════════════════════════════════
+   DARK MODE
+══════════════════════════════════════ */
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('psw_dark', isDark ? '1' : '0');
+  document.getElementById('darkBtn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+}
+(function initDark() {
+  const saved = localStorage.getItem('psw_dark');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved === '1' || (saved === null && prefersDark)) {
+    document.body.classList.add('dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('darkBtn');
+      if (btn) btn.textContent = '☀️ Light';
+    });
+  }
+})();
+
+/* ══════════════════════════════════════
    SUBMISSION FORM ENGINE
 ══════════════════════════════════════ */
 let sfStep    = 0;
@@ -1732,9 +1907,20 @@ function sfBack() { goToStep(sfStep - 1); }
 function goToStep(n) {
   document.getElementById('sf-pane-' + sfStep).style.display = 'none';
   sfStep = n;
-  document.getElementById('sf-pane-' + sfStep).style.display = 'block';
+  const pane = document.getElementById('sf-pane-' + sfStep);
+  pane.style.display = 'block';
+  pane.style.animation = 'none';
+  pane.offsetHeight; // reflow
+  pane.style.animation = '';
   updateStepper();
+  updateProgressBar();
   window.scrollTo({ top: document.getElementById('sfCard').offsetTop - 20, behavior: 'smooth' });
+}
+
+function updateProgressBar() {
+  const pct = Math.round((sfStep / (SF_STEPS - 1)) * 100);
+  document.getElementById('sfProgressFill').style.width  = pct + '%';
+  document.getElementById('sfProgressLabel').textContent = pct + '%';
 }
 
 function updateStepper() {
@@ -1838,12 +2024,12 @@ function addMember() {
   const max = sfTrack === 'ai' ? 4 : 7;
   if (sfMembers.length >= max) return;
   sfMembers.push({ name: '', email: '', role: '' });
-  renderMembers();
+  renderMembers(); saveDraft();
 }
 
 function removeMember(i) {
   sfMembers.splice(i, 1);
-  renderMembers();
+  renderMembers(); saveDraft();
 }
 
 /* ── Review builder ── */
@@ -1927,6 +2113,9 @@ function submitForm() {
   const id  = 'SUB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
   const now = new Date().toLocaleString('en-GB', { dateStyle:'long', timeStyle:'short' });
   const trackLabel = sfTrack === 'ai' ? 'AI Track' : 'Innovation Track';
+
+  // ── Clear draft on successful submit ──
+  localStorage.removeItem(LS_FORM);
 
   // ── Build and fire the mailto ──
   sendSubmissionEmail(id, now, trackLabel);
@@ -2055,8 +2244,10 @@ function resetForm() {
   selectTrack(null); sfTrack = null;
   document.getElementById('ts-ai').className  = 'track-select-card';
   document.getElementById('ts-inn').className = 'track-select-card';
+  localStorage.removeItem(LS_FORM);
   document.querySelectorAll('.sf-pane').forEach((el,i) => el.style.display = i===0?'block':'none');
   updateStepper();
+  updateProgressBar();
   window.scrollTo({ top: document.getElementById('sfCard').offsetTop - 20, behavior:'smooth' });
 }
 
@@ -2134,7 +2325,88 @@ function toggleCheck(label) {
 function show(id) { const e = document.getElementById(id); if (e) e.classList.add('show'); }
 function hide(id) { const e = document.getElementById(id); if (e) e.classList.remove('show'); }
 function setVisible(id, v) { const e = document.getElementById(id); if (e) e.style.display = v ? 'block' : 'none'; }
-function val(id) { const e = document.getElementById(id); return e ? e.value : ''; }
+function val(id) { const e = document.getElementById(id); return e ? sanitize(e.value) : ''; }
+function rawVal(id) { const e = document.getElementById(id); return e ? e.value : ''; }
+
+/* ── Input Sanitization ── */
+function sanitize(str) {
+  if (!str) return '';
+  return String(str)
+    .trim()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+// Used where raw HTML output isn't needed (e.g. email body)
+function rawSanitize(str) {
+  return String(str || '').trim().replace(/[<>]/g, '');
+}
+
+/* ── localStorage Form Autosave ── */
+const LS_FORM = 'psw_form_draft_v1';
+const AUTOSAVE_FIELDS = [
+  'f-teamName','f-org','f-leadName','f-leadEmail','f-leadPhone',
+  'f-title','f-abstract',
+  'f-aiCat','f-repo','f-arch','f-datasets',
+  'f-domain','f-users','f-novelty','f-scale',
+  'f-aiProto','f-aiReport','f-aiCode','f-aiEthics',
+  'f-innProto','f-innReport','f-bizModel','f-research','f-risk'
+];
+
+function saveDraft() {
+  const draft = {};
+  AUTOSAVE_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) draft[id] = el.value;
+  });
+  draft['_track']   = sfTrack;
+  draft['_members'] = sfMembers;
+  localStorage.setItem(LS_FORM, JSON.stringify(draft));
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(LS_FORM);
+    if (!raw) return;
+    const draft = JSON.parse(raw);
+    AUTOSAVE_FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && draft[id] !== undefined) el.value = draft[id];
+    });
+    if (draft._track) {
+      sfTrack = draft._track;
+      selectTrack(sfTrack);
+      setVisible('ai-details',       sfTrack === 'ai');
+      setVisible('inn-details',      sfTrack === 'inn');
+      setVisible('ai-deliverables',  sfTrack === 'ai');
+      setVisible('inn-deliverables', sfTrack === 'inn');
+      updateMemberLimit();
+    }
+    if (draft._members && Array.isArray(draft._members)) {
+      sfMembers = draft._members;
+      renderMembers();
+    }
+    // Update live counters
+    updateCount('f-title','cnt-title',120);
+    updateWordCount('f-abstract','cnt-abstract',50,100);
+  } catch(e) { /* ignore corrupt draft */ }
+}
+
+// Attach autosave to all form inputs
+function attachAutosave() {
+  AUTOSAVE_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', saveDraft);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  attachAutosave();
+  loadDraft();
+  updateProgressBar();
+});
 </script>
 </body>
 </html>
