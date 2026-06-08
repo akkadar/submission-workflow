@@ -717,34 +717,6 @@
     white-space: nowrap; min-width: 36px; text-align: right;
   }
 
-  /* ── GAS Setup Panel ── */
-  .gas-step { display:flex; gap:14px; align-items:flex-start; margin-bottom:18px; }
-  .gas-step-num {
-    flex-shrink:0; width:28px; height:28px; border-radius:50%;
-    background:var(--dark); color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-size:.78rem; font-weight:700; margin-top:2px;
-  }
-  .gas-step-body { flex:1; }
-  .gas-step-title { font-weight:700; font-size:.88rem; color:var(--dark); margin-bottom:4px; }
-  .gas-step-desc  { font-size:.82rem; color:var(--muted); line-height:1.5; }
-  .gas-code {
-    background:#0D1117; color:#C9D1D9; border-radius:8px;
-    padding:14px 16px; font-size:.72rem; line-height:1.55;
-    overflow-x:auto; white-space:pre-wrap; word-break:break-all;
-    border:1px solid #30363D; font-family:monospace;
-    max-height:220px; overflow-y:auto;
-  }
-  body.dark .gas-code { background:#0A0C10; border-color:#21262D; }
-  .gas-url-input {
-    flex:1; min-width:200px; padding:9px 12px;
-    border:1.5px solid var(--border); border-radius:8px;
-    font-size:.85rem; font-family:inherit; color:var(--dark); background:var(--white);
-    transition:border-color .2s;
-  }
-  .gas-url-input:focus { outline:none; border-color:var(--inn); box-shadow:0 0 0 3px rgba(15,157,88,.1); }
-  body.dark .gas-url-input { background:#1E2130; color:var(--text); border-color:var(--border); }
-
   /* ── Submissions Tab ── */
   .sub-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
   .sub-search {
@@ -1266,113 +1238,21 @@
 
   <!-- ══ SUBMISSIONS DASHBOARD ══ -->
   <section class="section" id="sec-submissions">
-
-    <!-- ── Google Sheets Setup Panel ── -->
-    <div class="card" id="gasSetupCard">
-      <div class="card-title">
-        <span class="icon" style="background:#E8F5E9;">📡</span>
-        Connect Google Sheets <span style="font-size:.75rem;font-weight:400;color:var(--muted);margin-left:4px;">— see all submissions from every browser &amp; device</span>
-        <button onclick="toggleGasPanel()" id="gasToggleBtn"
-          style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:.82rem;color:var(--muted);font-family:inherit;">
-          ▼ Show setup
-        </button>
-      </div>
-
-      <!-- Connected banner -->
-      <div id="gasConnectedBanner" style="display:none;padding:10px 14px;background:#E6F4EA;border-radius:8px;display:none;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:1rem;">✅</span>
-        <span style="font-size:.85rem;color:#0F9D58;font-weight:600;">Connected to Google Sheets</span>
-        <span id="gasSheetLabel" style="font-size:.78rem;color:var(--muted);word-break:break-all;flex:1;"></span>
-        <button onclick="disconnectGas()" style="background:none;border:1px solid #FECACA;border-radius:6px;color:#DC2626;padding:3px 10px;font-size:.75rem;font-weight:600;cursor:pointer;">Disconnect</button>
-      </div>
-
-      <!-- Setup steps (collapsed by default when connected) -->
-      <div id="gasSetupBody" style="display:none;">
-        <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;line-height:1.55;">
-          Follow 3 quick steps once — then every submission from any browser will appear here automatically.
-        </p>
-
-        <!-- Step 1 -->
-        <div class="gas-step">
-          <div class="gas-step-num">1</div>
-          <div class="gas-step-body">
-            <div class="gas-step-title">Create a Google Sheet &amp; paste this Apps Script</div>
-            <div class="gas-step-desc">Open <a href="https://sheets.google.com" target="_blank" style="color:var(--ai);">sheets.google.com</a> → New Sheet → <strong>Extensions → Apps Script</strong> → delete everything → paste the code below → Save (💾).</div>
-            <div style="position:relative;margin-top:10px;">
-              <pre id="gasCode" class="gas-code">function doPost(e){
-  try{
-    const d=JSON.parse(e.postData.contents);
-    const ss=SpreadsheetApp.getActiveSpreadsheet();
-    let sh=ss.getSheetByName('Submissions')||ss.insertSheet('Submissions');
-    if(sh.getLastRow()==0) sh.appendRow(['ID','Date','Track','Team','Org','Lead Name','Lead Email','Phone','Members','Title','Abstract','AI Category','Repo','Architecture','Datasets','Domain','Users','Novelty','Scalability']);
-    sh.appendRow([d.id,d.now,d.track,d.teamName||'',d.org||'',d.leadName||'',d.leadEmail||'',d.leadPhone||'',(d.members||[]).map(m=>m.name).join('; '),d.title||'',d.abstract||'',d.aiCat||'',d.repo||'',d.arch||'',d.datasets||'',d.domain||'',d.users||'',d.novelty||'',d.scale||'']);
-    return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
-  }catch(err){return ContentService.createTextOutput(JSON.stringify({ok:false,e:err.toString()})).setMimeType(ContentService.MimeType.JSON);}
-}
-function doGet(){
-  try{
-    const sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Submissions');
-    if(!sh||sh.getLastRow()&lt;2) return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);
-    const rows=sh.getDataRange().getValues();
-    const keys=['id','now','track','teamName','org','leadName','leadEmail','leadPhone','membersStr','title','abstract','aiCat','repo','arch','datasets','domain','users','novelty','scale'];
-    const data=rows.slice(1).map(r=>Object.fromEntries(keys.map((k,i)=>[k,String(r[i]||'')])));
-    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
-  }catch(e){return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);}
-}</pre>
-              <button onclick="copyGasCode()" id="btnCopyCode"
-                style="position:absolute;top:8px;right:8px;background:var(--dark);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:600;cursor:pointer;">
-                📋 Copy
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="gas-step">
-          <div class="gas-step-num">2</div>
-          <div class="gas-step-body">
-            <div class="gas-step-title">Deploy as Web App</div>
-            <div class="gas-step-desc">In Apps Script: click <strong>Deploy → New deployment</strong> → Type: <em>Web App</em> → Execute as: <em>Me</em> → Who has access: <em>Anyone</em> → click <strong>Deploy</strong> → copy the URL shown.</div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="gas-step">
-          <div class="gas-step-num">3</div>
-          <div class="gas-step-body">
-            <div class="gas-step-title">Paste the deployment URL below</div>
-            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-              <input id="gasUrlInput" class="gas-url-input"
-                placeholder="https://script.google.com/macros/s/…/exec" />
-              <button onclick="saveGasUrl()" class="btn btn-save" style="white-space:nowrap;">✅ Connect</button>
-            </div>
-            <div id="gasUrlErr" style="display:none;font-size:.78rem;color:#DC2626;margin-top:4px;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Main dashboard card ── -->
     <div class="card">
       <div class="card-title">
         <span class="icon" style="background:#EDE9FE;">📊</span>
         All Project Submissions
         <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-          <button class="sub-refresh" onclick="renderSubmissions(true)">↻ Refresh</button>
-          <button class="btn-clear-subs" onclick="clearAllSubmissions()">🗑 Clear Local</button>
+          <span id="subStatus" style="font-size:.74rem;color:var(--muted);"></span>
+          <button class="sub-refresh" onclick="renderSubmissions()">↻ Refresh</button>
         </div>
-      </div>
-
-      <!-- Loading indicator -->
-      <div id="subLoading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:.88rem;">
-        ⏳ Fetching from Google Sheets…
       </div>
 
       <!-- Stats -->
       <div class="sub-stats">
-        <div class="sub-stat"><div class="stat-num tot" id="statTotal">0</div><div class="stat-label">Total</div></div>
-        <div class="sub-stat"><div class="stat-num ai"  id="statAI">0</div><div class="stat-label">🤖 AI Track</div></div>
-        <div class="sub-stat"><div class="stat-num inn" id="statInn">0</div><div class="stat-label">💡 Innovation</div></div>
+        <div class="sub-stat"><div class="stat-num tot" id="statTotal">—</div><div class="stat-label">Total</div></div>
+        <div class="sub-stat"><div class="stat-num ai"  id="statAI">—</div><div class="stat-label">🤖 AI Track</div></div>
+        <div class="sub-stat"><div class="stat-num inn" id="statInn">—</div><div class="stat-label">💡 Innovation</div></div>
       </div>
 
       <!-- Search -->
@@ -1380,7 +1260,6 @@ function doGet(){
         <input class="sub-search" id="subSearch" type="text"
                placeholder="🔍  Search by team, title, lead, ID…"
                oninput="applyFilter()" />
-        <span id="subSource" style="font-size:.75rem;color:var(--muted);white-space:nowrap;"></span>
       </div>
 
       <!-- Two-column layout -->
@@ -1390,18 +1269,17 @@ function doGet(){
             <span>🤖 AI Track</span>
             <span class="track-count" id="aiCountBadge">0</span>
           </div>
-          <div id="aiCards"></div>
+          <div id="aiCards"><div class="sub-empty"><div class="empty-icon">⏳</div><p>Loading…</p></div></div>
         </div>
         <div class="sub-track-col">
           <div class="sub-track-head inn">
             <span>💡 Innovation Track</span>
             <span class="track-count" id="innCountBadge">0</span>
           </div>
-          <div id="innCards"></div>
+          <div id="innCards"><div class="sub-empty"><div class="empty-icon">⏳</div><p>Loading…</p></div></div>
         </div>
       </div>
     </div>
-
   </section>
 
   <!-- ══ SUBMIT PROJECT ══ -->
@@ -2086,105 +1964,83 @@ const modals = {
 
 /* ════════════════════════════════════
    SUBMISSIONS DASHBOARD
+   Source of truth: submissions.json in the GitHub repo (public URL)
+   Fallback: localStorage for same-browser offline viewing
 ════════════════════════════════════ */
-const SUB_KEY = 'psw_submissions';
-const GAS_KEY = 'psw_gas_url';
-let   _allSubs = []; // master list after merge
+const SUB_KEY  = 'psw_submissions';
+const SUBS_URL = 'https://akkadar.github.io/submission-workflow/submissions.json';
+let   _allSubs = [];
 
-/* ── localStorage helpers ── */
-function loadLocalSubs() {
-  try { return JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); } catch { return []; }
-}
-function getGasUrl() { return localStorage.getItem(GAS_KEY) || ''; }
-
-/* ── Merge by ID (GAS takes precedence) ── */
-function mergeSubs(local, remote) {
-  const map = {};
-  local.forEach(s  => { map[s.id] = s; });
-  remote.forEach(s => { map[s.id] = s; }); // remote overwrites
-  return Object.values(map).sort((a,b) => b.id.localeCompare(a.id));
+function setSubStatus(msg) {
+  const el = document.getElementById('subStatus');
+  if (el) el.textContent = msg;
 }
 
-/* ── Main render (optionally re-fetch GAS) ── */
-async function renderSubmissions(fetchRemote = false) {
-  const gasUrl = getGasUrl();
-  const local  = loadLocalSubs();
-  updateGasUI(gasUrl);
-
-  if (gasUrl && fetchRemote) {
-    document.getElementById('subLoading').style.display = 'block';
-    try {
-      const res  = await fetch(gasUrl, { cache: 'no-store' });
-      const remote = await res.json();
-      _allSubs = mergeSubs(local, Array.isArray(remote) ? remote : []);
-      document.getElementById('subSource').textContent = `📡 Google Sheets · ${_allSubs.length} total`;
-    } catch {
-      _allSubs = local;
-      document.getElementById('subSource').textContent = '⚠️ Sheets unreachable — showing local data';
-    }
-    document.getElementById('subLoading').style.display = 'none';
-  } else {
-    _allSubs = gasUrl ? mergeSubs(local, []) : local;
-    document.getElementById('subSource').textContent = gasUrl
-      ? '📡 Connected — click ↻ to sync from Sheets'
-      : '💾 Local browser data only';
+/* ── Fetch from the public JSON file (no auth needed) ── */
+async function renderSubmissions() {
+  setSubStatus('⏳ Loading…');
+  try {
+    const res = await fetch(SUBS_URL + '?_=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    _allSubs = await res.json();
+    if (!Array.isArray(_allSubs)) _allSubs = [];
+    setSubStatus('✅ Live · ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}));
+  } catch {
+    // Fallback to localStorage if GitHub Pages is unreachable
+    try { _allSubs = JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); } catch { _allSubs = []; }
+    setSubStatus('⚠️ Offline — showing local cache');
   }
-
   applyFilter();
 }
 
-/* ── Filter & display ── */
+/* ── Filter & render cards ── */
 function applyFilter() {
-  const query = (document.getElementById('subSearch')?.value || '').toLowerCase().trim();
-  const filtered = query
+  const q = (document.getElementById('subSearch')?.value || '').toLowerCase().trim();
+  const filtered = q
     ? _allSubs.filter(s =>
-        (s.title     || '').toLowerCase().includes(query) ||
-        (s.teamName  || '').toLowerCase().includes(query) ||
-        (s.leadName  || '').toLowerCase().includes(query) ||
-        (s.leadEmail || '').toLowerCase().includes(query) ||
-        (s.id        || '').toLowerCase().includes(query) ||
-        (s.org       || '').toLowerCase().includes(query))
+        [s.title, s.teamName, s.leadName, s.leadEmail, s.id, s.org]
+          .some(v => (v||'').toLowerCase().includes(q)))
     : _allSubs;
 
   const aiList  = filtered.filter(s => s.track === 'ai');
   const innList = filtered.filter(s => s.track === 'inn');
 
   document.getElementById('statTotal').textContent = _allSubs.length;
-  document.getElementById('statAI').textContent    = _allSubs.filter(s=>s.track==='ai').length;
-  document.getElementById('statInn').textContent   = _allSubs.filter(s=>s.track==='inn').length;
+  document.getElementById('statAI').textContent    = _allSubs.filter(s => s.track === 'ai').length;
+  document.getElementById('statInn').textContent   = _allSubs.filter(s => s.track === 'inn').length;
   document.getElementById('aiCountBadge').textContent  = aiList.length;
   document.getElementById('innCountBadge').textContent = innList.length;
 
   document.getElementById('aiCards').innerHTML  = aiList.length
     ? aiList.map(s => subCard(s, 'ai')).join('')
-    : subEmptyState('ai', query);
+    : subEmptyState('ai', q);
   document.getElementById('innCards').innerHTML = innList.length
     ? innList.map(s => subCard(s, 'inn')).join('')
-    : subEmptyState('inn', query);
+    : subEmptyState('inn', q);
 }
 
-/* ── Card HTML ── */
+/* ── Submission card ── */
 function subCard(s, track) {
-  const ai      = track === 'ai';
-  const accent  = ai ? 'var(--ai)' : 'var(--inn)';
-  const memberStr = s.membersStr  // from GAS (flat string)
-    ? s.membersStr.split(';').filter(Boolean).map(n=>`<span class="sub-member-chip">👤 ${esc(n.trim())}</span>`).join('')
-    : Array.isArray(s.members) && s.members.length
-      ? s.members.map(m=>`<span class="sub-member-chip">👤 ${esc(m.name||'—')}${m.role?' · '+esc(m.role):''}</span>`).join('')
-      : '';
+  const ai     = track === 'ai';
+  const accent = ai ? 'var(--ai)' : 'var(--inn)';
+  const chips  = Array.isArray(s.members) && s.members.length
+    ? s.members.map(m => `<span class="sub-member-chip">👤 ${esc(m.name||'—')}${m.role?' · '+esc(m.role):''}</span>`).join('')
+    : '';
 
   const specific = ai ? `
     <div class="sub-detail-grid" style="margin-top:8px;">
       <div><div class="sub-dk">AI Category</div><div class="sub-dv">${esc(s.aiCat||'—')}</div></div>
-      <div><div class="sub-dk">Repository</div><div class="sub-dv">${s.repo?`<a href="${esc(s.repo)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--ai);">${esc(s.repo)}</a>`:'—'}</div></div>
-      <div style="grid-column:1/-1;"><div class="sub-dk">Architecture</div><div class="sub-dv">${esc(s.arch||'—')}</div></div>
-      <div style="grid-column:1/-1;"><div class="sub-dk">Datasets</div><div class="sub-dv">${esc(s.datasets||'—')}</div></div>
+      <div><div class="sub-dk">Repository</div><div class="sub-dv">${s.repo
+        ? `<a href="${esc(s.repo)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--ai);">${esc(s.repo)}</a>`
+        : '—'}</div></div>
+      <div style="grid-column:1/-1"><div class="sub-dk">Architecture</div><div class="sub-dv">${esc(s.arch||'—')}</div></div>
+      <div style="grid-column:1/-1"><div class="sub-dk">Datasets</div><div class="sub-dv">${esc(s.datasets||'—')}</div></div>
     </div>` : `
     <div class="sub-detail-grid" style="margin-top:8px;">
       <div><div class="sub-dk">Domain</div><div class="sub-dv">${esc(s.domain||'—')}</div></div>
       <div><div class="sub-dk">Target Users</div><div class="sub-dv">${esc(s.users||'—')}</div></div>
-      <div style="grid-column:1/-1;"><div class="sub-dk">Novelty</div><div class="sub-dv">${esc(s.novelty||'—')}</div></div>
-      <div style="grid-column:1/-1;"><div class="sub-dk">Scalability</div><div class="sub-dv">${esc(s.scale||'—')}</div></div>
+      <div style="grid-column:1/-1"><div class="sub-dk">Novelty</div><div class="sub-dv">${esc(s.novelty||'—')}</div></div>
+      <div style="grid-column:1/-1"><div class="sub-dk">Scalability</div><div class="sub-dv">${esc(s.scale||'—')}</div></div>
     </div>`;
 
   return `
@@ -2198,14 +2054,16 @@ function subCard(s, track) {
       <span style="font-weight:600;color:var(--dark);">${esc(s.teamName)}</span>
       ${s.org ? `<span>·</span><span>${esc(s.org)}</span>` : ''}
       <span>·</span>
-      <span><a href="mailto:${esc(s.leadEmail)}" onclick="event.stopPropagation()" style="color:${accent};">${esc(s.leadEmail)}</a></span>
+      <a href="mailto:${esc(s.leadEmail)}" onclick="event.stopPropagation()" style="color:${accent};">${esc(s.leadEmail)}</a>
     </div>
     <div class="sub-card-details">
       <div class="sub-detail-grid">
-        <div><div class="sub-dk">Team Lead</div><div class="sub-dv">${esc(s.leadName||'—')}${s.leadPhone?' · '+esc(s.leadPhone):''}</div></div>
-        <div><div class="sub-dk">Organisation</div><div class="sub-dv">${esc(s.org||'—')}</div></div>
+        <div><div class="sub-dk">Team Lead</div>
+          <div class="sub-dv">${esc(s.leadName||'—')}${s.leadPhone?' · '+esc(s.leadPhone):''}</div></div>
+        <div><div class="sub-dk">Organisation</div>
+          <div class="sub-dv">${esc(s.org||'—')}</div></div>
       </div>
-      ${memberStr ? `<div class="sub-members" style="margin-top:6px;">${memberStr}</div>` : ''}
+      ${chips ? `<div class="sub-members" style="margin-top:6px;">${chips}</div>` : ''}
       <div class="sub-dk" style="margin-top:10px;">Abstract</div>
       <div class="sub-abstract">${esc(s.abstract||'—')}</div>
       ${specific}
@@ -2216,78 +2074,26 @@ function subCard(s, track) {
 function subEmptyState(track, query) {
   const label = track === 'ai' ? 'AI Track' : 'Innovation Track';
   return `<div class="sub-empty">
-    <div class="empty-icon">${track==='ai'?'🤖':'💡'}</div>
-    <p>${query ? `No ${label} submissions match your search.` : `No ${label} submissions yet.`}</p>
+    <div class="empty-icon">${track === 'ai' ? '🤖' : '💡'}</div>
+    <p>${query ? `No ${label} submissions match your search.`
+               : `No ${label} submissions yet.`}</p>
     ${!query ? `<p style="margin-top:6px;"><a href="submit.html">Submit the first project →</a></p>` : ''}
   </div>`;
 }
 
-function clearAllSubmissions() {
-  const all = loadLocalSubs();
-  if (!all.length) { showToast('ℹ️ No local submissions to clear.'); return; }
-  if (!confirm(`Delete all ${all.length} local submission(s)? Google Sheets data is not affected.`)) return;
-  localStorage.removeItem(SUB_KEY);
-  _allSubs = [];
-  applyFilter();
-  showToast('🗑 Local submissions cleared.');
-}
-
-/* ── GAS Setup UI ── */
-let gasPanelOpen = false;
-
-function updateGasUI(gasUrl) {
-  const connected = !!gasUrl;
-  const banner = document.getElementById('gasConnectedBanner');
-  const body   = document.getElementById('gasSetupBody');
-  const toggle = document.getElementById('gasToggleBtn');
-
-  if (connected) {
-    banner.style.display = 'flex';
-    document.getElementById('gasSheetLabel').textContent = gasUrl;
-    body.style.display   = gasPanelOpen ? 'block' : 'none';
-    toggle.textContent   = gasPanelOpen ? '▲ Hide setup' : '▼ Show setup';
-  } else {
-    banner.style.display = 'none';
-    body.style.display   = gasPanelOpen ? 'block' : 'none';
-    toggle.textContent   = gasPanelOpen ? '▲ Hide setup' : '▼ Show setup';
+/* ── Auto-refresh when tab gets focus or storage changes ── */
+window.addEventListener('focus', () => {
+  if (document.getElementById('sec-submissions').classList.contains('active')) {
+    renderSubmissions();
   }
-}
-
-function toggleGasPanel() {
-  gasPanelOpen = !gasPanelOpen;
-  updateGasUI(getGasUrl());
-}
-
-function saveGasUrl() {
-  const val = (document.getElementById('gasUrlInput').value || '').trim();
-  const err = document.getElementById('gasUrlErr');
-  if (!val.startsWith('https://script.google.com/macros/')) {
-    err.textContent = 'URL must start with https://script.google.com/macros/ — check you copied the deployment URL, not the editor URL.';
-    err.style.display = 'block'; return;
+});
+window.addEventListener('storage', e => {
+  if (e.key === SUB_KEY &&
+      document.getElementById('sec-submissions').classList.contains('active')) {
+    renderSubmissions();
+    showToast('🔔 New submission detected!');
   }
-  err.style.display = 'none';
-  localStorage.setItem(GAS_KEY, val);
-  gasPanelOpen = false;
-  showToast('✅ Google Sheets connected!');
-  renderSubmissions(true); // immediately fetch
-}
-
-function disconnectGas() {
-  if (!confirm('Disconnect Google Sheets? You can reconnect anytime.')) return;
-  localStorage.removeItem(GAS_KEY);
-  gasPanelOpen = false;
-  renderSubmissions(false);
-  showToast('🔌 Disconnected from Google Sheets.');
-}
-
-function copyGasCode() {
-  const code = document.getElementById('gasCode').innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    const btn = document.getElementById('btnCopyCode');
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
-  });
-}
+});
 
 /* ──────────────────────── */
 function showSection(id, btn) {
@@ -2295,7 +2101,7 @@ function showSection(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (id === 'submissions') renderSubmissions(!!getGasUrl()); // auto-fetch if GAS connected
+  if (id === 'submissions') renderSubmissions();
 }
 
 function openModal(key) {
