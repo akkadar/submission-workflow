@@ -853,6 +853,9 @@ function submitForm() {
     <div class="sd-row"><span class="sd-key">Lead</span>    <span class="sd-val">${esc(v('f-leadEmail'))}</span></div>
     <div class="sd-row"><span class="sd-key">Submitted</span><span class="sd-val">${now}</span></div>`;
 
+  // ── Send to Google Sheets (if configured) ──
+  postToGas(subRecord);
+
   // ── Generate & auto-download receipt ──
   const receiptHtml = buildReceiptHtml(id, now);
   lastReceipt = { id, now, html: receiptHtml };
@@ -910,6 +913,18 @@ function submitForm() {
       `?subject=${encodeURIComponent('New Submission: ' + v('f-title') + ' [' + id + ']')}` +
       `&body=${encodeURIComponent(emailBody)}`;
   }, 800); // slight delay so download fires first
+}
+
+/* ── POST submission to Google Sheets via GAS ── */
+function postToGas(data) {
+  const url = localStorage.getItem('psw_gas_url');
+  if (!url) return; // not configured
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    // GAS requires no-cors for cross-origin POST (response will be opaque – that's fine)
+    mode: 'no-cors'
+  }).catch(() => {}); // silent fail — user still has localStorage copy
 }
 
 /* ── Re-download from success screen button ── */
