@@ -853,8 +853,7 @@ function submitForm() {
     <div class="sd-row"><span class="sd-key">Lead</span>    <span class="sd-val">${esc(v('f-leadEmail'))}</span></div>
     <div class="sd-row"><span class="sd-key">Submitted</span><span class="sd-val">${now}</span></div>`;
 
-  // ── Write to central submissions.json in GitHub repo ──
-  saveToGitHub(subRecord);
+  // localStorage already saved above — that's all we need
 
   // ── Generate & auto-download receipt ──
   const receiptHtml = buildReceiptHtml(id, now);
@@ -915,45 +914,6 @@ function submitForm() {
   }, 800); // slight delay so download fires first
 }
 
-/* ════════════════════════════
-   SAVE TO GITHUB REPO
-   Reads submissions.json → appends → writes back
-════════════════════════════ */
-const GH_API = 'https://api.github.com/repos/akkadar/submission-workflow/contents/submissions.json';
-const GH_TOK = atob('Z2hwX2lJUWJVQWlFUFZsaU5MNlFycXFhaUtPQ0F5cjQwRWs3YWY='); // base64-encoded PAT
-
-async function saveToGitHub(sub) {
-  try {
-    // 1. Fetch current file to get SHA + content
-    const getRes = await fetch(GH_API, {
-      headers: { Authorization: `token ${GH_TOK}`, Accept: 'application/vnd.github.v3+json' }
-    });
-    if (!getRes.ok) throw new Error('GET failed');
-
-    const fileData = await getRes.json();
-    const sha      = fileData.sha;
-    const current  = JSON.parse(atob(fileData.content.replace(/\s/g, '')));
-
-    // 2. Append new submission
-    current.push(sub);
-
-    // 3. Base64-encode updated JSON (handles Unicode)
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2))));
-
-    // 4. PUT back
-    await fetch(GH_API, {
-      method: 'PUT',
-      headers: {
-        Authorization: `token ${GH_TOK}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/vnd.github.v3+json'
-      },
-      body: JSON.stringify({ message: `sub: ${sub.id}`, content: encoded, sha })
-    });
-  } catch (err) {
-    console.warn('GitHub save failed (localStorage copy is safe):', err);
-  }
-}
 
 /* ── Re-download from success screen button ── */
 function downloadReceipt() {
