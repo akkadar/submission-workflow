@@ -2201,7 +2201,7 @@ function subEmptyState(track, query) {
 
 /* ── Auto-poll every 15 s — always in sync ── */
 (function startAutoSync() {
-  const POLL_MS = 15000;
+  const POLL_MS = 5000;
   let _lastCount = -1;
 
   async function poll() {
