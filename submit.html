@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Submit Project — Submission Workflow</title>
+<style>
+/* ── Reset & Variables ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ai:        #1A73E8;
+  --ai-light:  #E8F0FE;
+  --ai-mid:    #4285F4;
+  --inn:       #0F9D58;
+  --inn-light: #E6F4EA;
+  --inn-mid:   #34A853;
+  --dark:      #1A1A2E;
+  --grey:      #F8F9FA;
+  --border:    #E0E0E0;
+  --text:      #333;
+  --muted:     #666;
+  --white:     #fff;
+  --bg:        #F0F2F5;
+  --card-bg:   #fff;
+  --shadow:    0 2px 12px rgba(0,0,0,.10);
+  --shadow-lg: 0 6px 28px rgba(0,0,0,.14);
+  --radius:    12px;
+  --transition:.25s ease;
+}
+
+/* ── Dark Mode ── */
+body.dark {
+  --grey:     #1E2130; --border:   #2E3347; --text:     #E2E8F0;
+  --muted:    #94A3B8; --white:    #151824; --bg:       #0F1117;
+  --card-bg:  #1A1F2E; --ai-light: #1A2744; --inn-light:#0D2820;
+  --shadow:   0 2px 12px rgba(0,0,0,.4); --shadow-lg: 0 6px 28px rgba(0,0,0,.5);
+}
+body.dark .card         { background: var(--card-bg); }
+body.dark .sf-input,
+body.dark .sf-select,
+body.dark .sf-textarea  { background: #1E2130; color: var(--text); border-color: var(--border); }
+body.dark .sf-input::placeholder,
+body.dark .sf-textarea::placeholder { color: #4A5568; }
+body.dark .member-row   { background: #1E2130; }
+body.dark .agree-banner { background: #2D2006; border-color: #78350F; }
+body.dark .agree-banner p { color: #FCD34D; }
+body.dark .success-det  { background: #1E2130; }
+body.dark .sf-check-item         { background: #1E2130; }
+body.dark .sf-check-item.checked { background: var(--inn-light); }
+body.dark .track-sel-card        { background: #1E2130; border-color: var(--border); }
+body.dark .track-sel-card.sel-ai  { background: var(--ai-light); }
+body.dark .track-sel-card.sel-inn { background: var(--inn-light); }
+body.dark .btn-back     { background: #1E2130; color: var(--text); border-color: var(--border); }
+body.dark .review-block { color: var(--text); }
+body.dark .crit-card    { background: #1E2130; }
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; transition: background .3s, color .3s;
+}
+
+/* ── Header ── */
+.header {
+  background: var(--dark); color: #fff;
+  padding: 22px 40px; display: flex; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+.header::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(26,115,232,.2) 0%, transparent 65%);
+  pointer-events:none;
+}
+.header-left { flex:1; min-width:200px; position:relative; z-index:1; }
+.header-left h1 { font-size:1.45rem; font-weight:700; }
+.header-left p  { font-size:.82rem; color:#aaa; margin-top:3px; }
+.header-actions { display:flex; gap:8px; position:relative; z-index:1; flex-wrap:wrap; }
+.hdr-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+  color:#fff; border-radius:20px; padding:6px 14px;
+  font-size:.82rem; font-weight:600; cursor:pointer;
+  text-decoration:none; transition:var(--transition);
+}
+.hdr-btn:hover { background:rgba(255,255,255,.2); }
+
+/* ── Main wrapper ── */
+.wrap { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* ── Card ── */
+.card {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 28px 32px; margin-bottom: 24px;
+}
+.card-title {
+  font-size:1.05rem; font-weight:700; color:var(--dark);
+  margin-bottom:22px; display:flex; align-items:center; gap:10px;
+}
+.card-title .icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+
+/* ── Progress bar ── */
+.progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.progress-bar  { flex:1; height:6px; background:var(--border); border-radius:10px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--ai),var(--inn)); transition:width .4s cubic-bezier(.4,0,.2,1); width:0%; }
+.progress-pct  { font-size:.75rem; font-weight:700; color:var(--muted); white-space:nowrap; min-width:36px; text-align:right; }
+
+/* ── Stepper ── */
+.stepper { display:flex; align-items:center; margin-bottom:28px; }
+.step-item { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; position:relative; }
+.step-item:not(:last-child)::after { content:''; position:absolute; top:17px; left:55%; width:90%; height:2px; background:var(--border); z-index:0; transition:background .4s; }
+.step-item.done:not(:last-child)::after  { background:var(--inn); }
+.step-circle {
+  width:34px; height:34px; border-radius:50%; border:2px solid var(--border);
+  background:var(--white); display:flex; align-items:center; justify-content:center;
+  font-size:.8rem; font-weight:700; color:var(--muted); z-index:1; transition:all .3s;
+}
+.step-item.active .step-circle { border-color:var(--ai); background:var(--ai); color:#fff; box-shadow:0 0 0 4px rgba(26,115,232,.15); }
+.step-item.done   .step-circle { border-color:var(--inn); background:var(--inn); color:#fff; }
+.step-label { font-size:.7rem; font-weight:600; color:var(--muted); text-align:center; }
+.step-item.active .step-label { color:var(--ai); }
+.step-item.done   .step-label { color:var(--inn); }
+
+/* ── Pane animation ── */
+.pane { animation: fadeUp .25s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── Section label ── */
+.sec-label {
+  font-size:.7rem; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; color:var(--muted); margin:20px 0 10px;
+  padding-bottom:5px; border-bottom:1px solid var(--border);
+}
+
+/* ── Form fields ── */
+.row { display:grid; gap:14px; margin-bottom:14px; }
+.row.c2 { grid-template-columns:1fr 1fr; }
+.row.c3 { grid-template-columns:1fr 1fr 1fr; }
+.row.c1 { grid-template-columns:1fr; }
+.field  { display:flex; flex-direction:column; gap:5px; }
+.flabel { font-size:.82rem; font-weight:600; color:var(--dark); }
+.flabel .req { color:#EF4444; margin-left:2px; }
+.fhint  { font-size:.73rem; color:var(--muted); }
+.finput, .fselect, .ftextarea {
+  width:100%; padding:9px 12px; border:1.5px solid var(--border);
+  border-radius:8px; font-size:.88rem; font-family:inherit;
+  color:var(--dark); background:var(--white); transition:border-color .2s, box-shadow .2s;
+}
+.finput:focus, .fselect:focus, .ftextarea:focus {
+  outline:none; border-color:var(--ai); box-shadow:0 0 0 3px rgba(26,115,232,.1);
+}
+.finput.err, .fselect.err, .ftextarea.err { border-color:#EF4444; box-shadow:0 0 0 3px rgba(239,68,68,.08); }
+.ftextarea { resize:vertical; min-height:80px; }
+.ferr  { font-size:.75rem; color:#EF4444; margin-top:2px; display:none; }
+.ferr.show { display:block; }
+.fcount { font-size:.73rem; color:var(--muted); text-align:right; margin-top:2px; }
+.fcount.warn { color:#F59E0B; }
+.fcount.over { color:#EF4444; font-weight:600; }
+
+/* ── Track selection ── */
+.track-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:8px 0 20px; }
+.track-sel-card {
+  border:2.5px solid var(--border); border-radius:14px; padding:24px 20px;
+  cursor:pointer; transition:all .25s; background:var(--white);
+  text-align:center; position:relative;
+}
+.track-sel-card:hover { border-color:#94A3B8; box-shadow:var(--shadow); transform:translateY(-2px); }
+.track-sel-card.sel-ai  { border-color:var(--ai);  background:var(--ai-light);  box-shadow:0 0 0 4px rgba(26,115,232,.1); }
+.track-sel-card.sel-inn { border-color:var(--inn); background:var(--inn-light); box-shadow:0 0 0 4px rgba(15,157,88,.1); }
+.ts-icon { font-size:2.4rem; margin-bottom:8px; }
+.track-sel-card h3 { font-size:1rem; font-weight:700; color:var(--dark); margin-bottom:5px; }
+.track-sel-card p  { font-size:.8rem; color:var(--muted); line-height:1.45; }
+.ts-check {
+  position:absolute; top:10px; right:10px; width:20px; height:20px;
+  border-radius:50%; display:none; align-items:center; justify-content:center;
+  font-size:.7rem; color:#fff;
+}
+.sel-ai  .ts-check { display:flex; background:var(--ai); }
+.sel-inn .ts-check { display:flex; background:var(--inn); }
+.badge { display:inline-block; padding:3px 9px; border-radius:20px; font-size:.73rem; font-weight:600; }
+.badge-ai  { background:var(--ai-light);  color:var(--ai); }
+.badge-inn { background:var(--inn-light); color:var(--inn); }
+
+/* ── Team members ── */
+.member-list { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.member-row {
+  display:grid; grid-template-columns:1fr 1fr 1fr 34px;
+  gap:8px; align-items:end;
+  background:var(--grey); border-radius:8px; padding:10px 12px;
+  border:1px solid var(--border);
+}
+.member-num { grid-column:1/-1; font-size:.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:2px; }
+.btn-rem-member {
+  background:none; border:1.5px solid #FECACA; border-radius:6px;
+  color:#EF4444; cursor:pointer; font-size:.85rem;
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  transition:var(--transition);
+}
+.btn-rem-member:hover { background:#FEF2F2; }
+.btn-add-member {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--ai-light); color:var(--ai); border:1px solid #C7D9F8;
+  border-radius:7px; padding:7px 14px; font-size:.82rem; font-weight:600;
+  cursor:pointer; transition:var(--transition);
+}
+.btn-add-member:hover { background:#D4E5FF; }
+
+/* ── Check items ── */
+.check-group { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.check-item {
+  display:flex; gap:10px; align-items:flex-start;
+  padding:10px 14px; border-radius:8px;
+  border:1.5px solid var(--border); background:var(--grey);
+  cursor:pointer; transition:var(--transition);
+}
+.check-item:hover  { border-color:#94A3B8; }
+.check-item.checked { border-color:var(--inn); background:var(--inn-light); }
+.check-item input[type=checkbox] { margin-top:2px; cursor:pointer; flex-shrink:0; accent-color:var(--inn); width:15px; height:15px; }
+.ci-label { font-size:.87rem; font-weight:600; color:var(--dark); }
+.ci-desc  { font-size:.77rem; color:var(--muted); margin-top:2px; line-height:1.4; }
+
+/* ── Nav buttons ── */
+.form-nav {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:26px; padding-top:18px; border-top:1px solid var(--border);
+}
+.btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:9px 20px; border-radius:8px; border:none;
+  font-size:.88rem; font-weight:600; cursor:pointer;
+  transition:var(--transition); white-space:nowrap; font-family:inherit;
+}
+.btn-back   { background:var(--grey); color:var(--dark); border:1px solid var(--border); }
+.btn-back:hover { background:var(--border); }
+.btn-next   { background:var(--ai); color:#fff; }
+.btn-next:hover { background:var(--ai-mid); }
+.btn-submit { background:linear-gradient(135deg,var(--inn),var(--inn-mid)); color:#fff; font-size:.92rem; padding:10px 26px; }
+.btn-submit:hover { filter:brightness(1.07); }
+
+/* ── Review ── */
+.review-block { margin-bottom:16px; }
+.rev-title {
+  font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
+  color:var(--muted); margin-bottom:7px; padding-bottom:5px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.rev-edit { font-size:.75rem; color:var(--ai); cursor:pointer; text-transform:none; letter-spacing:0; font-weight:600; }
+.rev-edit:hover { text-decoration:underline; }
+.rev-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px 18px; }
+.rev-row  { display:flex; flex-direction:column; gap:1px; padding:4px 0; }
+.rev-key  { font-size:.74rem; color:var(--muted); }
+.rev-val  { font-size:.86rem; color:var(--dark); font-weight:500; word-break:break-word; }
+.rev-val.long { font-size:.82rem; line-height:1.5; }
+
+/* ── Agreement banner ── */
+.agree-banner {
+  background:#FFFBEB; border:1.5px solid #FDE68A; border-radius:10px;
+  padding:13px 15px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start;
+}
+.agree-banner p { font-size:.83rem; color:#92400E; line-height:1.5; }
+
+/* ── Success screen ── */
+.success-screen { display:none; text-align:center; padding:40px 20px; }
+.success-screen.show { display:block; }
+.suc-icon { font-size:3.8rem; margin-bottom:14px; animation:popIn .5s cubic-bezier(.17,.67,.4,1.4); }
+@keyframes popIn { from { transform:scale(0); opacity:0; } to { transform:scale(1); opacity:1; } }
+.suc-id { display:inline-block; background:var(--grey); border:1.5px solid var(--border); border-radius:8px; padding:7px 18px; font-family:monospace; font-size:.95rem; color:var(--dark); font-weight:700; letter-spacing:1px; margin:12px 0 20px; }
+.success-det { background:var(--grey); border-radius:10px; padding:14px 20px; display:inline-block; text-align:left; min-width:280px; margin-bottom:18px; }
+.sd-row { display:flex; justify-content:space-between; gap:16px; padding:5px 0; border-bottom:1px solid var(--border); font-size:.85rem; }
+.sd-row:last-child { border-bottom:none; }
+.sd-key { color:var(--muted); }
+.sd-val { font-weight:600; color:var(--dark); }
+.btn-new { background:var(--dark); color:#fff; padding:10px 24px; margin-top:6px; }
+
+/* ── Print ── */
+@media print {
+  .header .header-actions, .form-nav, .progress-wrap, .stepper { display:none !important; }
+  body { background:#fff !important; color:#000 !important; }
+  .card { box-shadow:none !important; border:1px solid #ddd; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .header { padding:16px 18px; }
+  .header-left h1 { font-size:1.15rem; }
+  .wrap { padding:16px 12px 60px; }
+  .card { padding:18px 14px; }
+  .track-grid  { grid-template-columns:1fr; }
+  .row.c2, .row.c3 { grid-template-columns:1fr; }
+  .rev-grid    { grid-template-columns:1fr; }
+  .member-row  { grid-template-columns:1fr 1fr; }
+  .step-label  { display:none; }
+  .form-nav    { flex-wrap:wrap; gap:8px; }
+  .form-nav .btn { flex:1; justify-content:center; }
+}
+@media (max-width:400px) {
+  .member-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <h1>🚀 Submit Your Project</h1>
+    <p>Project Submission Workflow · May 2026</p>
+  </div>
+  <div class="header-actions">
+    <a class="hdr-btn" href="index.html">← Back to Workflow</a>
+    <button class="hdr-btn" onclick="toggleDark()" id="darkBtn">🌙 Dark</button>
+    <button class="hdr-btn" onclick="window.print()">🖨️ Print</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="wrap">
+
+  <!-- SUCCESS -->
+  <div class="card success-screen" id="successScreen">
+    <div class="suc-icon">🎉</div>
+    <h2 style="font-size:1.35rem;color:var(--dark);margin-bottom:6px;">Submission Received!</h2>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:4px;">Your project has been submitted. Keep your ID safe.</p>
+    <div class="suc-id" id="sucId">–</div>
+    <div class="success-det" id="sucDetails"></div>
+    <p style="font-size:.81rem;color:var(--muted);margin-bottom:14px;">A confirmation will be sent to your team lead within 24 hours.</p>
+    <button class="btn btn-new" onclick="resetForm()">Submit Another Project</button>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card" id="formCard">
+    <div class="card-title">
+      <span class="icon" style="background:#DCFCE7;">📋</span>
+      Project Submission
+      <span style="margin-left:auto;font-size:.76rem;font-weight:400;color:var(--muted);">Fields marked <span style="color:#EF4444;">*</span> are required</span>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-pct"  id="progressPct">0%</div>
+    </div>
+
+    <!-- STEPPER (4 steps) -->
+    <div class="stepper" id="stepper">
+      <div class="step-item active" id="si-0"><div class="step-circle">1</div><div class="step-label">Track</div></div>
+      <div class="step-item"        id="si-1"><div class="step-circle">2</div><div class="step-label">Team</div></div>
+      <div class="step-item"        id="si-2"><div class="step-circle">3</div><div class="step-label">Project</div></div>
+      <div class="step-item"        id="si-3"><div class="step-circle">4</div><div class="step-label">Review</div></div>
+    </div>
+
+    <!-- ── STEP 0: TRACK ── -->
+    <div class="pane" id="pane-0">
+      <h3 style="font-size:.98rem;font-weight:700;color:var(--dark);margin-bottom:5px;">Choose your submission track</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:16px;">A project may only be submitted to one track. Your choice is final once registration closes.</p>
+      <div class="track-grid">
+        <div class="track-sel-card" id="ts-ai" onclick="selectTrack('ai')">
+          <div class="ts-check">✓</div>
+          <div class="ts-icon">🤖</div>
+          <h3>AI Track</h3>
+          <p>Core AI / ML component — machine learning, NLP, computer vision, deep learning.</p>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;">
+            <span class="badge badge-ai">1–5 members</span>
+            <span class="badge badge-ai">Deadline Jun 20</span>
+          </div>
+        </div>
+        <div class="track-sel-card" id="ts-inn" onclick="selectTrack('inn')">
+          <div class="ts-check">✓</div>
+          <div class="ts-icon">💡</div>
+          <h3>Innovation Track</h3>
+          <p>Novel products, processes, or social impact — any domain, no AI/ML core required.</p>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;">
+            <span class="badge badge-inn">1–8 members</span>
+            <span class="badge badge-inn">Deadline Jun 30</span>
+          </div>
+        </div>
+      </div>
+      <div class="ferr" id="err-track" style="font-size:.85rem;margin-bottom:8px;">Please select a track to continue.</div>
+      <div class="form-nav" style="justify-content:flex-end;">
+        <button class="btn btn-next" onclick="next()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 1: TEAM ── -->
+    <div class="pane" id="pane-1" style="display:none;">
+      <div class="sec-label">Team Information</div>
+      <div class="row c2">
+        <div class="field">
+          <label class="flabel">Team Name <span class="req">*</span></label>
+          <input class="finput" id="f-teamName" placeholder="e.g. Neural Pioneers" oninput="clearErr(this)" />
+          <span class="ferr" id="err-teamName">Team name is required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Organisation / Institution</label>
+          <input class="finput" id="f-org" placeholder="e.g. MIT, Google, Independent" />
+        </div>
+      </div>
+      <div class="sec-label">Team Lead (Primary Contact)</div>
+      <div class="row c3">
+        <div class="field">
+          <label class="flabel">Full Name <span class="req">*</span></label>
+          <input class="finput" id="f-leadName" placeholder="Jane Smith" oninput="clearErr(this)" />
+          <span class="ferr" id="err-leadName">Lead name is required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Email Address <span class="req">*</span></label>
+          <input class="finput" type="email" id="f-leadEmail" placeholder="jane@example.com" oninput="clearErr(this)" />
+          <span class="ferr" id="err-leadEmail">A valid email is required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Phone (optional)</label>
+          <input class="finput" id="f-leadPhone" placeholder="+1 555 000 0000" />
+        </div>
+      </div>
+      <div class="sec-label" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>Additional Members</span>
+        <span style="font-size:.73rem;color:var(--muted);" id="memberNote"></span>
+      </div>
+      <div class="member-list" id="memberList"></div>
+      <button class="btn-add-member" id="btnAddMem" onclick="addMember()">＋ Add Member</button>
+      <div class="form-nav">
+        <button class="btn btn-back" onclick="back()">← Back</button>
+        <button class="btn btn-next" onclick="next()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: PROJECT DETAILS ── -->
+    <div class="pane" id="pane-2" style="display:none;">
+      <div class="sec-label">Project Overview</div>
+      <div class="row c1">
+        <div class="field">
+          <label class="flabel">Project Title <span class="req">*</span></label>
+          <input class="finput" id="f-title" placeholder="Enter your project title" maxlength="120"
+                 oninput="clearErr(this);updateCount('f-title','cnt-title',120)" />
+          <div style="display:flex;justify-content:space-between;">
+            <span class="ferr" id="err-title">Project title is required.</span>
+            <span class="fcount" id="cnt-title">0 / 120</span>
+          </div>
+        </div>
+      </div>
+      <div class="row c1">
+        <div class="field">
+          <label class="flabel">Abstract <span class="req">*</span> <span class="fhint">(10–50 words)</span></label>
+          <textarea class="ftextarea" id="f-abstract" rows="3"
+            placeholder="Briefly describe your project — what problem it solves and your approach."
+            oninput="clearErr(this);updateWordCount('f-abstract','cnt-abstract',10,50)"></textarea>
+          <div style="display:flex;justify-content:space-between;">
+            <span class="ferr" id="err-abstract">Abstract must be 10–50 words.</span>
+            <span class="fcount" id="cnt-abstract">0 words</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI-specific -->
+      <div id="ai-block" style="display:none;">
+        <div class="sec-label">AI Track Details</div>
+        <div class="row c2">
+          <div class="field">
+            <label class="flabel">AI Category <span class="req">*</span></label>
+            <select class="fselect" id="f-aiCat" oninput="clearErr(this)">
+              <option value="">— Select category —</option>
+              <option>Machine Learning</option>
+              <option>Deep Learning / Neural Networks</option>
+              <option>Natural Language Processing</option>
+              <option>Computer Vision</option>
+              <option>Reinforcement Learning</option>
+              <option>Generative AI</option>
+              <option>Robotics / Embodied AI</option>
+              <option>AI for Science</option>
+              <option>Other</option>
+            </select>
+            <span class="ferr" id="err-aiCat">Please select a category.</span>
+          </div>
+          <div class="field">
+            <label class="flabel">GitHub / Repository URL <span class="req">*</span></label>
+            <input class="finput" id="f-repo" placeholder="https://github.com/…" oninput="clearErr(this)" />
+            <span class="ferr" id="err-repo">Repository URL is required.</span>
+          </div>
+        </div>
+        <div class="row c1">
+          <div class="field">
+            <label class="flabel">Model / Architecture Summary <span class="req">*</span></label>
+            <textarea class="ftextarea" id="f-arch" rows="3"
+              placeholder="Briefly describe the model architecture and key techniques used."
+              oninput="clearErr(this)"></textarea>
+            <span class="ferr" id="err-arch">Architecture summary is required.</span>
+          </div>
+        </div>
+        <div class="row c1">
+          <div class="field">
+            <label class="flabel">Dataset(s) Used <span class="req">*</span></label>
+            <textarea class="ftextarea" id="f-datasets" rows="2"
+              placeholder="Name each dataset, its source, and confirm it is legally licensed."
+              oninput="clearErr(this)"></textarea>
+            <span class="ferr" id="err-datasets">Dataset description is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Innovation-specific -->
+      <div id="inn-block" style="display:none;">
+        <div class="sec-label">Innovation Track Details</div>
+        <div class="row c2">
+          <div class="field">
+            <label class="flabel">Innovation Domain <span class="req">*</span></label>
+            <select class="fselect" id="f-domain" oninput="clearErr(this)">
+              <option value="">— Select domain —</option>
+              <option>Healthcare & Medical</option>
+              <option>Education</option>
+              <option>Sustainability & Climate</option>
+              <option>Finance & Fintech</option>
+              <option>Agriculture</option>
+              <option>Smart Cities & Infrastructure</option>
+              <option>Social Impact</option>
+              <option>Manufacturing & Supply Chain</option>
+              <option>Other</option>
+            </select>
+            <span class="ferr" id="err-domain">Please select a domain.</span>
+          </div>
+          <div class="field">
+            <label class="flabel">Target Users <span class="req">*</span></label>
+            <input class="finput" id="f-users" placeholder="e.g. Rural healthcare workers, SMEs…" oninput="clearErr(this)" />
+            <span class="ferr" id="err-users">Target users are required.</span>
+          </div>
+        </div>
+        <div class="row c1">
+          <div class="field">
+            <label class="flabel">Novelty Explanation <span class="req">*</span></label>
+            <textarea class="ftextarea" id="f-novelty" rows="3"
+              placeholder="What makes your approach novel compared to existing solutions?"
+              oninput="clearErr(this)"></textarea>
+            <span class="ferr" id="err-novelty">Novelty explanation is required.</span>
+          </div>
+        </div>
+        <div class="row c1">
+          <div class="field">
+            <label class="flabel">Scalability Plan <span class="req">*</span></label>
+            <textarea class="ftextarea" id="f-scale" rows="2"
+              placeholder="How does this solution grow beyond the prototype stage?"
+              oninput="clearErr(this)"></textarea>
+            <span class="ferr" id="err-scale">Scalability plan is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-nav">
+        <button class="btn btn-back" onclick="back()">← Back</button>
+        <button class="btn btn-next" onclick="next()">Review →</button>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: REVIEW & SUBMIT ── -->
+    <div class="pane" id="pane-3" style="display:none;">
+      <div class="agree-banner">
+        <span style="font-size:1.1rem;">⚠️</span>
+        <p>Review all details carefully. Once submitted, changes require written approval from the review committee.</p>
+      </div>
+      <div id="reviewContent"></div>
+
+      <div class="check-group" style="margin-top:10px;">
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" id="ck-rules" />
+          <div><div class="ci-label">I confirm all submission rules have been read <span style="color:#EF4444;">*</span></div>
+               <div class="ci-desc">I have read and agree to comply with the full rules for my chosen track.</div></div>
+        </label>
+        <label class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox" id="ck-truth" />
+          <div><div class="ci-label">All information is accurate and truthful <span style="color:#EF4444;">*</span></div>
+               <div class="ci-desc">Providing false information may result in immediate disqualification.</div></div>
+        </label>
+      </div>
+      <div class="ferr" id="err-agree" style="font-size:.85rem;margin-bottom:8px;">Both confirmations are required to submit.</div>
+
+      <div class="form-nav">
+        <button class="btn btn-back" onclick="back()">← Back</button>
+        <button class="btn btn-submit" onclick="submitForm()">🚀 Submit Project</button>
+      </div>
+    </div>
+
+  </div><!-- /formCard -->
+</main>
+
+<script>
+/* ════════════════════════════
+   DARK MODE
+════════════════════════════ */
+function toggleDark() {
+  const dark = document.body.classList.toggle('dark');
+  localStorage.setItem('psw_dark', dark ? '1' : '0');
+  document.getElementById('darkBtn').textContent = dark ? '☀️ Light' : '🌙 Dark';
+}
+(function() {
+  const s = localStorage.getItem('psw_dark');
+  const p = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (s === '1' || (s === null && p)) {
+    document.body.classList.add('dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const b = document.getElementById('darkBtn');
+      if (b) b.textContent = '☀️ Light';
+    });
+  }
+})();
+
+/* ════════════════════════════
+   FORM STATE
+════════════════════════════ */
+const STEPS   = 4;
+let   step    = 0;
+let   track   = null;
+let   members = [];
+
+/* ════════════════════════════
+   NAVIGATION
+════════════════════════════ */
+function next() {
+  if (!validate(step)) return;
+  if (step === STEPS - 2) buildReview();
+  goTo(step + 1);
+}
+function back() { goTo(step - 1); }
+
+function goTo(n) {
+  document.getElementById('pane-' + step).style.display = 'none';
+  step = n;
+  const p = document.getElementById('pane-' + step);
+  p.style.display = 'block';
+  p.style.animation = 'none'; p.offsetHeight; p.style.animation = '';
+  updateStepper();
+  updateProgress();
+  window.scrollTo({ top: document.getElementById('formCard').offsetTop - 16, behavior: 'smooth' });
+}
+
+function updateStepper() {
+  for (let i = 0; i < STEPS; i++) {
+    const el = document.getElementById('si-' + i);
+    el.className = 'step-item' + (i < step ? ' done' : i === step ? ' active' : '');
+    el.querySelector('.step-circle').textContent = i < step ? '✓' : String(i + 1);
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round((step / (STEPS - 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent  = pct + '%';
+}
+
+/* ════════════════════════════
+   TRACK SELECTION
+════════════════════════════ */
+function selectTrack(t) {
+  track = t;
+  document.getElementById('ts-ai').className  = 'track-sel-card' + (t === 'ai'  ? ' sel-ai'  : '');
+  document.getElementById('ts-inn').className = 'track-sel-card' + (t === 'inn' ? ' sel-inn' : '');
+  hideErr('err-track');
+}
+
+/* ════════════════════════════
+   VALIDATION
+════════════════════════════ */
+function validate(s) {
+  let ok = true;
+  if (s === 0) {
+    if (!track) { showErr('err-track'); return false; }
+    /* reveal track-specific blocks on step 0 pass */
+    setVis('ai-block',  track === 'ai');
+    setVis('inn-block', track === 'inn');
+    updateMemberNote();
+    return true;
+  }
+  if (s === 1) {
+    ok = req('f-teamName','err-teamName') & ok;
+    ok = req('f-leadName','err-leadName') & ok;
+    ok = reqEmail('f-leadEmail','err-leadEmail') & ok;
+    return !!ok;
+  }
+  if (s === 2) {
+    ok = req('f-title','err-title') & ok;
+    ok = reqWords('f-abstract','err-abstract', 10, 50) & ok;
+    if (track === 'ai') {
+      ok = reqSel('f-aiCat','err-aiCat')       & ok;
+      ok = req('f-repo','err-repo')             & ok;
+      ok = req('f-arch','err-arch')             & ok;
+      ok = req('f-datasets','err-datasets')     & ok;
+    } else {
+      ok = reqSel('f-domain','err-domain')      & ok;
+      ok = req('f-users','err-users')           & ok;
+      ok = req('f-novelty','err-novelty')       & ok;
+      ok = req('f-scale','err-scale')           & ok;
+    }
+    return !!ok;
+  }
+  if (s === 3) {
+    const r = document.getElementById('ck-rules').checked;
+    const t = document.getElementById('ck-truth').checked;
+    if (!r || !t) { showErr('err-agree'); return false; }
+    hideErr('err-agree'); return true;
+  }
+  return true;
+}
+
+function req(id, eid) {
+  const el = document.getElementById(id); if (!el) return true;
+  if (!el.value.trim()) { el.classList.add('err'); showErr(eid); return false; }
+  el.classList.remove('err'); hideErr(eid); return true;
+}
+function reqEmail(id, eid) {
+  const el = document.getElementById(id); if (!el) return true;
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+  if (!ok) { el.classList.add('err'); showErr(eid); return false; }
+  el.classList.remove('err'); hideErr(eid); return true;
+}
+function reqSel(id, eid) {
+  const el = document.getElementById(id); if (!el) return true;
+  if (!el.value) { el.classList.add('err'); showErr(eid); return false; }
+  el.classList.remove('err'); hideErr(eid); return true;
+}
+function reqWords(id, eid, min, max) {
+  const el = document.getElementById(id); if (!el) return true;
+  const wc = wordCount(el.value);
+  if (wc < min || wc > max) { el.classList.add('err'); showErr(eid); return false; }
+  el.classList.remove('err'); hideErr(eid); return true;
+}
+function clearErr(el) {
+  el.classList.remove('err');
+  const eid = 'err-' + el.id.replace('f-','');
+  const e = document.getElementById(eid);
+  if (e) e.classList.remove('show');
+}
+function showErr(id) { const e = document.getElementById(id); if (e) e.classList.add('show'); }
+function hideErr(id) { const e = document.getElementById(id); if (e) e.classList.remove('show'); }
+
+/* ════════════════════════════
+   TEAM MEMBERS
+════════════════════════════ */
+function updateMemberNote() {
+  const max = track === 'ai' ? 4 : 7;
+  document.getElementById('memberNote').textContent =
+    `Up to ${max} additional (${track === 'ai' ? 5 : 8} total incl. lead)`;
+}
+function renderMembers() {
+  const max = track === 'ai' ? 4 : 7;
+  document.getElementById('memberList').innerHTML = members.map((m, i) => `
+    <div class="member-row">
+      <div class="member-num">Member ${i + 2}</div>
+      <div class="field"><label class="flabel">Full Name</label>
+        <input class="finput" value="${esc(m.name)}" placeholder="Full name" oninput="members[${i}].name=this.value;saveDraft()" /></div>
+      <div class="field"><label class="flabel">Email</label>
+        <input class="finput" type="email" value="${esc(m.email)}" placeholder="email@example.com" oninput="members[${i}].email=this.value;saveDraft()" /></div>
+      <div class="field"><label class="flabel">Role</label>
+        <input class="finput" value="${esc(m.role)}" placeholder="e.g. ML Engineer" oninput="members[${i}].role=this.value;saveDraft()" /></div>
+      <button class="btn-rem-member" onclick="removeMember(${i})">✕</button>
+    </div>`).join('');
+  document.getElementById('btnAddMem').style.display = members.length >= max ? 'none' : 'inline-flex';
+}
+function addMember()    { const max = track==='ai'?4:7; if(members.length>=max)return; members.push({name:'',email:'',role:''}); renderMembers(); saveDraft(); }
+function removeMember(i){ members.splice(i,1); renderMembers(); saveDraft(); }
+
+/* ════════════════════════════
+   REVIEW BUILDER
+════════════════════════════ */
+function buildReview() {
+  const ai = track === 'ai';
+  const badge = ai
+    ? `<span style="display:inline-flex;align-items:center;gap:5px;background:var(--ai-light);color:var(--ai);padding:4px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">🤖 AI Track</span>`
+    : `<span style="display:inline-flex;align-items:center;gap:5px;background:var(--inn-light);color:var(--inn);padding:4px 12px;border-radius:20px;font-size:.85rem;font-weight:700;">💡 Innovation Track</span>`;
+
+  const memberHtml = members.length
+    ? members.map((m,i)=>`<div class="rev-row"><span class="rev-key">Member ${i+2}</span><span class="rev-val">${esc(m.name)||'—'} · ${esc(m.email)||'—'} · ${esc(m.role)||'—'}</span></div>`).join('')
+    : `<div class="rev-row"><span class="rev-val" style="color:var(--muted);">No additional members</span></div>`;
+
+  const specific = ai ? `
+    <div class="review-block">
+      <div class="rev-title">AI Details <span class="rev-edit" onclick="goTo(2)">Edit</span></div>
+      <div class="rev-grid">
+        <div class="rev-row"><span class="rev-key">Category</span><span class="rev-val">${esc(v('f-aiCat'))}</span></div>
+        <div class="rev-row"><span class="rev-key">Repository</span><span class="rev-val">${esc(v('f-repo'))}</span></div>
+      </div>
+      <div class="rev-row"><span class="rev-key">Architecture</span><span class="rev-val long">${esc(v('f-arch'))}</span></div>
+      <div class="rev-row"><span class="rev-key">Datasets</span><span class="rev-val long">${esc(v('f-datasets'))}</span></div>
+    </div>` : `
+    <div class="review-block">
+      <div class="rev-title">Innovation Details <span class="rev-edit" onclick="goTo(2)">Edit</span></div>
+      <div class="rev-grid">
+        <div class="rev-row"><span class="rev-key">Domain</span><span class="rev-val">${esc(v('f-domain'))}</span></div>
+        <div class="rev-row"><span class="rev-key">Target Users</span><span class="rev-val">${esc(v('f-users'))}</span></div>
+      </div>
+      <div class="rev-row"><span class="rev-key">Novelty</span><span class="rev-val long">${esc(v('f-novelty'))}</span></div>
+      <div class="rev-row"><span class="rev-key">Scalability</span><span class="rev-val long">${esc(v('f-scale'))}</span></div>
+    </div>`;
+
+  document.getElementById('reviewContent').innerHTML = `
+    <div class="review-block">
+      <div class="rev-title">Track <span class="rev-edit" onclick="goTo(0)">Change</span></div>
+      ${badge}
+    </div>
+    <div class="review-block">
+      <div class="rev-title">Team <span class="rev-edit" onclick="goTo(1)">Edit</span></div>
+      <div class="rev-grid">
+        <div class="rev-row"><span class="rev-key">Team Name</span><span class="rev-val">${esc(v('f-teamName'))}</span></div>
+        <div class="rev-row"><span class="rev-key">Organisation</span><span class="rev-val">${esc(v('f-org'))||'—'}</span></div>
+        <div class="rev-row"><span class="rev-key">Lead</span><span class="rev-val">${esc(v('f-leadName'))}</span></div>
+        <div class="rev-row"><span class="rev-key">Email</span><span class="rev-val">${esc(v('f-leadEmail'))}</span></div>
+      </div>
+      ${memberHtml}
+    </div>
+    <div class="review-block">
+      <div class="rev-title">Project <span class="rev-edit" onclick="goTo(2)">Edit</span></div>
+      <div class="rev-row"><span class="rev-key">Title</span><span class="rev-val">${esc(v('f-title'))}</span></div>
+      <div class="rev-row"><span class="rev-key">Abstract</span><span class="rev-val long">${esc(v('f-abstract'))}</span></div>
+    </div>
+    ${specific}`;
+}
+
+/* ════════════════════════════
+   SUBMIT
+════════════════════════════ */
+function submitForm() {
+  if (!validate(3)) return;
+  const id  = 'SUB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+  const now = new Date().toLocaleString('en-GB', { dateStyle:'long', timeStyle:'short' });
+  localStorage.removeItem('psw_submit_draft');
+
+  document.getElementById('sucId').textContent = id;
+  document.getElementById('sucDetails').innerHTML = `
+    <div class="sd-row"><span class="sd-key">Track</span><span class="sd-val">${track==='ai'?'🤖 AI Track':'💡 Innovation Track'}</span></div>
+    <div class="sd-row"><span class="sd-key">Team</span><span class="sd-val">${esc(v('f-teamName'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Project</span><span class="sd-val">${esc(v('f-title'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Lead</span><span class="sd-val">${esc(v('f-leadEmail'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Submitted</span><span class="sd-val">${now}</span></div>`;
+
+  document.getElementById('formCard').style.display = 'none';
+  const sc = document.getElementById('successScreen');
+  sc.classList.add('show'); sc.scrollIntoView({ behavior:'smooth', block:'center' });
+
+  // Fire mailto to admin
+  const body = encodeURIComponent(
+    `New Submission — ${id}\n\nTrack: ${track==='ai'?'AI':'Innovation'}\nTeam: ${v('f-teamName')}\nProject: ${v('f-title')}\nLead: ${v('f-leadName')} <${v('f-leadEmail')}>\nSubmitted: ${now}`
+  );
+  window.location.href = `mailto:amir.kadar@gmail.com?subject=New Submission: ${encodeURIComponent(v('f-title'))}&body=${body}`;
+}
+
+function resetForm() {
+  step = 0; track = null; members = [];
+  document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('formCard').style.display = 'block';
+  document.querySelectorAll('.finput,.fselect,.ftextarea').forEach(e => e.value = '');
+  document.querySelectorAll('input[type=checkbox]').forEach(e => e.checked = false);
+  document.querySelectorAll('.check-item').forEach(e => e.classList.remove('checked'));
+  document.querySelectorAll('.ferr').forEach(e => e.classList.remove('show'));
+  document.getElementById('memberList').innerHTML = '';
+  document.getElementById('ts-ai').className  = 'track-sel-card';
+  document.getElementById('ts-inn').className = 'track-sel-card';
+  document.querySelectorAll('.pane').forEach((p,i) => p.style.display = i===0?'block':'none');
+  updateStepper(); updateProgress();
+}
+
+/* ════════════════════════════
+   AUTOSAVE (localStorage)
+════════════════════════════ */
+const LS = 'psw_submit_draft';
+const FIELDS = ['f-teamName','f-org','f-leadName','f-leadEmail','f-leadPhone',
+  'f-title','f-abstract','f-aiCat','f-repo','f-arch','f-datasets',
+  'f-domain','f-users','f-novelty','f-scale'];
+
+function saveDraft() {
+  const d = {}; FIELDS.forEach(id => { const e=document.getElementById(id); if(e) d[id]=e.value; });
+  d._track = track; d._members = members;
+  localStorage.setItem(LS, JSON.stringify(d));
+}
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(LS); if (!raw) return;
+    const d = JSON.parse(raw);
+    FIELDS.forEach(id => { const e=document.getElementById(id); if(e&&d[id]!==undefined) e.value=d[id]; });
+    if (d._track) { track=d._track; selectTrack(track); setVis('ai-block',track==='ai'); setVis('inn-block',track==='inn'); updateMemberNote(); }
+    if (Array.isArray(d._members) && d._members.length) { members=d._members; renderMembers(); }
+    updateCount('f-title','cnt-title',120);
+    updateWordCount('f-abstract','cnt-abstract',10,50);
+  } catch(e){}
+}
+document.addEventListener('DOMContentLoaded', () => {
+  FIELDS.forEach(id => { const e=document.getElementById(id); if(e) e.addEventListener('input', saveDraft); });
+  loadDraft(); updateProgress();
+});
+
+/* ════════════════════════════
+   UTILITIES
+════════════════════════════ */
+function wordCount(s) { return s.trim() ? s.trim().split(/\s+/).length : 0; }
+
+function updateCount(fid, cid, max) {
+  const e=document.getElementById(fid), c=document.getElementById(cid); if(!e||!c) return;
+  const n=e.value.length;
+  c.textContent=`${n} / ${max}`;
+  c.className='fcount'+(n>max?' over':n>max*.85?' warn':'');
+}
+function updateWordCount(fid, cid, min, max) {
+  const e=document.getElementById(fid), c=document.getElementById(cid); if(!e||!c) return;
+  const wc=wordCount(e.value);
+  c.textContent=`${wc} word${wc!==1?'s':''}`;
+  c.className='fcount'+(wc>max?' over':wc>=min?'':' warn');
+}
+
+/* Sanitize for HTML output */
+function esc(s) {
+  return String(s||'').trim()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+}
+/* Get field value (raw, trimmed) */
+function v(id) { const e=document.getElementById(id); return e?e.value.trim():''; }
+
+function setVis(id, show) { const e=document.getElementById(id); if(e) e.style.display=show?'block':'none'; }
+function toggleCheck(lbl) { const cb=lbl.querySelector('input'); setTimeout(()=>lbl.classList.toggle('checked',cb.checked),0); }
+</script>
+</body>
+</html>
