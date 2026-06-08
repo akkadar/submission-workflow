@@ -1244,6 +1244,7 @@
         All Project Submissions
         <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
           <span id="subStatus" style="font-size:.74rem;color:var(--muted);"></span>
+          <button class="sub-refresh" onclick="exportSubmissionsHtml()" title="Download a standalone HTML report of all submissions">⬇ Export</button>
           <button class="sub-refresh" onclick="renderSubmissions()">↻ Refresh</button>
         </div>
       </div>
@@ -1269,14 +1270,14 @@
             <span>🤖 AI Track</span>
             <span class="track-count" id="aiCountBadge">0</span>
           </div>
-          <div id="aiCards"><div class="sub-empty"><div class="empty-icon">⏳</div><p>Loading…</p></div></div>
+          <div id="aiCards"></div>
         </div>
         <div class="sub-track-col">
           <div class="sub-track-head inn">
             <span>💡 Innovation Track</span>
             <span class="track-count" id="innCountBadge">0</span>
           </div>
-          <div id="innCards"><div class="sub-empty"><div class="empty-icon">⏳</div><p>Loading…</p></div></div>
+          <div id="innCards"></div>
         </div>
       </div>
     </div>
@@ -1964,11 +1965,10 @@ const modals = {
 
 /* ════════════════════════════════════
    SUBMISSIONS DASHBOARD
-   Source of truth: submissions.json in the GitHub repo (public URL)
-   Fallback: localStorage for same-browser offline viewing
+   Source of truth: localStorage (psw_submissions)
+   Auto-updates via storage events + window focus
 ════════════════════════════════════ */
-const SUB_KEY  = 'psw_submissions';
-const SUBS_URL = 'https://akkadar.github.io/submission-workflow/submissions.json';
+const SUB_KEY = 'psw_submissions';
 let   _allSubs = [];
 
 function setSubStatus(msg) {
@@ -1976,21 +1976,111 @@ function setSubStatus(msg) {
   if (el) el.textContent = msg;
 }
 
-/* ── Fetch from the public JSON file (no auth needed) ── */
-async function renderSubmissions() {
-  setSubStatus('⏳ Loading…');
-  try {
-    const res = await fetch(SUBS_URL + '?_=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    _allSubs = await res.json();
-    if (!Array.isArray(_allSubs)) _allSubs = [];
-    setSubStatus('✅ Live · ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}));
-  } catch {
-    // Fallback to localStorage if GitHub Pages is unreachable
-    try { _allSubs = JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); } catch { _allSubs = []; }
-    setSubStatus('⚠️ Offline — showing local cache');
-  }
+/* ── Load from localStorage ── */
+function renderSubmissions() {
+  try { _allSubs = JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); }
+  catch { _allSubs = []; }
+  setSubStatus(_allSubs.length
+    ? '🟢 ' + _allSubs.length + ' submission' + (_allSubs.length > 1 ? 's' : '')
+    : '');
   applyFilter();
+}
+
+/* ── Auto-refresh on focus and cross-tab storage change ── */
+window.addEventListener('focus', () => {
+  if (document.getElementById('sec-submissions')?.classList.contains('active'))
+    renderSubmissions();
+});
+window.addEventListener('storage', e => {
+  if (e.key === SUB_KEY &&
+      document.getElementById('sec-submissions')?.classList.contains('active')) {
+    renderSubmissions();
+    showToast('🔔 New submission!');
+  }
+});
+
+/* ── Export all submissions as a standalone HTML file ── */
+function exportSubmissionsHtml() {
+  const all = _allSubs;
+  if (!all.length) { showToast('ℹ️ No submissions to export yet.'); return; }
+
+  const now  = new Date().toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short' });
+  const rows = all.map(s => {
+    const ai   = s.track === 'ai';
+    const cols = ai
+      ? `<td>${esc(s.aiCat||'—')}</td><td><a href="${esc(s.repo||'')}">${esc(s.repo||'—')}</a></td><td>—</td><td>—</td>`
+      : `<td>—</td><td>—</td><td>${esc(s.domain||'—')}</td><td>${esc(s.users||'—')}</td>`;
+    const members = Array.isArray(s.members) && s.members.length
+      ? s.members.map(m => esc(m.name||'')).filter(Boolean).join(', ')
+      : '—';
+    return `<tr>
+      <td style="font-family:monospace;font-size:.8rem;">${esc(s.id)}</td>
+      <td>${esc(s.now)}</td>
+      <td><span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78rem;font-weight:700;
+          background:${ai?'#E8F0FE':'#E6F4EA'};color:${ai?'#1A73E8':'#0F9D58'};">${ai?'🤖 AI':'💡 Innovation'}</span></td>
+      <td><strong>${esc(s.teamName)}</strong>${s.org?'<br><small style="color:#888">'+esc(s.org)+'</small>':''}</td>
+      <td>${esc(s.leadName)}<br><a href="mailto:${esc(s.leadEmail)}" style="color:#1A73E8;font-size:.85rem;">${esc(s.leadEmail)}</a></td>
+      <td style="font-size:.82rem;">${members}</td>
+      <td><strong>${esc(s.title)}</strong><br><span style="font-size:.8rem;color:#666;">${esc((s.abstract||'').slice(0,100))}${(s.abstract||'').length>100?'…':''}</span></td>
+      ${cols}
+    </tr>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>All Submissions — Project Submission Workflow</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#333;padding:24px 16px 60px}
+.page{max-width:1200px;margin:0 auto}
+h1{font-size:1.3rem;font-weight:700;color:#1A1A2E;margin-bottom:4px}
+.meta{font-size:.82rem;color:#666;margin-bottom:20px}
+.stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.stat{background:#fff;border-radius:10px;padding:12px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08);text-align:center;min-width:90px}
+.stat .n{font-size:1.8rem;font-weight:800}
+.stat .n.tot{background:linear-gradient(135deg,#1A73E8,#0F9D58);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat .n.ai{color:#1A73E8}.stat .n.inn{color:#0F9D58}
+.stat .l{font-size:.72rem;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+th{background:#1A1A2E;color:#fff;padding:10px 12px;text-align:left;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #EEE;vertical-align:top;font-size:.85rem;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F9FAFB}
+@media print{body{background:#fff;padding:0}.stat{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head><body>
+<div class="page">
+  <h1>📋 Project Submission Report</h1>
+  <div class="meta">Generated ${now} · ${all.length} submission${all.length>1?'s':''}</div>
+  <div class="stats">
+    <div class="stat"><div class="n tot">${all.length}</div><div class="l">Total</div></div>
+    <div class="stat"><div class="n ai">${all.filter(s=>s.track==='ai').length}</div><div class="l">🤖 AI</div></div>
+    <div class="stat"><div class="n inn">${all.filter(s=>s.track==='inn').length}</div><div class="l">💡 Innovation</div></div>
+  </div>
+  <div class="wrap">
+    <table>
+      <thead><tr>
+        <th>ID</th><th>Submitted</th><th>Track</th><th>Team</th><th>Lead</th>
+        <th>Members</th><th>Project</th><th>AI Category</th><th>Repo</th>
+        <th>Domain</th><th>Target Users</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+</div>
+</body></html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `submissions-${new Date().toISOString().slice(0,10)}.html`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  showToast(`⬇ Exported ${all.length} submission(s) as HTML`);
 }
 
 /* ── Filter & render cards ── */
@@ -2101,7 +2191,7 @@ function showSection(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (id === 'submissions') renderSubmissions();
+  if (id === 'submissions') renderSubmissions(); // reads localStorage directly
 }
 
 function openModal(key) {
