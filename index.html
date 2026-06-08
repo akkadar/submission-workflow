@@ -2199,6 +2199,48 @@ function subEmptyState(track, query) {
 
 /* (focus + storage listeners already registered above) */
 
+/* ── Auto-poll every 15 s — always in sync ── */
+(function startAutoSync() {
+  const POLL_MS = 15000;
+  let _lastCount = -1;
+
+  async function poll() {
+    // Only fetch when the submissions tab is visible
+    if (!document.getElementById('sec-submissions')?.classList.contains('active')) return;
+    try {
+      const url = 'https://raw.githubusercontent.com/akkadar/submission-workflow/main/submissions.json?t=' + Date.now();
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return;
+      const remote = await res.json();
+
+      // Merge with localStorage
+      let local = [];
+      try { local = JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); } catch {}
+      const merged = [...remote];
+      for (const s of local) {
+        if (!merged.find(r => r.id === s.id)) merged.push(s);
+      }
+      merged.sort((a, b) => {
+        const tA = parseInt((a.id||'').split('-')[1]||'0', 36);
+        const tB = parseInt((b.id||'').split('-')[1]||'0', 36);
+        return tB - tA;
+      });
+
+      // Only re-render if something changed
+      if (merged.length !== _lastCount) {
+        if (_lastCount !== -1 && merged.length > _lastCount)
+          showToast('🔔 ' + (merged.length - _lastCount) + ' new submission!');
+        _lastCount = merged.length;
+        _allSubs = merged;
+        setSubStatus('🟢 ' + merged.length + ' submission' + (merged.length !== 1 ? 's' : ''));
+        applyFilter();
+      }
+    } catch {}
+  }
+
+  setInterval(poll, POLL_MS);
+})();
+
 /* ──────────────────────── */
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
