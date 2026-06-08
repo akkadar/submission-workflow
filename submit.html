@@ -827,6 +827,21 @@ function submitForm() {
 
   const id  = 'SUB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
   const now = new Date().toLocaleString('en-GB', { dateStyle:'long', timeStyle:'short' });
+
+  // ── Persist to shared submissions log ──
+  const subRecord = {
+    id, now, track,
+    teamName: v('f-teamName'), org: v('f-org'),
+    leadName: v('f-leadName'), leadEmail: v('f-leadEmail'), leadPhone: v('f-leadPhone'),
+    members: JSON.parse(JSON.stringify(members)),
+    title: v('f-title'), abstract: v('f-abstract'),
+    aiCat: v('f-aiCat'), repo: v('f-repo'), arch: v('f-arch'), datasets: v('f-datasets'),
+    domain: v('f-domain'), users: v('f-users'), novelty: v('f-novelty'), scale: v('f-scale'),
+  };
+  const allSubs = JSON.parse(localStorage.getItem('psw_submissions') || '[]');
+  allSubs.push(subRecord);
+  localStorage.setItem('psw_submissions', JSON.stringify(allSubs));
+
   localStorage.removeItem('psw_submit_draft');
 
   // ── Success card ──
