@@ -324,8 +324,13 @@ body {
     <p style="color:var(--muted);font-size:.88rem;margin-bottom:4px;">Your project has been submitted. Keep your ID safe.</p>
     <div class="suc-id" id="sucId">–</div>
     <div class="success-det" id="sucDetails"></div>
-    <p style="font-size:.81rem;color:var(--muted);margin-bottom:14px;">A confirmation will be sent to your team lead within 24 hours.</p>
-    <button class="btn btn-new" onclick="resetForm()">Submit Another Project</button>
+    <p style="font-size:.81rem;color:var(--muted);margin-bottom:16px;">A confirmation will be sent to your team lead within 24 hours.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" id="btnDownload"
+        style="background:linear-gradient(135deg,#1A73E8,#4285F4);color:#fff;padding:10px 22px;"
+        onclick="downloadReceipt()">⬇️ Download Receipt</button>
+      <button class="btn btn-new" onclick="resetForm()">Submit Another Project</button>
+    </div>
   </div>
 
   <!-- FORM CARD -->
@@ -815,29 +820,240 @@ function buildReview() {
 /* ════════════════════════════
    SUBMIT
 ════════════════════════════ */
+let lastReceipt = { id:'', now:'', html:'' }; // store for re-download
+
 function submitForm() {
   if (!validate(3)) return;
+
   const id  = 'SUB-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
   const now = new Date().toLocaleString('en-GB', { dateStyle:'long', timeStyle:'short' });
   localStorage.removeItem('psw_submit_draft');
 
+  // ── Success card ──
   document.getElementById('sucId').textContent = id;
   document.getElementById('sucDetails').innerHTML = `
-    <div class="sd-row"><span class="sd-key">Track</span><span class="sd-val">${track==='ai'?'🤖 AI Track':'💡 Innovation Track'}</span></div>
-    <div class="sd-row"><span class="sd-key">Team</span><span class="sd-val">${esc(v('f-teamName'))}</span></div>
-    <div class="sd-row"><span class="sd-key">Project</span><span class="sd-val">${esc(v('f-title'))}</span></div>
-    <div class="sd-row"><span class="sd-key">Lead</span><span class="sd-val">${esc(v('f-leadEmail'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Track</span>   <span class="sd-val">${track==='ai'?'🤖 AI Track':'💡 Innovation Track'}</span></div>
+    <div class="sd-row"><span class="sd-key">Team</span>    <span class="sd-val">${esc(v('f-teamName'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Project</span> <span class="sd-val">${esc(v('f-title'))}</span></div>
+    <div class="sd-row"><span class="sd-key">Lead</span>    <span class="sd-val">${esc(v('f-leadEmail'))}</span></div>
     <div class="sd-row"><span class="sd-key">Submitted</span><span class="sd-val">${now}</span></div>`;
 
+  // ── Generate & auto-download receipt ──
+  const receiptHtml = buildReceiptHtml(id, now);
+  lastReceipt = { id, now, html: receiptHtml };
+  triggerDownload(receiptHtml, `${id}-receipt.html`);
+
+  // ── Show success screen ──
   document.getElementById('formCard').style.display = 'none';
   const sc = document.getElementById('successScreen');
-  sc.classList.add('show'); sc.scrollIntoView({ behavior:'smooth', block:'center' });
+  sc.classList.add('show');
+  sc.scrollIntoView({ behavior:'smooth', block:'center' });
 
-  // Fire mailto to admin
-  const body = encodeURIComponent(
-    `New Submission — ${id}\n\nTrack: ${track==='ai'?'AI':'Innovation'}\nTeam: ${v('f-teamName')}\nProject: ${v('f-title')}\nLead: ${v('f-leadName')} <${v('f-leadEmail')}>\nSubmitted: ${now}`
-  );
-  window.location.href = `mailto:amir.kadar@gmail.com?subject=New Submission: ${encodeURIComponent(v('f-title'))}&body=${body}`;
+  // ── Mailto admin (with full details in body) ──
+  const ai = track === 'ai';
+  const emailBody = [
+    `New Project Submission`,
+    `Submission ID : ${id}`,
+    `Submitted     : ${now}`,
+    ``,
+    `── TRACK ──`,
+    `Track         : ${ai ? 'AI Track' : 'Innovation Track'}`,
+    ``,
+    `── TEAM ──`,
+    `Team Name     : ${v('f-teamName')}`,
+    `Organisation  : ${v('f-org') || '—'}`,
+    `Lead Name     : ${v('f-leadName')}`,
+    `Lead Email    : ${v('f-leadEmail')}`,
+    `Lead Phone    : ${v('f-leadPhone') || '—'}`,
+    members.length ? members.map((m,i)=>`Member ${i+2}     : ${m.name||'—'} | ${m.email||'—'} | ${m.role||'—'}`).join('\n') : 'Members      : Lead only',
+    ``,
+    `── PROJECT ──`,
+    `Title         : ${v('f-title')}`,
+    `Abstract      : ${v('f-abstract')}`,
+    ``,
+    ai ? [
+      `── AI DETAILS ──`,
+      `Category      : ${v('f-aiCat')}`,
+      `Repository    : ${v('f-repo')}`,
+      `Architecture  : ${v('f-arch')}`,
+      `Datasets      : ${v('f-datasets')}`,
+    ].join('\n') : [
+      `── INNOVATION DETAILS ──`,
+      `Domain        : ${v('f-domain')}`,
+      `Target Users  : ${v('f-users')}`,
+      `Novelty       : ${v('f-novelty')}`,
+      `Scalability   : ${v('f-scale')}`,
+    ].join('\n'),
+    ``,
+    `── NOTE ──`,
+    `A full styled receipt has been downloaded by the applicant as ${id}-receipt.html`,
+  ].join('\n');
+
+  setTimeout(() => {
+    window.location.href =
+      `mailto:amir.kadar@gmail.com` +
+      `?subject=${encodeURIComponent('New Submission: ' + v('f-title') + ' [' + id + ']')}` +
+      `&body=${encodeURIComponent(emailBody)}`;
+  }, 800); // slight delay so download fires first
+}
+
+/* ── Re-download from success screen button ── */
+function downloadReceipt() {
+  if (lastReceipt.html) triggerDownload(lastReceipt.html, `${lastReceipt.id}-receipt.html`);
+}
+
+/* ── File download helper ── */
+function triggerDownload(content, filename) {
+  const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+/* ════════════════════════════
+   RECEIPT HTML GENERATOR
+════════════════════════════ */
+function buildReceiptHtml(id, now) {
+  const ai = track === 'ai';
+  const trackColor = ai ? '#1A73E8' : '#0F9D58';
+  const trackLabel = ai ? '🤖 AI Track' : '💡 Innovation Track';
+
+  const memberRows = members.length
+    ? members.map((m, i) => `
+        <tr>
+          <td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;white-space:nowrap;">Member ${i+2}</td>
+          <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;">
+            <strong>${esc(m.name)||'—'}</strong>
+            ${m.email ? `<br><span style="color:#666;font-size:.85rem;">${esc(m.email)}</span>` : ''}
+            ${m.role  ? `<span style="margin-left:8px;background:#F0F2F5;padding:2px 8px;border-radius:10px;font-size:.78rem;color:#555;">${esc(m.role)}</span>` : ''}
+          </td>
+        </tr>`).join('')
+    : `<tr><td colspan="2" style="color:#999;padding:7px 0;font-style:italic;">No additional members</td></tr>`;
+
+  const specificSection = ai ? `
+    <div style="margin-bottom:28px;">
+      <h3 style="font-size:1rem;font-weight:700;color:#1A73E8;margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid #E8F0FE;">🤖 AI Track Details</h3>
+      <table style="width:100%;border-collapse:collapse;">
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;width:140px;">AI Category</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;font-weight:600;">${esc(v('f-aiCat'))}</td></tr>
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;">Repository</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;"><a href="${esc(v('f-repo'))}" style="color:#1A73E8;">${esc(v('f-repo'))}</a></td></tr>
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;vertical-align:top;">Architecture</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;line-height:1.6;">${esc(v('f-arch'))}</td></tr>
+        <tr><td style="color:#666;padding:7px 0;vertical-align:top;">Datasets</td>
+            <td style="padding:7px 0 7px 16px;line-height:1.6;">${esc(v('f-datasets'))}</td></tr>
+      </table>
+    </div>` : `
+    <div style="margin-bottom:28px;">
+      <h3 style="font-size:1rem;font-weight:700;color:#0F9D58;margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid #E6F4EA;">💡 Innovation Track Details</h3>
+      <table style="width:100%;border-collapse:collapse;">
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;width:140px;">Domain</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;font-weight:600;">${esc(v('f-domain'))}</td></tr>
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;">Target Users</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;">${esc(v('f-users'))}</td></tr>
+        <tr><td style="color:#666;padding:7px 0;border-bottom:1px solid #eee;vertical-align:top;">Novelty</td>
+            <td style="padding:7px 0 7px 16px;border-bottom:1px solid #eee;line-height:1.6;">${esc(v('f-novelty'))}</td></tr>
+        <tr><td style="color:#666;padding:7px 0;vertical-align:top;">Scalability</td>
+            <td style="padding:7px 0 7px 16px;line-height:1.6;">${esc(v('f-scale'))}</td></tr>
+      </table>
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Submission Receipt — ${esc(v('f-title'))}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F2F5;color:#333;min-height:100vh;padding:32px 16px 60px;}
+  .page{max-width:700px;margin:0 auto;}
+  .receipt{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.1);}
+  .r-header{background:linear-gradient(135deg,#1A1A2E 0%,#2D2D4E 100%);color:#fff;padding:28px 32px;}
+  .r-header h1{font-size:1.1rem;font-weight:700;letter-spacing:.3px;margin-bottom:4px;}
+  .r-header .sub-id{font-family:monospace;font-size:1.05rem;background:rgba(255,255,255,.12);padding:5px 14px;border-radius:8px;display:inline-block;letter-spacing:1.5px;margin-top:8px;}
+  .r-header .meta{font-size:.8rem;color:rgba(255,255,255,.65);margin-top:6px;}
+  .r-body{padding:28px 32px;}
+  .track-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:20px;font-size:.9rem;font-weight:700;margin-bottom:24px;background:${ai?'#E8F0FE':'#E6F4EA'};color:${trackColor};}
+  h3{font-size:1rem;font-weight:700;color:#1A1A2E;margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid #F0F2F5;}
+  section{margin-bottom:28px;}
+  table{width:100%;border-collapse:collapse;}
+  td{vertical-align:top;}
+  .key{color:#666;padding:7px 0;border-bottom:1px solid #eee;width:140px;white-space:nowrap;font-size:.88rem;}
+  .val{padding:7px 0 7px 16px;border-bottom:1px solid #eee;font-size:.9rem;line-height:1.6;}
+  .r-footer{background:#F8F9FA;border-top:1px solid #E0E0E0;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .r-footer p{font-size:.78rem;color:#999;}
+  .print-btn{background:#1A1A2E;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;}
+  @media print{.print-btn,.r-footer button{display:none!important;}body{background:#fff;padding:0;}
+    .receipt{box-shadow:none;border-radius:0;}.page{max-width:100%;}}
+  @media(max-width:520px){.r-header,.r-body,.r-footer{padding:20px 18px;}.key{width:110px;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="receipt">
+
+    <!-- Header -->
+    <div class="r-header">
+      <h1>📋 Project Submission Receipt</h1>
+      <div class="sub-id">${id}</div>
+      <div class="meta">Submitted on ${now} · Project Submission Workflow</div>
+    </div>
+
+    <div class="r-body">
+      <div class="track-badge">${trackLabel}</div>
+
+      <!-- Team -->
+      <section>
+        <h3>👥 Team Information</h3>
+        <table>
+          <tr><td class="key">Team Name</td>   <td class="val"><strong>${esc(v('f-teamName'))}</strong></td></tr>
+          <tr><td class="key">Organisation</td><td class="val">${esc(v('f-org'))||'—'}</td></tr>
+          <tr><td class="key">Team Lead</td>   <td class="val"><strong>${esc(v('f-leadName'))}</strong></td></tr>
+          <tr><td class="key">Lead Email</td>  <td class="val"><a href="mailto:${esc(v('f-leadEmail'))}" style="color:#1A73E8;">${esc(v('f-leadEmail'))}</a></td></tr>
+          ${v('f-leadPhone') ? `<tr><td class="key">Lead Phone</td><td class="val">${esc(v('f-leadPhone'))}</td></tr>` : ''}
+          ${memberRows}
+        </table>
+      </section>
+
+      <!-- Project -->
+      <section>
+        <h3>🎯 Project Overview</h3>
+        <table>
+          <tr><td class="key">Title</td>   <td class="val"><strong>${esc(v('f-title'))}</strong></td></tr>
+          <tr><td class="key">Abstract</td><td class="val">${esc(v('f-abstract'))}</td></tr>
+        </table>
+      </section>
+
+      <!-- Track-specific -->
+      ${specificSection}
+
+      <!-- Declarations -->
+      <section>
+        <h3>✅ Declarations Confirmed</h3>
+        <table>
+          <tr><td class="val" style="padding:5px 0;border-bottom:1px solid #eee;">☑ Submission rules have been read and will be followed</td></tr>
+          <tr><td class="val" style="padding:5px 0;">☑ All information provided is accurate and truthful</td></tr>
+        </table>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="r-footer">
+      <div>
+        <p>Submission ID: <strong style="font-family:monospace;color:#333;">${id}</strong></p>
+        <p style="margin-top:3px;">This receipt is your official confirmation. Keep it for your records.</p>
+      </div>
+      <button class="print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>`;
 }
 
 function resetForm() {
