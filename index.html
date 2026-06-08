@@ -717,6 +717,90 @@
     white-space: nowrap; min-width: 36px; text-align: right;
   }
 
+  /* ── Submissions Tab ── */
+  .sub-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+  .sub-search {
+    flex:1; min-width:180px; padding:8px 14px; border:1.5px solid var(--border);
+    border-radius:20px; font-size:.88rem; font-family:inherit; color:var(--dark);
+    background:var(--white); transition:border-color .2s, box-shadow .2s;
+  }
+  .sub-search:focus { outline:none; border-color:var(--ai); box-shadow:0 0 0 3px rgba(26,115,232,.1); }
+  .sub-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .sub-stat {
+    background:var(--white); border-radius:12px; padding:16px 12px;
+    text-align:center; box-shadow:var(--shadow); border:1px solid var(--border);
+  }
+  .sub-stat .stat-num { font-size:2rem; font-weight:800; line-height:1.1; }
+  .sub-stat .stat-num.ai  { color:var(--ai); }
+  .sub-stat .stat-num.inn { color:var(--inn); }
+  .sub-stat .stat-num.tot { background:linear-gradient(135deg,var(--ai),var(--inn)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .sub-stat .stat-label { font-size:.74rem; color:var(--muted); font-weight:600; margin-top:3px; text-transform:uppercase; letter-spacing:.4px; }
+  .sub-tracks { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .sub-track-col { display:flex; flex-direction:column; gap:10px; }
+  .sub-track-head {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; border-radius:10px; color:#fff;
+    font-weight:700; font-size:.88rem;
+  }
+  .sub-track-head.ai  { background:linear-gradient(135deg,var(--ai),var(--ai-mid)); }
+  .sub-track-head.inn { background:linear-gradient(135deg,var(--inn),var(--inn-mid)); }
+  .sub-track-head .track-count {
+    background:rgba(255,255,255,.22); padding:2px 10px;
+    border-radius:20px; font-size:.8rem;
+  }
+  .sub-card {
+    background:var(--white); border-radius:10px; padding:14px 16px;
+    box-shadow:var(--shadow); border-left:4px solid transparent;
+    cursor:pointer; transition:var(--transition);
+  }
+  .sub-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-1px); }
+  .sub-card.ai  { border-left-color:var(--ai); }
+  .sub-card.inn { border-left-color:var(--inn); }
+  .sub-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px; }
+  .sub-card-id  { font-family:monospace; font-size:.74rem; color:var(--muted); background:var(--grey); padding:2px 8px; border-radius:6px; white-space:nowrap; }
+  .sub-card-date { font-size:.72rem; color:var(--muted); white-space:nowrap; }
+  .sub-card-title { font-weight:700; font-size:.9rem; color:var(--dark); margin-bottom:4px; }
+  .sub-card-team  { font-size:.8rem; color:var(--muted); display:flex; align-items:center; gap:5px; }
+  .sub-card-details {
+    display:none; margin-top:12px; padding-top:12px;
+    border-top:1px solid var(--border);
+  }
+  .sub-card.open .sub-card-details { display:block; }
+  .sub-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; }
+  .sub-dk { font-size:.72rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.4px; margin-bottom:1px; }
+  .sub-dv { font-size:.82rem; color:var(--dark); line-height:1.5; word-break:break-word; margin-bottom:6px; }
+  .sub-abstract { font-size:.82rem; color:var(--text); line-height:1.55; background:var(--grey); border-radius:6px; padding:8px 10px; margin-top:6px; }
+  .sub-members { margin-top:6px; }
+  .sub-member-chip {
+    display:inline-flex; align-items:center; gap:4px;
+    background:var(--grey); border:1px solid var(--border);
+    border-radius:20px; padding:2px 10px; font-size:.74rem;
+    color:var(--dark); margin:2px;
+  }
+  .sub-empty { text-align:center; padding:40px 20px; color:var(--muted); }
+  .sub-empty .empty-icon { font-size:2.5rem; margin-bottom:10px; }
+  .sub-empty p { font-size:.88rem; }
+  .sub-empty a { color:var(--ai); font-weight:600; }
+  .btn-clear-subs {
+    display:inline-flex; align-items:center; gap:5px;
+    background:#FEF2F2; color:#DC2626; border:1px solid #FECACA;
+    border-radius:7px; padding:6px 12px; font-size:.78rem; font-weight:600;
+    cursor:pointer; transition:var(--transition); white-space:nowrap;
+  }
+  .btn-clear-subs:hover { background:#FEE2E2; }
+  .sub-refresh {
+    display:inline-flex; align-items:center; gap:5px;
+    background:var(--grey); color:var(--muted); border:1px solid var(--border);
+    border-radius:7px; padding:6px 12px; font-size:.78rem; font-weight:600;
+    cursor:pointer; transition:var(--transition); white-space:nowrap;
+  }
+  .sub-refresh:hover { background:var(--border); }
+  @media (max-width:780px) {
+    .sub-tracks { grid-template-columns:1fr; }
+    .sub-stats  { grid-template-columns:1fr 1fr 1fr; }
+    .sub-detail-grid { grid-template-columns:1fr; }
+  }
+
   /* ── Print / PDF ── */
   .print-btn {
     display: inline-flex; align-items: center; gap: 6px;
@@ -810,6 +894,7 @@
     <button class="nav-btn" onclick="showSection('ai', this)">AI Track Rules</button>
     <button class="nav-btn" onclick="showSection('innovation', this)">Innovation Track Rules</button>
     <button class="nav-btn" onclick="showSection('timeline', this)">Timeline</button>
+    <button class="nav-btn" onclick="showSection('submissions', this)" id="navSubmissions">📊 Submissions</button>
     <a class="nav-btn" href="submit.html" style="color:var(--inn);font-weight:700;text-decoration:none;">🚀 Submit Project ↗</a>
   </nav>
 </div>
@@ -1149,6 +1234,59 @@
         <div class="deliv-item"><span class="deliv-icon">🛠️</span><div class="deliv-text"><div class="dt">Portal Technical Support</div><div class="ds">support@organisation.org</div></div></div>
       </div>
     </div>
+  </section>
+
+  <!-- ══ SUBMISSIONS DASHBOARD ══ -->
+  <section class="section" id="sec-submissions">
+
+    <div class="card">
+      <div class="card-title">
+        <span class="icon" style="background:#EDE9FE;">📊</span>
+        All Project Submissions
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="sub-refresh" onclick="renderSubmissions()">↻ Refresh</button>
+          <button class="btn-clear-subs" onclick="clearAllSubmissions()">🗑 Clear All</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="sub-stats" id="subStats">
+        <div class="sub-stat"><div class="stat-num tot" id="statTotal">0</div><div class="stat-label">Total</div></div>
+        <div class="sub-stat"><div class="stat-num ai"  id="statAI">0</div><div class="stat-label">🤖 AI Track</div></div>
+        <div class="sub-stat"><div class="stat-num inn" id="statInn">0</div><div class="stat-label">💡 Innovation</div></div>
+      </div>
+
+      <!-- Search -->
+      <div class="sub-toolbar">
+        <input class="sub-search" id="subSearch" type="text"
+               placeholder="🔍  Search by team, project title, lead…"
+               oninput="renderSubmissions()" />
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="sub-tracks">
+
+        <!-- AI Track column -->
+        <div class="sub-track-col">
+          <div class="sub-track-head ai">
+            <span>🤖 AI Track</span>
+            <span class="track-count" id="aiCountBadge">0</span>
+          </div>
+          <div id="aiCards"></div>
+        </div>
+
+        <!-- Innovation Track column -->
+        <div class="sub-track-col">
+          <div class="sub-track-head inn">
+            <span>💡 Innovation Track</span>
+            <span class="track-count" id="innCountBadge">0</span>
+          </div>
+          <div id="innCards"></div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
   <!-- ══ SUBMIT PROJECT ══ -->
@@ -1831,11 +1969,120 @@ const modals = {
   },
 };
 
+/* ════════════════════════════════════
+   SUBMISSIONS DASHBOARD
+════════════════════════════════════ */
+const SUB_KEY = 'psw_submissions';
+
+function loadSubmissions() {
+  try { return JSON.parse(localStorage.getItem(SUB_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function renderSubmissions() {
+  const all   = loadSubmissions();
+  const query = (document.getElementById('subSearch')?.value || '').toLowerCase().trim();
+
+  const filtered = query
+    ? all.filter(s =>
+        (s.title    || '').toLowerCase().includes(query) ||
+        (s.teamName || '').toLowerCase().includes(query) ||
+        (s.leadName || '').toLowerCase().includes(query) ||
+        (s.leadEmail|| '').toLowerCase().includes(query) ||
+        (s.id       || '').toLowerCase().includes(query) ||
+        (s.org      || '').toLowerCase().includes(query))
+    : all;
+
+  const aiList  = filtered.filter(s => s.track === 'ai');
+  const innList = filtered.filter(s => s.track === 'inn');
+
+  // Stats (always show totals from all, not filtered)
+  document.getElementById('statTotal').textContent = all.length;
+  document.getElementById('statAI').textContent    = all.filter(s=>s.track==='ai').length;
+  document.getElementById('statInn').textContent   = all.filter(s=>s.track==='inn').length;
+  document.getElementById('aiCountBadge').textContent  = aiList.length;
+  document.getElementById('innCountBadge').textContent = innList.length;
+
+  document.getElementById('aiCards').innerHTML  = aiList.length
+    ? aiList.map(s => subCard(s, 'ai')).join('')
+    : subEmptyState('ai', query);
+  document.getElementById('innCards').innerHTML = innList.length
+    ? innList.map(s => subCard(s, 'inn')).join('')
+    : subEmptyState('inn', query);
+}
+
+function subCard(s, track) {
+  const ai     = track === 'ai';
+  const accent = ai ? 'var(--ai)' : 'var(--inn)';
+  const members = Array.isArray(s.members) && s.members.length
+    ? s.members.map(m => `<span class="sub-member-chip">👤 ${esc(m.name||'—')}${m.role?' · '+esc(m.role):''}</span>`).join('')
+    : '';
+
+  const specific = ai ? `
+    <div class="sub-detail-grid" style="margin-top:8px;">
+      <div><div class="sub-dk">AI Category</div><div class="sub-dv">${esc(s.aiCat||'—')}</div></div>
+      <div><div class="sub-dk">Repository</div><div class="sub-dv">${s.repo?`<a href="${esc(s.repo)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--ai);">${esc(s.repo)}</a>`:'—'}</div></div>
+      <div style="grid-column:1/-1;"><div class="sub-dk">Architecture</div><div class="sub-dv">${esc(s.arch||'—')}</div></div>
+      <div style="grid-column:1/-1;"><div class="sub-dk">Datasets</div><div class="sub-dv">${esc(s.datasets||'—')}</div></div>
+    </div>` : `
+    <div class="sub-detail-grid" style="margin-top:8px;">
+      <div><div class="sub-dk">Domain</div><div class="sub-dv">${esc(s.domain||'—')}</div></div>
+      <div><div class="sub-dk">Target Users</div><div class="sub-dv">${esc(s.users||'—')}</div></div>
+      <div style="grid-column:1/-1;"><div class="sub-dk">Novelty</div><div class="sub-dv">${esc(s.novelty||'—')}</div></div>
+      <div style="grid-column:1/-1;"><div class="sub-dk">Scalability</div><div class="sub-dv">${esc(s.scale||'—')}</div></div>
+    </div>`;
+
+  return `
+  <div class="sub-card ${track}" onclick="this.classList.toggle('open')">
+    <div class="sub-card-top">
+      <span class="sub-card-id">${esc(s.id)}</span>
+      <span class="sub-card-date">${esc(s.now)}</span>
+    </div>
+    <div class="sub-card-title">${esc(s.title)}</div>
+    <div class="sub-card-team">
+      <span style="font-weight:600;color:var(--dark);">${esc(s.teamName)}</span>
+      ${s.org ? `<span>·</span><span>${esc(s.org)}</span>` : ''}
+      <span>·</span>
+      <span><a href="mailto:${esc(s.leadEmail)}" onclick="event.stopPropagation()" style="color:${accent};">${esc(s.leadEmail)}</a></span>
+    </div>
+    <div class="sub-card-details">
+      <div class="sub-detail-grid">
+        <div><div class="sub-dk">Team Lead</div><div class="sub-dv">${esc(s.leadName||'—')}${s.leadPhone?' · '+esc(s.leadPhone):''}</div></div>
+        <div><div class="sub-dk">Organisation</div><div class="sub-dv">${esc(s.org||'—')}</div></div>
+      </div>
+      ${members ? `<div class="sub-members" style="margin-top:6px;">${members}</div>` : ''}
+      <div class="sub-dk" style="margin-top:10px;">Abstract</div>
+      <div class="sub-abstract">${esc(s.abstract||'—')}</div>
+      ${specific}
+    </div>
+  </div>`;
+}
+
+function subEmptyState(track, query) {
+  const label = track === 'ai' ? 'AI Track' : 'Innovation Track';
+  return `<div class="sub-empty">
+    <div class="empty-icon">${track==='ai'?'🤖':'💡'}</div>
+    <p>${query ? `No ${label} submissions match your search.` : `No ${label} submissions yet.`}</p>
+    ${!query ? `<p style="margin-top:6px;"><a href="submit.html">Submit the first project →</a></p>` : ''}
+  </div>`;
+}
+
+function clearAllSubmissions() {
+  const all = loadSubmissions();
+  if (!all.length) { showToast('ℹ️ No submissions to clear.'); return; }
+  if (!confirm(`Delete ALL ${all.length} submission(s)? This cannot be undone.`)) return;
+  localStorage.removeItem(SUB_KEY);
+  renderSubmissions();
+  showToast('🗑 All submissions cleared.');
+}
+
+/* ──────────────────────── */
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'submissions') renderSubmissions();
 }
 
 function openModal(key) {
