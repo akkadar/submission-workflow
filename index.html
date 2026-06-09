@@ -717,6 +717,46 @@
     white-space: nowrap; min-width: 36px; text-align: right;
   }
 
+  /* ── Submissions Gate ── */
+  .sub-gate {
+    text-align:center; padding:52px 32px;
+  }
+  .sub-gate-lock {
+    font-size:3rem; margin-bottom:14px;
+    animation:floatLock 3s ease-in-out infinite;
+  }
+  @keyframes floatLock {
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+  }
+  .sub-gate-title { font-size:1.2rem; font-weight:700; color:var(--dark); margin-bottom:6px; }
+  .sub-gate-sub   { font-size:.85rem; color:var(--muted); margin-bottom:26px; }
+  .sub-gate-row {
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    max-width:360px; margin:0 auto 8px;
+  }
+  .sub-gate-input {
+    flex:1; min-width:190px; padding:10px 14px;
+    border:2px solid var(--border); border-radius:10px;
+    font-size:.92rem; font-family:inherit; color:var(--dark);
+    background:var(--white); transition:border-color .2s, box-shadow .2s;
+  }
+  .sub-gate-input:focus { outline:none; border-color:var(--ai); box-shadow:0 0 0 3px rgba(26,115,232,.12); }
+  .sub-gate-input.err   { border-color:#EF4444; box-shadow:0 0 0 3px rgba(239,68,68,.1); animation:gateShake .35s ease; }
+  @keyframes gateShake {
+    0%,100%{transform:translateX(0);}
+    20%,60%{transform:translateX(-6px);}
+    40%,80%{transform:translateX(6px);}
+  }
+  .sub-gate-btn {
+    padding:10px 22px; border:none; border-radius:10px;
+    background:var(--ai); color:#fff; font-size:.92rem; font-weight:700;
+    cursor:pointer; transition:background .2s; white-space:nowrap; font-family:inherit;
+  }
+  .sub-gate-btn:hover { background:var(--ai-mid); }
+  .sub-gate-err  { font-size:.8rem; color:#EF4444; margin-top:5px; min-height:1.2em; }
+  .sub-gate-hint { font-size:.73rem; color:var(--muted); margin-top:16px; }
+
   /* ── Submissions Tab ── */
   .sub-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
   .sub-search {
@@ -1238,7 +1278,25 @@
 
   <!-- ══ SUBMISSIONS DASHBOARD ══ -->
   <section class="section" id="sec-submissions">
-    <div class="card">
+
+    <!-- Password gate (shown until unlocked) -->
+    <div class="card sub-gate" id="subGate">
+      <div class="sub-gate-lock">🔒</div>
+      <div class="sub-gate-title">Admin Access Required</div>
+      <div class="sub-gate-sub">Enter the admin password to view all project submissions.</div>
+      <div class="sub-gate-row">
+        <input class="sub-gate-input" id="subGateInput" type="password"
+               placeholder="Enter password…"
+               onkeydown="if(event.key==='Enter')unlockSubmissions()"
+               oninput="this.classList.remove('err');document.getElementById('subGateErr').textContent=''" />
+        <button class="sub-gate-btn" onclick="unlockSubmissions()">🔓 Unlock</button>
+      </div>
+      <div class="sub-gate-err" id="subGateErr"></div>
+      <div class="sub-gate-hint">Contact your event organiser if you need the password.</div>
+    </div>
+
+    <!-- Dashboard (hidden until unlocked) -->
+    <div class="card" id="subDashboard" style="display:none;">
       <div class="card-title">
         <span class="icon" style="background:#EDE9FE;">📊</span>
         All Project Submissions
@@ -1280,7 +1338,7 @@
           <div id="innCards"></div>
         </div>
       </div>
-    </div>
+    </div><!-- /subDashboard -->
   </section>
 
   <!-- ══ SUBMIT PROJECT ══ -->
@@ -1965,11 +2023,42 @@ const modals = {
 
 /* ════════════════════════════════════
    SUBMISSIONS DASHBOARD
-   Source of truth: localStorage (psw_submissions)
-   Auto-updates via storage events + window focus
+   Password-gated admin view.
+   Source of truth: GitHub + localStorage (merged).
 ════════════════════════════════════ */
 const SUB_KEY = 'psw_submissions';
 let   _allSubs = [];
+
+/* ── Gate logic ── */
+(function initSubGate() {
+  const _p = [35,6,21,95,89,70,118,19,64,65,65]; // XOR of 'Submit@2026'
+  const _k = 'psw2026!';
+  const PWD = _p.map((b,i) => String.fromCharCode(b ^ _k.charCodeAt(i % _k.length))).join('');
+
+  function reveal() {
+    document.getElementById('subGate').style.display      = 'none';
+    document.getElementById('subDashboard').style.display = 'block';
+    renderSubmissions();
+  }
+
+  // Stay unlocked for the browser session
+  if (sessionStorage.getItem('psw_sub_unlocked') === '1') { reveal(); return; }
+
+  window.unlockSubmissions = function() {
+    const inp = document.getElementById('subGateInput');
+    if (inp.value === PWD) {
+      sessionStorage.setItem('psw_sub_unlocked', '1');
+      reveal();
+    } else {
+      inp.classList.remove('err');
+      void inp.offsetWidth; // re-trigger animation
+      inp.classList.add('err');
+      document.getElementById('subGateErr').textContent = '❌ Incorrect password. Please try again.';
+      inp.value = '';
+      inp.focus();
+    }
+  };
+})();
 
 function setSubStatus(msg) {
   const el = document.getElementById('subStatus');
@@ -2247,7 +2336,7 @@ function showSection(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (id === 'submissions') renderSubmissions(); // reads localStorage directly
+  if (id === 'submissions' && sessionStorage.getItem('psw_sub_unlocked') === '1') renderSubmissions();
 }
 
 function openModal(key) {
