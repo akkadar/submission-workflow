@@ -273,49 +273,6 @@ body {
 .sd-val { font-weight:600; color:var(--dark); }
 .btn-new { background:var(--dark); color:#fff; padding:10px 24px; margin-top:6px; }
 
-/* ── Password Gate ── */
-.gate-card {
-  text-align: center; padding: 48px 32px;
-}
-.gate-lock {
-  font-size: 3.2rem; margin-bottom: 16px;
-  animation: floatLock 3s ease-in-out infinite;
-}
-@keyframes floatLock {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-.gate-title { font-size: 1.25rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-.gate-sub   { font-size: .85rem; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
-.gate-input-wrap {
-  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-  max-width: 380px; margin: 0 auto 10px;
-}
-.gate-input {
-  flex: 1; min-width: 200px; padding: 11px 16px;
-  border: 2px solid var(--border); border-radius: 10px;
-  font-size: .95rem; font-family: inherit; color: var(--dark);
-  background: var(--white); transition: border-color .2s, box-shadow .2s;
-  letter-spacing: .05em;
-}
-.gate-input:focus { outline: none; border-color: var(--ai); box-shadow: 0 0 0 3px rgba(26,115,232,.12); }
-.gate-input.err   { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,.1); animation: shake .35s ease; }
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20%,60% { transform: translateX(-6px); }
-  40%,80% { transform: translateX(6px); }
-}
-.gate-btn {
-  padding: 11px 24px; border: none; border-radius: 10px;
-  background: var(--ai); color: #fff; font-size: .95rem; font-weight: 700;
-  cursor: pointer; transition: background .2s, transform .1s; white-space: nowrap;
-  font-family: inherit;
-}
-.gate-btn:hover  { background: var(--ai-mid); }
-.gate-btn:active { transform: scale(.97); }
-.gate-err { font-size: .83rem; color: #EF4444; margin-top: 6px; min-height: 1.2em; }
-.gate-hint { font-size: .75rem; color: var(--muted); margin-top: 18px; }
-
 /* ── Print ── */
 @media print {
   .header .header-actions, .form-nav, .progress-wrap, .stepper { display:none !important; }
@@ -360,22 +317,6 @@ body {
 <!-- MAIN -->
 <main class="wrap">
 
-  <!-- PASSWORD GATE -->
-  <div class="card gate-card" id="gateCard">
-    <div class="gate-lock">🔒</div>
-    <div class="gate-title">Access Required</div>
-    <div class="gate-sub">Enter the submission password to access the project submission form.</div>
-    <div class="gate-input-wrap">
-      <input class="gate-input" id="gateInput" type="password"
-             placeholder="Enter password…"
-             onkeydown="if(event.key==='Enter')unlockGate()"
-             oninput="this.classList.remove('err');document.getElementById('gateErr').textContent=''" />
-      <button class="gate-btn" onclick="unlockGate()">🔓 Unlock</button>
-    </div>
-    <div class="gate-err" id="gateErr"></div>
-    <div class="gate-hint">Contact your event organiser if you need the password.</div>
-  </div>
-
   <!-- SUCCESS -->
   <div class="card success-screen" id="successScreen">
     <div class="suc-icon">🎉</div>
@@ -394,7 +335,7 @@ body {
   </div>
 
   <!-- FORM CARD -->
-  <div class="card" id="formCard" style="display:none;">
+  <div class="card" id="formCard">
     <div class="card-title">
       <span class="icon" style="background:#DCFCE7;">📋</span>
       Project Submission
@@ -665,40 +606,6 @@ function toggleDark() {
       if (b) b.textContent = '☀️ Light';
     });
   }
-})();
-
-/* ════════════════════════════
-   PASSWORD GATE
-════════════════════════════ */
-(function() {
-  // XOR-encoded password (Submit@2026)
-  const _p = [35,6,21,95,89,70,118,19,64,65,65];
-  const _k = 'psw2026!';
-  const PWD = _p.map((b,i) => String.fromCharCode(b ^ _k.charCodeAt(i % _k.length))).join('');
-
-  function showForm() {
-    document.getElementById('gateCard').style.display  = 'none';
-    document.getElementById('formCard').style.display  = 'block';
-  }
-
-  // Stay unlocked for the whole browser session
-  if (sessionStorage.getItem('psw_unlocked') === '1') { showForm(); return; }
-
-  window.unlockGate = function() {
-    const inp = document.getElementById('gateInput');
-    if (inp.value === PWD) {
-      sessionStorage.setItem('psw_unlocked', '1');
-      showForm();
-    } else {
-      inp.classList.add('err');
-      // Remove + re-add to re-trigger shake on repeated wrong attempts
-      void inp.offsetWidth;
-      inp.classList.add('err');
-      document.getElementById('gateErr').textContent = '❌ Incorrect password. Please try again.';
-      inp.value = '';
-      inp.focus();
-    }
-  };
 })();
 
 /* ════════════════════════════
