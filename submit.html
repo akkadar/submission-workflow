@@ -368,7 +368,6 @@ body {
           <p>Core AI / ML component — machine learning, NLP, computer vision, deep learning.</p>
           <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;">
             <span class="badge badge-ai">1–5 members</span>
-            <span class="badge badge-ai">Deadline Jun 20</span>
           </div>
         </div>
         <div class="track-sel-card" id="ts-inn" onclick="selectTrack('inn')">
@@ -377,8 +376,7 @@ body {
           <h3>Innovation Track</h3>
           <p>Novel products, processes, or social impact — any domain, no AI/ML core required.</p>
           <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;">
-            <span class="badge badge-inn">1–8 members</span>
-            <span class="badge badge-inn">Deadline Jun 30</span>
+            <span class="badge badge-inn">1–5 members</span>
           </div>
         </div>
       </div>
@@ -740,12 +738,11 @@ function hideErr(id) { const e = document.getElementById(id); if (e) e.classList
    TEAM MEMBERS
 ════════════════════════════ */
 function updateMemberNote() {
-  const max = track === 'ai' ? 4 : 7;
   document.getElementById('memberNote').textContent =
-    `Up to ${max} additional (${track === 'ai' ? 5 : 8} total incl. lead)`;
+    `Up to 4 additional (5 total incl. lead)`;
 }
 function renderMembers() {
-  const max = track === 'ai' ? 4 : 7;
+  const max = 4;
   document.getElementById('memberList').innerHTML = members.map((m, i) => `
     <div class="member-row">
       <div class="member-num">Member ${i + 2}</div>
@@ -759,7 +756,7 @@ function renderMembers() {
     </div>`).join('');
   document.getElementById('btnAddMem').style.display = members.length >= max ? 'none' : 'inline-flex';
 }
-function addMember()    { const max = track==='ai'?4:7; if(members.length>=max)return; members.push({name:'',email:'',role:''}); renderMembers(); saveDraft(); }
+function addMember()    { if(members.length>=4)return; members.push({name:'',email:'',role:''}); renderMembers(); saveDraft(); }
 function removeMember(i){ members.splice(i,1); renderMembers(); saveDraft(); }
 
 /* ════════════════════════════
