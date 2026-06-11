@@ -109,5 +109,26 @@
     "users": "Humans",
     "novelty": "............................",
     "scale": "................................"
+  },
+  {
+    "id": "SUB-MQ95EVRA-U7MN",
+    "now": "11 June 2026 at 10:00",
+    "track": "ai",
+    "teamName": "team 7",
+    "org": "Ceros",
+    "leadName": "Amir K",
+    "leadEmail": "amirk@ceragon.com",
+    "leadPhone": "0525734284",
+    "members": [],
+    "title": "ak",
+    "abstract": "sdsa dfsa sad dsa sad sa dsa dsa d sad sad sa d",
+    "aiCat": "Machine Learning",
+    "repo": "https://akkadar.github.io/submission-workflow/submit.html",
+    "arch": "fgf",
+    "datasets": "gfgf",
+    "domain": "",
+    "users": "",
+    "novelty": "",
+    "scale": ""
   }
 ]
