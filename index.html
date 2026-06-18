@@ -286,6 +286,18 @@
   .center-dot { width: 10px; height: 10px; border-radius: 50%; background: #94A3B8; margin: 2px 0; }
 
   /* ── Section 3 & 4: Rules ── */
+  /* ── Track Rules toggle ── */
+  .track-rules-toggle {
+    display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;
+  }
+  .trr-btn {
+    padding: 9px 28px; border-radius: 24px; border: 2px solid var(--border);
+    background: var(--white); color: var(--muted);
+    font-size: .88rem; font-weight: 600; cursor: pointer; transition: all .25s;
+  }
+  .trr-btn.trr-ai.active  { border-color: var(--ai);  background: var(--ai-light);  color: var(--ai); }
+  .trr-btn.trr-inn.active { border-color: var(--inn); background: var(--inn-light); color: var(--inn); }
+
   .rules-header {
     border-radius: var(--radius) var(--radius) 0 0;
     padding: 20px 28px;
@@ -931,11 +943,9 @@
   <nav class="nav">
     <button class="nav-btn active" onclick="showSection('overview', this)">Overview</button>
     <button class="nav-btn" onclick="showSection('workflow', this)">Workflow</button>
-    <button class="nav-btn" onclick="showSection('ai', this)">AI Track Rules</button>
-    <button class="nav-btn" onclick="showSection('innovation', this)">Innovation Track Rules</button>
-    <button class="nav-btn" onclick="showSection('timeline', this)">Timeline</button>
+    <button class="nav-btn" onclick="showSection('rules', this)">Track Rules</button>
     <button class="nav-btn" onclick="showSection('submissions', this)" id="navSubmissions">📊 Submissions</button>
-    <a class="nav-btn" href="submit.html" style="color:var(--inn);font-weight:700;text-decoration:none;">🚀 Submit Project ↗</a>
+    <a class="nav-btn" href="submit.html" style="color:var(--inn);font-weight:700;text-decoration:none;">🚀 Submit ↗</a>
   </nav>
 </div>
 
@@ -999,6 +1009,33 @@
         <div class="deliv-item"><span class="deliv-icon">🛡️</span><div class="deliv-text"><div class="dt">Confidential</div></div></div>
         <div class="deliv-item"><span class="deliv-icon">©️</span><div class="deliv-text"><div class="dt">IP retained by team</div></div></div>
       </div>
+    </div>
+
+    <div class="card" id="timelineCard" style="margin-top:20px;">
+      <div class="card-title" style="display:flex;align-items:center;">
+        <span class="icon" style="background:#FEF3C7;">📅</span>
+        Timeline
+        <div class="tl-toolbar" id="tlToolbar">
+          <button class="btn btn-edit" id="btnEditTl" onclick="startEditTimeline()">✏️ Edit</button>
+        </div>
+      </div>
+      <div id="tlView" class="timeline"></div>
+      <div id="tlEdit" style="display:none;">
+        <div id="tlEditList"></div>
+        <div class="add-milestone-row">
+          <button class="btn btn-add" onclick="addMilestone()">＋ Add Milestone</button>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap;">
+          <button class="btn btn-reset" onclick="resetTimeline()">↺ Reset to Defaults</button>
+          <button class="btn btn-cancel" onclick="cancelEditTimeline()">Cancel</button>
+          <button class="btn btn-save" onclick="saveTimeline()">💾 Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title"><span class="icon" style="background:#FCE7F3;">📬</span>Contact</div>
+      <div class="deliv-item"><span class="deliv-icon">📧</span><div class="deliv-text"><div class="dt">Questions &amp; Support</div><div class="ds">Cer-innovation@ceragon.com</div></div></div>
     </div>
   </section>
 
@@ -1096,113 +1133,72 @@
     </div>
   </section>
 
-  <!-- ══ AI TRACK RULES ══ -->
-  <section class="section" id="sec-ai">
-    <div class="rules-header ai">
-      <div class="rh-icon">🤖</div>
-      <div>
-        <h2>AI Track — Submission Rules</h2>
-        <p>AI, ML, NLP, Computer Vision · Teams of 1–5</p>
-      </div>
+  <!-- ══ TRACK RULES ══ -->
+  <section class="section" id="sec-rules">
+    <!-- Toggle -->
+    <div class="track-rules-toggle">
+      <button class="trr-btn trr-ai active" id="trBtn-ai" onclick="switchTrackRules('ai')">🤖 AI Track</button>
+      <button class="trr-btn trr-inn" id="trBtn-inn" onclick="switchTrackRules('inn')">💡 Innovation Track</button>
     </div>
-    <div class="rules-body">
 
-      <div class="section-label">Required Deliverables</div>
-      <div class="deliverables-grid">
-        <div class="deliv-item"><span class="deliv-icon">💻</span><div class="deliv-text"><div class="dt">Working Prototype / Demo</div><div class="ds">Link or executable · Max 500 MB if uploaded directly</div></div></div>
-        <div class="deliv-item"><span class="deliv-icon">📄</span><div class="deliv-text"><div class="dt">Technical Report (PDF)</div><div class="ds">10–25 pages · Problem, architecture, data, evaluation, results</div></div></div>
-        <div class="deliv-item"><span class="deliv-icon">💾</span><div class="deliv-text"><div class="dt">Source Code Repository</div><div class="ds">GitHub/GitLab link with clear README</div></div></div>
-        <div class="deliv-item"><span class="deliv-icon">🗄️</span><div class="deliv-text"><div class="dt">Dataset Declaration</div><div class="ds">Provenance, licensing, and usage description for all data</div></div></div>
-        <div class="deliv-item"><span class="deliv-icon">⚖️</span><div class="deliv-text"><div class="dt">AI Ethics Statement (1–2 pages)</div><div class="ds">Fairness, bias, privacy, and potential misuse addressed</div></div></div>
-        <div class="deliv-item"><span class="deliv-icon">👥</span><div class="deliv-text"><div class="dt">Team Bios & Roles</div><div class="ds">Max 1 page total · Name, role, and brief background</div></div></div>
-      </div>
-
-      <div class="section-label">Submission Rules</div>
-      <table class="rules-table">
-        <thead>
-          <tr><th style="width:50px;">ID</th><th style="width:200px;">Rule</th><th>Details</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="rule-id ai">R1</span></td><td><div class="rule-name">Single Track Only</div></td><td><div class="rule-detail">May not be submitted to the Innovation Track simultaneously.</div></td></tr>
-          <tr><td><span class="rule-id ai">R2</span></td><td><div class="rule-name">Original Work</div></td><td><div class="rule-detail">Must be developed by the submitting team. Third-party libraries are fine; submitting others' work as your own is not.</div></td></tr>
-          <tr><td><span class="rule-id ai">R3</span></td><td><div class="rule-name">Data Licensing</div></td><td><div class="rule-detail">All data used must be legally licensed. Proprietary datasets must be declared.</div></td></tr>
-          <tr><td><span class="rule-id ai">R4</span></td><td><div class="rule-name">English Only</div></td><td><div class="rule-detail">All written content must be in English.</div></td></tr>
-        </tbody>
-      </table>
-
-      <div class="section-label">Evaluation Criteria</div>
-      <div class="criteria-grid" style="grid-template-columns:repeat(4,1fr);">
-        <div class="crit-card"><div class="crit-pct">30%</div><div class="crit-name">Impact</div><div class="crit-desc">Significance of the problem and expected outcomes</div></div>
-        <div class="crit-card"><div class="crit-pct">30%</div><div class="crit-name">Innovation</div><div class="crit-desc">Novelty of the AI approach vs. existing solutions</div></div>
-        <div class="crit-card"><div class="crit-pct">25%</div><div class="crit-name">Feasibility</div><div class="crit-desc">Realistic scope and achievable with available resources</div></div>
-        <div class="crit-card"><div class="crit-pct">15%</div><div class="crit-name">Company Fit</div><div class="crit-desc">Alignment with company strategic or tactical priorities</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ INNOVATION TRACK RULES ══ -->
-  <section class="section" id="sec-innovation">
-    <div class="rules-header inn">
-      <div class="rh-icon">💡</div>
-      <div>
-        <h2>Innovation Track — Submission Rules</h2>
-        <p>Novel products, processes &amp; social impact · Teams of 1–5</p>
-      </div>
-    </div>
-    <div class="rules-body">
-
-      <div class="section-label">Submission Rules</div>
-      <table class="rules-table">
-        <thead>
-          <tr><th style="width:50px;">ID</th><th style="width:200px;">Rule</th><th>Details</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="rule-id inn">R1</span></td><td><div class="rule-name">Single Track Only</div></td><td><div class="rule-detail">May not be submitted to the AI Track simultaneously.</div></td></tr>
-          <tr><td><span class="rule-id inn">R2</span></td><td><div class="rule-name">Original Work</div></td><td><div class="rule-detail">Must be substantially the work of the submitting team. Open-source foundations must be declared.</div></td></tr>
-          <tr><td><span class="rule-id inn">R3</span></td><td><div class="rule-name">Novelty Required</div></td><td><div class="rule-detail">Describe what makes your approach novel vs. existing solutions. Generic claims without evidence will reduce scores.</div></td></tr>
-          <tr><td><span class="rule-id inn">R4</span></td><td><div class="rule-name">English Only</div></td><td><div class="rule-detail">All written content must be in English.</div></td></tr>
-        </tbody>
-      </table>
-
-      <div class="section-label">Evaluation Criteria</div>
-      <div class="criteria-grid" style="grid-template-columns:repeat(4,1fr);">
-        <div class="crit-card"><div class="crit-pct inn">30%</div><div class="crit-name">Impact</div><div class="crit-desc">Significance of the problem and expected outcomes</div></div>
-        <div class="crit-card"><div class="crit-pct inn">30%</div><div class="crit-name">Innovation</div><div class="crit-desc">Novelty of the approach vs. existing solutions</div></div>
-        <div class="crit-card"><div class="crit-pct inn">25%</div><div class="crit-name">Feasibility</div><div class="crit-desc">Realistic scope and achievable with available resources</div></div>
-        <div class="crit-card"><div class="crit-pct inn">15%</div><div class="crit-name">Company Fit</div><div class="crit-desc">Alignment with company strategic or tactical priorities</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ TIMELINE ══ -->
-  <section class="section" id="sec-timeline">
-    <div class="card" id="timelineCard">
-      <div class="card-title" style="display:flex;align-items:center;">
-        <span class="icon" style="background:#FEF3C7;">📅</span>
-        Full Submission Timeline
-        <div class="tl-toolbar" id="tlToolbar">
-          <button class="btn btn-edit" id="btnEditTl" onclick="startEditTimeline()">✏️ Edit Timeline</button>
+    <!-- AI content -->
+    <div id="trContent-ai">
+      <div class="rules-header ai">
+        <div class="rh-icon">🤖</div>
+        <div>
+          <h2>AI Track — Submission Rules</h2>
+          <p>AI, ML, NLP, Computer Vision · Teams of 1–5</p>
         </div>
       </div>
-      <!-- View mode -->
-      <div id="tlView" class="timeline"></div>
-      <!-- Edit mode (hidden by default) -->
-      <div id="tlEdit" style="display:none;">
-        <div id="tlEditList"></div>
-        <div class="add-milestone-row">
-          <button class="btn btn-add" onclick="addMilestone()">＋ Add Milestone</button>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;flex-wrap:wrap;">
-          <button class="btn btn-reset" onclick="resetTimeline()">↺ Reset to Defaults</button>
-          <button class="btn btn-cancel" onclick="cancelEditTimeline()">Cancel</button>
-          <button class="btn btn-save" onclick="saveTimeline()">💾 Save Changes</button>
+      <div class="rules-body">
+        <div class="section-label">Submission Rules</div>
+        <table class="rules-table">
+          <thead><tr><th style="width:50px;">ID</th><th style="width:200px;">Rule</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td><span class="rule-id ai">R1</span></td><td><div class="rule-name">Single Track Only</div></td><td><div class="rule-detail">May not be submitted to the Innovation Track simultaneously.</div></td></tr>
+            <tr><td><span class="rule-id ai">R2</span></td><td><div class="rule-name">Original Work</div></td><td><div class="rule-detail">Must be developed by the submitting team. Third-party libraries are fine; submitting others' work as your own is not.</div></td></tr>
+            <tr><td><span class="rule-id ai">R3</span></td><td><div class="rule-name">Data Licensing</div></td><td><div class="rule-detail">All data used must be legally licensed. Proprietary datasets must be declared.</div></td></tr>
+            <tr><td><span class="rule-id ai">R4</span></td><td><div class="rule-name">English Only</div></td><td><div class="rule-detail">All written content must be in English.</div></td></tr>
+          </tbody>
+        </table>
+        <div class="section-label">Evaluation Criteria</div>
+        <div class="criteria-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="crit-card"><div class="crit-pct">30%</div><div class="crit-name">Impact</div><div class="crit-desc">Significance of the problem and expected outcomes</div></div>
+          <div class="crit-card"><div class="crit-pct">30%</div><div class="crit-name">Innovation</div><div class="crit-desc">Novelty of the AI approach vs. existing solutions</div></div>
+          <div class="crit-card"><div class="crit-pct">25%</div><div class="crit-name">Feasibility</div><div class="crit-desc">Realistic scope and achievable with available resources</div></div>
+          <div class="crit-card"><div class="crit-pct">15%</div><div class="crit-name">Company Fit</div><div class="crit-desc">Alignment with company strategic or tactical priorities</div></div>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><span class="icon" style="background:#FCE7F3;">📬</span>Contact</div>
-      <div class="deliv-item"><span class="deliv-icon">📧</span><div class="deliv-text"><div class="dt">Questions &amp; Support</div><div class="ds">Cer-innovation@ceragon.com</div></div></div>
+    <!-- Innovation content -->
+    <div id="trContent-inn" style="display:none;">
+      <div class="rules-header inn">
+        <div class="rh-icon">💡</div>
+        <div>
+          <h2>Innovation Track — Submission Rules</h2>
+          <p>Novel products, processes &amp; social impact · Teams of 1–5</p>
+        </div>
+      </div>
+      <div class="rules-body">
+        <div class="section-label">Submission Rules</div>
+        <table class="rules-table">
+          <thead><tr><th style="width:50px;">ID</th><th style="width:200px;">Rule</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td><span class="rule-id inn">R1</span></td><td><div class="rule-name">Single Track Only</div></td><td><div class="rule-detail">May not be submitted to the AI Track simultaneously.</div></td></tr>
+            <tr><td><span class="rule-id inn">R2</span></td><td><div class="rule-name">Original Work</div></td><td><div class="rule-detail">Must be substantially the work of the submitting team. Open-source foundations must be declared.</div></td></tr>
+            <tr><td><span class="rule-id inn">R3</span></td><td><div class="rule-name">Novelty Required</div></td><td><div class="rule-detail">Describe what makes your approach novel vs. existing solutions. Generic claims without evidence will reduce scores.</div></td></tr>
+            <tr><td><span class="rule-id inn">R4</span></td><td><div class="rule-name">English Only</div></td><td><div class="rule-detail">All written content must be in English.</div></td></tr>
+          </tbody>
+        </table>
+        <div class="section-label">Evaluation Criteria</div>
+        <div class="criteria-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="crit-card"><div class="crit-pct inn">30%</div><div class="crit-name">Impact</div><div class="crit-desc">Significance of the problem and expected outcomes</div></div>
+          <div class="crit-card"><div class="crit-pct inn">30%</div><div class="crit-name">Innovation</div><div class="crit-desc">Novelty of the approach vs. existing solutions</div></div>
+          <div class="crit-card"><div class="crit-pct inn">25%</div><div class="crit-name">Feasibility</div><div class="crit-desc">Realistic scope and achievable with available resources</div></div>
+          <div class="crit-card"><div class="crit-pct inn">15%</div><div class="crit-name">Company Fit</div><div class="crit-desc">Alignment with company strategic or tactical priorities</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2267,6 +2263,13 @@ function showSection(id, btn) {
   document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   if (id === 'submissions' && sessionStorage.getItem('psw_sub_unlocked') === '1') renderSubmissions();
+}
+
+function switchTrackRules(track) {
+  document.getElementById('trContent-ai').style.display  = track === 'ai'  ? 'block' : 'none';
+  document.getElementById('trContent-inn').style.display = track === 'inn' ? 'block' : 'none';
+  document.getElementById('trBtn-ai').classList.toggle('active', track === 'ai');
+  document.getElementById('trBtn-inn').classList.toggle('active', track === 'inn');
 }
 
 function openModal(key) {
