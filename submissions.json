@@ -300,5 +300,34 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MS1US09L-1IMR",
+    "now": "26 July 2026 at 16:47",
+    "track": "ai",
+    "teamName": "tigers",
+    "org": "Marketing",
+    "leadName": "Tanya Solomon",
+    "leadEmail": "solomontanya@yahoo.com",
+    "leadPhone": "+972524286626",
+    "members": [
+      {
+        "name": "tali pariente",
+        "email": "",
+        "role": ""
+      }
+    ],
+    "title": "Testing testing 123",
+    "abstract": "This is a test to see if ten words are enough for this",
+    "aiCat": "Other",
+    "repo": "",
+    "aiImpact": "Ensure this form works and is user friendly",
+    "aiNovelty": "Vey novel. Because it is so novel, we need to test it:-)",
+    "aiFeasibility": "It is very realistic - especially when Amir and Ori are in charge.",
+    "aiFit": "Fits perfectly - and meets CLT expectations.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
