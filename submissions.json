@@ -358,5 +358,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MS5R7Q8R-C004",
+    "now": "29 July 2026 at 10:19",
+    "track": "inn",
+    "teamName": "RF System",
+    "org": "Ceragon",
+    "leadName": "Avihu Haim",
+    "leadEmail": "avihuh@ceragon.com",
+    "leadPhone": "+972525209301",
+    "members": [],
+    "title": "MULTI",
+    "abstract": "MULTI is a highly efficient, feature-rich automation architecture built for MULTI-DUTs, MULTI-Tests, and MULTI-Platforms. Its generic and scalable design supports diverse and complex use cases, significantly reducing characterization, testing, validation, and research time, while keeping the underlying sophisticated architecture simple and extremely user-friendly for the end user.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
