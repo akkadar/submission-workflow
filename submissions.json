@@ -329,5 +329,34 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MS5OZALD-4WGZ",
+    "now": "29 July 2026 at 09:16",
+    "track": "inn",
+    "teamName": "Ceragon Treasury",
+    "org": "",
+    "leadName": "Omer Aizikovitz",
+    "leadEmail": "omerai@ceragon.com",
+    "leadPhone": "+972542430566",
+    "members": [
+      {
+        "name": "Yoav Laron",
+        "email": "yoavl@ceragon.com",
+        "role": "Corporate Treasurer "
+      }
+    ],
+    "title": "Treasury",
+    "abstract": "Automating processes, by gathering data automatically, securely, and accurately. This will be by agents help, and automation.\nActually, we already initiated such processes.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
