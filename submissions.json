@@ -381,5 +381,44 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MS7N7ISU-V639",
+    "now": "30 July 2026 at 18:02",
+    "track": "ai",
+    "teamName": "Plan2Order",
+    "org": "Product",
+    "leadName": "Ronen Toledano",
+    "leadEmail": "ronent@ceargon.com",
+    "leadPhone": "+972526554259",
+    "members": [
+      {
+        "name": "Arie Serkin",
+        "email": "Arie@ceragon.com",
+        "role": "Director, Global Presales Engineer"
+      },
+      {
+        "name": "Shirley Alus",
+        "email": "shirleya@ceragon.com",
+        "role": "Research Engineer"
+      },
+      {
+        "name": "Viktor Shainoha",
+        "email": "",
+        "role": "Software Development Engineer"
+      }
+    ],
+    "title": "From Plan to Order in One Flow",
+    "abstract": "A single connected platform that turns a network design into its BoM, deal analysis, and site configuration files automatically. Integrated with Ceragon NMS, ERP, CRM, and service systems, it removes manual re-entry between planning, sales, and commissioning, cutting quotation time and eliminating configuration-driven errors.",
+    "aiCat": "Machine Learning",
+    "repo": "https://ceragon-networks.github.io/Cegon_Planning_tool/",
+    "aiImpact": "Every opportunity today is manually re-entered across planning, BoM, CRM, and commissioning. Automating that chain targets 50 to 70 percent faster quotation response, a sharp reduction in configuration-driven errors and RMAs and frees senior presales capacity for design work. It also creates a new external revenue line through the licensed Professional tier.",
+    "aiNovelty": "No microwave vendor offers a single validated path from RF design to BoM to deal analysis to commissioning configuration. Competitors provide planning tools or configurators, not a connected flow. The AI layer, design proposals from a natural language brief plus automated validation against configuration rules, has no equivalent in our market.",
+    "aiFeasibility": "The engineering models already exist and are proven in the field, including LBC v8.5 with ITU-R P.530-19 and P.841 implementations. The planning tool MRD is approved in direction, and the configurator scope is defined. Remaining work is integration, not invention. Main dependency is API access to Salesforce/Oracle and NMS, which requires IT ownership.",
+    "aiFit": "Directly serves presales, sales, product, and service organizations, and builds on Ceragon-owned RF models, product catalog, and NMS. It strengthens the core business rather than adding an adjacent activity and aligns with the existing Planning Tool MRD and configurator roadmap already in progress.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
