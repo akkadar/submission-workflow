@@ -420,5 +420,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MS7V9CUG-D6FF",
+    "now": "30 July 2026 at 21:48",
+    "track": "inn",
+    "teamName": "OneTransport",
+    "org": "Radio Technologies",
+    "leadName": "Perry Bassan",
+    "leadEmail": "perryb@ceragon.com",
+    "leadPhone": "+972533342111",
+    "members": [],
+    "title": "Unified Terrestrial + NTN Transport Intelligence",
+    "abstract": "A combined TN & NTN communication system through a common scheduler, coordinated QoS, and a unified control plane. The objective would be to enable steering, path diversification, and optimization across both domains. This would position NTN as an integrated transport resource rather than just an external failover.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Improve service continuity by enabling coordinated terrestrial + NTN path diversity.\nAccelerate restoration by using link-state, traffic intent, and predictive degradation triggers.\nImprove resource utilization by treating terrestrial and NTN capacity as an active transport pool.\nImprove operator visibility with one policy and telemetry framework across mixed domains.\nDifferentiate Ceragon beyond radio capacity by adding transport intelligence, resiliency, and service assurance capabilities.\nSupport future-ready wireless transport for 4G/5G network modernization and future NTN-aware backhaul evolution.\n\nExpected outcome: a clearer path to differentiated, resilient, NTN-aware wireless transport.",
+    "innNovelty": "The novelty is not satellite backhaul by itself and not simply adding a backup path.\nThe new element is a transport-control layer that jointly manages microwave/mmWave and satellite/NTN resources.\nThe concept combines common scheduler, QoS/SLA policy, timing awareness, link-state abstraction, telemetry, and predictive restoration.\nExisting satellite backhaul is typically a separate service or path; 3GPP NTN work is largely focused on access and system-level NTN integration.\nThe proposed white space is a PTP/xHaul transport node or platform that treats terrestrial and NTN paths as one coordinated control domain.\nThis creates a potential IP and product-differentiation opportunity in the transport intelligence layer.\n\nCreative edge: Ceragon can own the control and service-assurance layer between terrestrial transport and NTN resources.",
+    "innFeasibility": "Step 1: architecture study defining abstraction layer, link metrics, QoS intents, traffic classes, timing requirements, and restoration triggers.\nStep 2: hybrid terrestrial/NTN proof point integrating an external satellite/NTN terminal or simulated NTN path as a managed transport resource.\nStep 3: control integration connecting transport logic to telemetry, policy interfaces, SLA models, and monitoring workflows.\nStep 4: route-to-product assessment covering customer value, IP opportunity, integration partners, and roadmap fit.\nSuccess criteria: demonstrate link-state abstraction, policy-based steering, restoration behavior, and unified service visibility across terrestrial + NTN paths.\nResources needed: architecture, system, product, software/control, NMS/telemetry, and IP review stakeholders.\n\nFeasibility principle: prove software/control-plane value before committing to deep satellite hardware integration.",
+    "innFit": "Aligns with Ceragon’s core expertise in high-capacity wireless transport, microwave/mmWave, and P2P/P2MP platforms.\nStrengthens the transport portfolio with software-defined intelligence, resiliency, and service-assurance differentiation.\nSupports customer-facing use cases requiring resilient connectivity, including remote sites, private networks, public safety, maritime, and disaster recovery.\nFits the INNO.LAB Innovation Initiatives track because it improves product architecture, enhances reliability, creates customer value, and may open future business opportunities.\nRecommended decision: approve architecture and feasibility study, followed by PoC definition.\n\nCompany fit: a practical way for Ceragon to lead convergence of terrestrial and NTN transport networks."
   }
 ]
