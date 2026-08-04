@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "SUB-MSESD46H-8L1W",
+    "now": "4 August 2026 at 18:01",
+    "track": "inn",
+    "teamName": "Satellites",
+    "org": "Unknown",
+    "leadName": "Doron Nehoray",
+    "leadEmail": "doronn@ceragon.com",
+    "leadPhone": "+972528277455",
+    "members": [
+      {
+        "name": "Yoav Danieli",
+        "email": "yoavda@ceragon.com",
+        "role": "VP, Quality and Business Excellence"
+      },
+      {
+        "name": "Raquel Shmilovitz",
+        "email": "raquels@ceragon.com",
+        "role": "PM"
+      }
+    ],
+    "title": "Satellite Ground Terminal",
+    "abstract": "Satellite Ground Terminal for Mobile Networks - \nCeragon could develop a carrier-grade satellite transport node that serves as the primary backhaul for cell sites. This instead of building satellite.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Huge and Huge",
+    "innNovelty": "I guess no such solution that our competitors have.",
+    "innFeasibility": "Maybe",
+    "innFit": "I have no idea."
+  }
+]
