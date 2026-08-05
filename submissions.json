@@ -55,5 +55,39 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MSGL3TY5-P20Y",
+    "now": "5 August 2026 at 15:13",
+    "track": "ai",
+    "teamName": "Finance - BFPA",
+    "org": "Finance",
+    "leadName": "Ignacio Cerutti",
+    "leadEmail": "ignacio.cerutti@ceragon.com",
+    "leadPhone": "+525519534435",
+    "members": [
+      {
+        "name": "Andrea Irala",
+        "email": "andreai@ceragon.com",
+        "role": ""
+      },
+      {
+        "name": "Juan Pedro Cardoni",
+        "email": "juanpedroc@ceragon.com",
+        "role": ""
+      }
+    ],
+    "title": "DA Assistant: AI-Enabled Deal Analysis Automation",
+    "abstract": "DA Assistant is an AI-enabled solution designed to automate and standardize Deal Analysis preparation by validating BOM data, connecting to product cost sources, applying controlled calculation logic, and creating a scalable foundation for an integrated Agent-of-Agents architecture supporting project analysis across finance, credit, RFPs, and contracts.",
+    "aiCat": "Natural Language Processing",
+    "repo": "",
+    "aiImpact": "DA Assistant can reduce manual effort in Deal Analysis preparation by automating BOM validation, product cost retrieval, and direct material cost calculation. It improves reliability, traceability, and consistency by flagging missing data, abnormal cost values, and unresolved assumptions before pricing and approval discussions.",
+    "aiNovelty": "The solution combines Copilot Studio, Dataverse, and Power Automate to create a finance-controlled AI assistant rather than a generic chatbot. It preserves the global costing format while applying structured logic, including Marketing Model matching and outlier-adjusted average costing across inventory organizations.",
+    "aiFeasibility": "The project can start with a focused PoC using the existing Product Cost Master and standard Presales BOM format. The first MVP would validate BOM data, calculate direct material cost, and produce a finance-ready summary. External Power Platform support would accelerate setup, governance, and scalability.",
+    "aiFit": "DA Assistant aligns with Ceragon’s need to improve Deal Analysis, RFP response, and project evaluation processes. It supports faster, more reliable commercial decisions and creates a scalable foundation for an Agent-of-Agents architecture integrating finance, credit, RFP, contract, and operational insights.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
