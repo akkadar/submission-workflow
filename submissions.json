@@ -32,5 +32,28 @@
     "innNovelty": "I guess no such solution that our competitors have.",
     "innFeasibility": "Maybe",
     "innFit": "I have no idea."
+  },
+  {
+    "id": "SUB-MSFRR008-KBSD",
+    "now": "5 August 2026 at 10:31",
+    "track": "ai",
+    "teamName": "",
+    "org": "Global Services",
+    "leadName": "Marius Oita",
+    "leadEmail": "mariuso@ceragon.com",
+    "leadPhone": "",
+    "members": [],
+    "title": "Company AI Assistant - One place for answers",
+    "abstract": "An AI assistant embedded in the company portal page that provides instant answers about policies, procedures, tools, and internal resources. It helps employees find information faster, reduces support requests, and improves productivity. E.g.:  how create expense report? where to find a technical document/download software? how change profile picture.",
+    "aiCat": "Generative AI",
+    "repo": "",
+    "aiImpact": "Employees spend less time searching across multiple systems or contacting support teams. The assistant provides quick, consistent answers, improves self service, accelerates onboarding, and reduces repetitive questions to HR, IT, Finance, and other support functions.",
+    "aiNovelty": "Instead of searching through multiple portals, documents, and knowledge bases, employees can ask questions in natural language and receive direct answers with links to the correct systems, documents, or procedures.",
+    "aiFeasibility": "The solution can be built using existing Copilot & SharePoint site technology combined with company knowledge sources. It can start with read only access to policies and documentation, then expand gradually to additional systems and capabilities.",
+    "aiFit": "The solution improves employee productivity, simplifies access to company knowledge, supports digital transformation, and reduces operational overhead by making information available from a single entry point within the company portal.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
