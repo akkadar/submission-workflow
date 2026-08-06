@@ -176,5 +176,44 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MSHAMN55-SFJH",
+    "now": "6 August 2026 at 12:08",
+    "track": "inn",
+    "teamName": "System & Research teams Initiative",
+    "org": "R&D",
+    "leadName": "Yossi Barda",
+    "leadEmail": "yossiba@ceragon.com",
+    "leadPhone": "+972507771167",
+    "members": [
+      {
+        "name": "yoav Heiman",
+        "email": "yoavh@ceragon.com",
+        "role": "Manager, System Architecture"
+      },
+      {
+        "name": "Efi Dvir",
+        "email": "efid@ceragon.com",
+        "role": "Research Engineer"
+      },
+      {
+        "name": "Olga Gabaev Gilan",
+        "email": "",
+        "role": "System Architect"
+      }
+    ],
+    "title": "Intelligent Traffic-Aware Carrier reduction for Energy-Efficient Backhaul Links",
+    "abstract": "Implement dynamic carrier on/off switching to consolidate traffic onto the minimum number of carriers during low-utilization periods and restore capacity as demand increases, reducing energy consumption and operational costs. The solution leverages an FPGA-based edge AI engine located near the traffic source for fast, real-time decision making.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Reduce power consumption by disabling unused radio carriers during low utilization.\n\nLab PoC indicates approximately 10.5 Watt saving per node (~21 W per link) for an IP-50CX 2+0 configuration. \nExpected around 25 Watt power saving when using Microwave RFU-D-HP node (50Watts for link).\n\nContributing to:\nLower operational expenses (OPEX).\n\nReduced thermal stress and potentially longer equipment lifespan.\nImproved sustainability and energy efficiency for operators.",
+    "innNovelty": "Current microwave links typically operate at full carrier configuration regardless of actual traffic demand.\n\nThis solution introduces:\nAutomatic carrier-level energy optimization.\nTraffic-aware on/off switching between single and dual/multiple carrier operation.\nFuture predictive AI capability that can proactively prepare the network for expected traffic changes.\nUsing a dedicated efficient Adge AI computing, implemented in HW FPGA device near the traffic.\nThe combination of power saving and service-aware operation creates a practical Green Mode capability for backhaul. networks.",
+    "innFeasibility": "Validation Approach:\nImplement Scheduled Carrier Switching as an initial PoC.\n\nDefine safe switching procedures and recovery mechanisms.\n\nVerify seamless carrier restoration during traffic spikes.\n\nMeasure actual power savings in lab and field deployments.\n\nResources & Timeline:\nSoftware development in network management, EMS and radio control components.\nLab validation work and might followed by limited customer / Beta sites trials.\nPhased implementation from scheduled mode to dynamic traffic-aware mode.",
+    "innFit": "The solution aligns with Ceragon's goals of improving network efficiency and delivering innovative backhaul capabilities.\nBenefits include:\nAdded value for mobile network operators.\nReduced customer operating costs\nSupport for sustainability and energy-saving initiatives.\nCan be integrated into existing Ceragon management and radio platforms.\nThis feature strengthens Ceragon's competitive position by offering a practical energy-efficiency capability without requiring new hardware."
   }
 ]
