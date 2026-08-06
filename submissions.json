@@ -118,5 +118,34 @@
     "innNovelty": "Security & Technical Architecture\n Local-Only Execution: The tool will operate strictly on the local machine with no external cloud dependencies or telemetry, eliminating data exfiltration risks.\n InfoSec Governed: Architected and managed directly from an Information Security perspective to ensure the codebase and operational mechanics align with Ceragon’s highest security standards.\n Seamless Integration: Built to be lightweight, utilizing minimal system resources while outperforming native OS alternatives.",
     "innFeasibility": "To develop and deploy a blazing-fast, custom file manager that operates completely locally on all corporate devices.\nWhen paired with the recently implemented high-speed file searching tool, this will create a comprehensive, zero-latency file ecosystem. This combination will radically improve the daily user experience and instantly resolve existing complaints regarding system sluggishness.",
     "innFit": "Problem Statement\nEmployees across Ceragon rely heavily on continuous file exploration, organization, and retrieval. Currently, the default Windows file manager suffers from sluggish performance and significant latency. These micro-delays compound throughout the day, creating chronic inefficiencies and generating frequent user experience complaints."
+  },
+  {
+    "id": "SUB-MSH4A6MX-GFEP",
+    "now": "6 August 2026 at 11:40",
+    "track": "inn",
+    "teamName": "The Data Protectors",
+    "org": "Infrastructure and service",
+    "leadName": "B sandeep kumar",
+    "leadEmail": "sandeepku@ceragon.com",
+    "leadPhone": "+917019750747",
+    "members": [
+      {
+        "name": "Kuruba Bellala Madhu",
+        "email": "kurubabellalam@ceragon.com",
+        "role": "IT Technician"
+      }
+    ],
+    "title": "Ceragon Lightning File Manager",
+    "abstract": "By treating internal desktop efficiency as a critical operational metric, we can eliminate dead time without compromising security. I have the technical capability and the security oversight required to incubate and execute this solution rapidly.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Business Impact & Proven ROI\nMassive Productivity Gains: This initiative scales a proven methodology. The recent file retrieval platform developed for the Sales Coordinator team successfully reduced invoice wait times from 5 minutes to 5 seconds.\nDemonstrated Success: That single implementation eliminated approximately 492 hours of waiting time per quarter.\nGlobal Scale: Expanding this efficiency from a targeted departmental solution to a global desktop utility—capitalizing on the momentum that secured the 2025 One Ceragon Award—will multiply these time savings across every department globally.",
+    "innNovelty": "Security & Technical Architecture\nLocal-Only Execution: The tool will operate strictly on the local machine with no external cloud dependencies or telemetry, eliminating data exfiltration risks.\nInfoSec Governed: Architected and managed directly from an Information Security perspective to ensure the codebase and operational mechanics align with Ceragon’s highest security standards.\nSeamless Integration: Built to be lightweight, utilizing minimal system resources while outperforming native OS alternatives.",
+    "innFeasibility": "Proposed Solution\nTo develop and deploy a blazing-fast, custom file manager that operates completely locally on all corporate devices.\nWhen paired with the recently implemented high-speed file searching tool, this will create a comprehensive, zero-latency file ecosystem. This combination will radically improve the daily user experience and instantly resolve existing complaints regarding system sluggishness.",
+    "innFit": "Problem Statement\nEmployees across Ceragon rely heavily on continuous file exploration, organization, and retrieval. Currently, the default Windows file manager suffers from sluggish performance and significant latency. These micro-delays compound throughout the day, creating chronic inefficiencies and generating frequent user experience complaints."
   }
 ]
