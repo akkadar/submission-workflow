@@ -215,5 +215,28 @@
     "innNovelty": "Current microwave links typically operate at full carrier configuration regardless of actual traffic demand.\n\nThis solution introduces:\nAutomatic carrier-level energy optimization.\nTraffic-aware on/off switching between single and dual/multiple carrier operation.\nFuture predictive AI capability that can proactively prepare the network for expected traffic changes.\nUsing a dedicated efficient Adge AI computing, implemented in HW FPGA device near the traffic.\nThe combination of power saving and service-aware operation creates a practical Green Mode capability for backhaul. networks.",
     "innFeasibility": "Validation Approach:\nImplement Scheduled Carrier Switching as an initial PoC.\n\nDefine safe switching procedures and recovery mechanisms.\n\nVerify seamless carrier restoration during traffic spikes.\n\nMeasure actual power savings in lab and field deployments.\n\nResources & Timeline:\nSoftware development in network management, EMS and radio control components.\nLab validation work and might followed by limited customer / Beta sites trials.\nPhased implementation from scheduled mode to dynamic traffic-aware mode.",
     "innFit": "The solution aligns with Ceragon's goals of improving network efficiency and delivering innovative backhaul capabilities.\nBenefits include:\nAdded value for mobile network operators.\nReduced customer operating costs\nSupport for sustainability and energy-saving initiatives.\nCan be integrated into existing Ceragon management and radio platforms.\nThis feature strengthens Ceragon's competitive position by offering a practical energy-efficiency capability without requiring new hardware."
+  },
+  {
+    "id": "SUB-MSHWB3KL-G0TQ",
+    "now": "6 August 2026 at 15:15",
+    "track": "inn",
+    "teamName": "SDR",
+    "org": "North America",
+    "leadName": "Gregg Grisevich",
+    "leadEmail": "greggg@ceragon.com",
+    "leadPhone": "18605938869",
+    "members": [],
+    "title": "Channel Partner AI Agent",
+    "abstract": "Ceragon has a full time Inside Sales Representative to respond to web site Leads, and inquiries from potential customers, and  channel partners who have questions.  As of 12/31/26 this position is being eliminated.   AI Agent could be used to prompt anyone who comes to our web site",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "The volume of calls, emails, and web inquiries is too great to assign this task to someone who has other responsibilities. If we do not develop and AI agent to replace the SDR the support our partners receive in the pre sale process will be greatly diminished",
+    "innNovelty": "I have performed this function full time for 4 years. Many of the inquiries I receive are of a similar nature and I think lend themselves to an AI agent solution",
+    "innFeasibility": "This is already happening in many industries",
+    "innFit": "If Channel Partners are going to be a strategic element in the Ceragon growth plan then we must address how to support them once the SDR role is eliminated"
   }
 ]
