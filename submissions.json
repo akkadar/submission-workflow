@@ -238,5 +238,28 @@
     "innNovelty": "I have performed this function full time for 4 years. Many of the inquiries I receive are of a similar nature and I think lend themselves to an AI agent solution",
     "innFeasibility": "This is already happening in many industries",
     "innFit": "If Channel Partners are going to be a strategic element in the Ceragon growth plan then we must address how to support them once the SDR role is eliminated"
+  },
+  {
+    "id": "SUB-MSIJ7RKR-XHDC",
+    "now": "7 August 2026 at 11:26",
+    "track": "inn",
+    "teamName": "Process Pioneers",
+    "org": "Supply Chain",
+    "leadName": "Vikash Shekhar",
+    "leadEmail": "vikass@ceragon.com",
+    "leadPhone": "9643833443",
+    "members": [],
+    "title": "Supplier Payment Process Improvement",
+    "abstract": "To implement a centralized vendor portal that enables suppliers to upload shipment information and invoices through an Advance Shipment Notice (ASN) process while automating notifications and document flow across Warehouse, SCM, and Finance teams.\nThe solution will provide real-time shipment visibility, automate document sharing, and streamline the vendor payment process.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Project Background-: Currently, there is no centralized platform to track inbound vendor shipments. Shipment notifications, invoice submissions, and document sharing are managed through manual email communication between suppliers and internal stakeholders. Once materials are received at the warehouse, the Warehouse team manually shares Goods Receipt Note (GRN) details and supporting documents with the Finance team to initiate vendor payments.\nThis process results in:\n•\tLimited visibility of inbound shipments.\n•\tDependency on manual communication and follow-ups.\n•\tDelayed document sharing and payment processing.\n•\tIncreased risk of missing documentation.\n•\tLack of real-time collaboration among Suppliers, Warehouse, SCM, and Finance teams.\n\nProposed Solution:- Develop a web-based Vendor Portal with the following capabilities:\nSupplier Activities\n•\tUpload Advance Shipment Notice (ASN).\n•\tUpload Invoice and supporting shipment documents.\n•\tTrack shipment and document submission status.\nAutomated Workflow\n1.\tSupplier submits ASN, invoice, and supporting documents through the portal.\n2.\tAutomated notifications are sent to: \no\tWarehouse Team\no\tSupply Chain Management Team\no\tFinance Team\n3.\tWarehouse team gains advance visibility of incoming shipments and can plan resources accordingly.\n4.\tUpon material receipt, Warehouse team performs Goods Receipt (GRN) and updates status in the portal.\n5.\tFinance team receives automated notification along with GRN confirmation and supporting documents.\n6.\tPayment processing is initiated without manual intervention from the Warehouse team.",
+    "innNovelty": "To implement a centralized vendor portal that enables suppliers to upload shipment information and invoices through an Advance Shipment Notice (ASN) process while automating notifications and document flow across Warehouse, SCM, and Finance teams.\nThe solution will provide real-time shipment visibility, automate document sharing, and streamline the vendor payment process",
+    "innFeasibility": "We are not planning to change any financial process, just try to reduce the manual work to automated.",
+    "innFit": "The proposed Vendor Shipment Visibility Portal will establish a digital, transparent, and automated process from shipment dispatch through payment initiation. The solution will improve operational efficiency, enhance warehouse planning, accelerate finance processing, reduce manual effort, and create a seamless collaboration platform for suppliers and internal stakeholders."
   }
 ]
