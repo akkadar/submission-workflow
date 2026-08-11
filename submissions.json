@@ -261,5 +261,28 @@
     "innNovelty": "To implement a centralized vendor portal that enables suppliers to upload shipment information and invoices through an Advance Shipment Notice (ASN) process while automating notifications and document flow across Warehouse, SCM, and Finance teams.\nThe solution will provide real-time shipment visibility, automate document sharing, and streamline the vendor payment process",
     "innFeasibility": "We are not planning to change any financial process, just try to reduce the manual work to automated.",
     "innFit": "The proposed Vendor Shipment Visibility Portal will establish a digital, transparent, and automated process from shipment dispatch through payment initiation. The solution will improve operational efficiency, enhance warehouse planning, accelerate finance processing, reduce manual effort, and create a seamless collaboration platform for suppliers and internal stakeholders."
+  },
+  {
+    "id": "SUB-MSOEWEK9-HD3E",
+    "now": "11 August 2026 at 11:42",
+    "track": "inn",
+    "teamName": "",
+    "org": "",
+    "leadName": "",
+    "leadEmail": "",
+    "leadPhone": "",
+    "members": [],
+    "title": "NetMaster Lifecycle Intelligence & Upgrade Recommendation",
+    "abstract": "Enhance NetMaster with continuous lifecycle intelligence to identify Out of Support and End of Life equipment, notify customers of lifecycle risks, and recommend suitable replacement solutions. This will enable proactive network modernization, improve customer visibility, reduce operational risks, and create new opportunities for upgrades, upselling, and network transformation.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Significance of the Problem\n\nCustomers often lack clear and continuous visibility into the lifecycle status of equipment deployed in their networks. Out of Support or End of Life equipment may remain in operation without the customer being fully aware of the associated support, availability, and operational risks. Today, identifying such equipment and planning replacements can require manual analysis and coordination, making the process reactive rather than proactive.\n\nExpected Outcomes\n\nThe proposed NetMaster capability would provide continuous lifecycle visibility and proactively identify equipment approaching or already in OoS/EoL status. It would:\n\nReduce the risk associated with unsupported or obsolete equipment.\nHelp customers proactively plan network upgrades and modernization.\nProvide recommended replacement solutions, reducing the effort required to identify upgrade paths.\nImprove customer awareness and engagement around network lifecycle management.\nCreate new opportunities for equipment upgrades, upselling, and network modernization.\nPosition NetMaster as a more proactive network lifecycle management and business-enablement platform, rather than only a network monitoring and inventory tool.",
+    "innNovelty": "The novelty is in integrating equipment lifecycle intelligence directly into NetMaster, rather than relying on separate lifecycle databases, manual checks, or commercial assessments.\n\nNetMaster would proactively identify OoS/EoL equipment within the live managed network and link each affected element to a recommended replacement or upgrade path. This combines network management, lifecycle visibility, and modernization recommendations in a single platform.\n\nThe approach would shift lifecycle management from a reactive, manual process to a proactive and automated capability, creating value for both customers and the business.",
+    "innFeasibility": "es. The proposed functionality is realistic and achievable using existing NetMaster capabilities and available data sources.\n\nThe solution can leverage existing inventory, device identification, and database mechanisms to identify OoS/EoL equipment, display lifecycle status, provide notifications, and recommend replacement products where applicable.\n\nThe main dependency is having an accurate and regularly maintained database of product lifecycle information and recommended replacements.\n\nOverall, the project is technically feasible and can be implemented incrementally, with the potential to evolve into a broader NetMaster lifecycle management capability.",
+    "innFit": "The project supports the company’s focus on customer value, network modernization, digitalization, and revenue growth.\n\nIt strengthens NetMaster as a strategic network management platform by providing customers with proactive lifecycle visibility and actionable upgrade recommendations. At the same time, it supports tactical priorities by helping identify upgrade, upsell, and modernization opportunities based on the actual equipment deployed in customer networks.\n\nThe solution also promotes proactive customer engagement, reduces the risks associated with obsolete equipment, and encourages migration toward newer, supported technologies."
   }
 ]
