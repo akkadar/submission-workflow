@@ -307,5 +307,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MSP5HUKF-MPRH",
+    "now": "12 August 2026 at 00:06",
+    "track": "ai",
+    "teamName": "Tier-3 Customer Support",
+    "org": "Global Customer Support",
+    "leadName": "Miroslav Cervenka",
+    "leadEmail": "Miroslav.Cervenka@ceragon.com",
+    "leadPhone": "",
+    "members": [],
+    "title": "MindLog AI: Intelligent Log Analysis for Faster Troubleshooting",
+    "abstract": "MindLog AI uses natural language processing and automated pattern detection to analyze technical logs, identify significant events, and generate structured troubleshooting reports. It reduces manual investigation effort, improves consistency, and helps support engineers reach evidence-based conclusions faster while retaining human validation of the final findings.",
+    "aiCat": "Natural Language Processing",
+    "repo": "",
+    "aiImpact": "Technical log analysis is often time-consuming and dependent on individual expertise. MindLog AI reduces the effort required to review large log files by highlighting significant events, patterns, anomalies, and relevant time correlations. Expected outcomes include faster troubleshooting, more consistent investigations, improved knowledge sharing, and reduced risk of overlooking important evidence.",
+    "aiNovelty": "MindLog AI combines log parsing, configurable keyword intelligence, pattern detection, PM analysis, AI-generated explanations, and structured reporting in a workflow designed specifically for technical support investigations. Unlike generic log-search tools, it converts raw evidence into prioritized and readable findings while preserving the original log context for engineering validation.",
+    "aiFeasibility": "A working solution has already been developed and can be demonstrated using anonymized technical logs. The project can be expanded incrementally by adding supported log formats, improving event correlation, validating results against engineer-led investigations, and incorporating feedback from support and R&D teams.",
+    "aiFit": "MindLog AI supports Ceragon’s operational and customer-support priorities by accelerating technical investigations, improving analysis consistency, and helping engineers reuse troubleshooting knowledge. The solution can support Customer Support, R&D, QA, integration, and field teams while improving case-handling efficiency and the quality of technical reports. It also can be use as a tool for network audit.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
