@@ -284,5 +284,28 @@
     "innNovelty": "The novelty is in integrating equipment lifecycle intelligence directly into NetMaster, rather than relying on separate lifecycle databases, manual checks, or commercial assessments.\n\nNetMaster would proactively identify OoS/EoL equipment within the live managed network and link each affected element to a recommended replacement or upgrade path. This combines network management, lifecycle visibility, and modernization recommendations in a single platform.\n\nThe approach would shift lifecycle management from a reactive, manual process to a proactive and automated capability, creating value for both customers and the business.",
     "innFeasibility": "es. The proposed functionality is realistic and achievable using existing NetMaster capabilities and available data sources.\n\nThe solution can leverage existing inventory, device identification, and database mechanisms to identify OoS/EoL equipment, display lifecycle status, provide notifications, and recommend replacement products where applicable.\n\nThe main dependency is having an accurate and regularly maintained database of product lifecycle information and recommended replacements.\n\nOverall, the project is technically feasible and can be implemented incrementally, with the potential to evolve into a broader NetMaster lifecycle management capability.",
     "innFit": "The project supports the company’s focus on customer value, network modernization, digitalization, and revenue growth.\n\nIt strengthens NetMaster as a strategic network management platform by providing customers with proactive lifecycle visibility and actionable upgrade recommendations. At the same time, it supports tactical priorities by helping identify upgrade, upsell, and modernization opportunities based on the actual equipment deployed in customer networks.\n\nThe solution also promotes proactive customer engagement, reduces the risks associated with obsolete equipment, and encourages migration toward newer, supported technologies."
+  },
+  {
+    "id": "SUB-MSOM186F-8H1M",
+    "now": "11 August 2026 at 17:31",
+    "track": "ai",
+    "teamName": "AI Network Intelligence",
+    "org": "East Zone BSNL NMS / Network Operations",
+    "leadName": "Madhup Ranjan Pandey",
+    "leadEmail": "madhupp@ceragon.com",
+    "leadPhone": "91+9819487791",
+    "members": [],
+    "title": "AI-Powered Telecom Network Monitoring, RCA & Voice Assistant",
+    "abstract": "An AI-enabled telecom network monitoring platform that provides real-time visibility of network links, intelligent alarm analysis, root cause identification, and voice-based interaction. The solution consolidates NMS data, identifies issues such as link failures, node disconnections, RSL and XPI conditions, and enables faster operational decision-making.",
+    "aiCat": "Natural Language Processing",
+    "repo": "https://github.com/mrpandey-devops",
+    "aiImpact": "The solution reduces manual monitoring effort by providing centralized network visibility, faster issue identification and intelligent RCA support. It can improve response time, reduce operational dependency on manual analysis, and help network teams make faster, data-driven decisions.",
+    "aiNovelty": "The solution combines real-time NMS monitoring, network alarm interpretation, RCA and voice-based AI interaction in a single operational interface. Instead of requiring engineers to manually correlate multiple network conditions, the assistant converts network data into actionable insights through natural-language interaction.",
+    "aiFeasibility": "The solution is built around existing NMS data and operational workflows, making it practical to integrate with the current network monitoring environment. The modular architecture allows AI capabilities, dashboards and automation features to be introduced incrementally without requiring major changes to the underlying network infrastructure.",
+    "aiFit": "The solution aligns with Ceragon’s focus on intelligent network operations, automation and improved customer experience. By enhancing network visibility, accelerating fault analysis and enabling AI-assisted operations, it can support efficient NMS operations and scalable service assurance for telecom networks.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
