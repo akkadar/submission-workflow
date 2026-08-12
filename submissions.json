@@ -353,5 +353,39 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MSQ4NZDK-LGKX",
+    "now": "12 August 2026 at 16:31",
+    "track": "ai",
+    "teamName": "",
+    "org": "",
+    "leadName": "",
+    "leadEmail": "",
+    "leadPhone": "",
+    "members": [
+      {
+        "name": "",
+        "email": "",
+        "role": ""
+      },
+      {
+        "name": "",
+        "email": "",
+        "role": ""
+      }
+    ],
+    "title": "Guy",
+    "abstract": "I send a project and recieved the code SUB-MSP5HUKF-MPRH-receipt. Thanks.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
