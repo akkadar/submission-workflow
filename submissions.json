@@ -433,5 +433,39 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MSYG1BIC-ZEEM",
+    "now": "18 August 2026 at 12:11",
+    "track": "inn",
+    "teamName": "ctr+alt+deal",
+    "org": "Sales/Operations",
+    "leadName": "Daniela Saghin",
+    "leadEmail": "danielas@ceragon.com",
+    "leadPhone": "",
+    "members": [
+      {
+        "name": "Francesco Papa",
+        "email": "francescop@ceragon.com",
+        "role": "Sales Manager Smart Cities"
+      },
+      {
+        "name": "Aylin Celik",
+        "email": "Aylinc@ceragon.com",
+        "role": "CSM"
+      }
+    ],
+    "title": "Quote-to-Order Automation: Connecting Salesforce, Partner Portal & Oracle",
+    "abstract": "Today, a signed contract takes six manual handoffs: email, Excel, re-entry — before reaching Oracle. This project connects Salesforce, the Partner Portal, and Oracle so clients submit their BOM/PO directly, pre-filled with account data. The PO auto-pushes to Oracle, and Salesforce status updates itself — no manual entry, no delay",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Every PO currently passes through six manual handoffs, adding days of delay, error risk, and no real-time Salesforce visibility — while a full Orders team is dedicated to re-entry work a system could do instantly. Automating this cuts time-to-revenue, removes duplicate data entry, and frees the Orders team to focus on true exceptions instead of routine processing.",
+    "innNovelty": "Rather than adding another manual checkpoint or a generic ERP integration, this approach uses data Salesforce already holds (VAT, tax, currency) to eliminate re-entry entirely, and ties Salesforce's opportunity status directly to a real business event (PO receipt) instead of a manual update. The BOM Validation and Orders teams' manual steps are removed, not just streamlined.",
+    "innFeasibility": "The integration relies on standard, well-understood tools already used at enterprise scale — either a native Oracle-Salesforce adapter, MuleSoft (Salesforce's own iPaaS), or a custom API integration against both systems' REST APIs. No new platform purchase is required. A phased pilot (2–3 accounts) lets IT validate data mapping and business rules before full rollout.",
+    "innFit": "This directly supports the quote-to-cash motion — a core, cross-functional sales operations priority — by removing friction between Sales, CSM, and Orders. It reduces operational cost through better resource allocation, improves partner/customer experience with faster order confirmation, and strengthens Salesforce as the single source of truth for pipeline status."
   }
 ]
