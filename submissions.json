@@ -467,5 +467,44 @@
     "innNovelty": "Rather than adding another manual checkpoint or a generic ERP integration, this approach uses data Salesforce already holds (VAT, tax, currency) to eliminate re-entry entirely, and ties Salesforce's opportunity status directly to a real business event (PO receipt) instead of a manual update. The BOM Validation and Orders teams' manual steps are removed, not just streamlined.",
     "innFeasibility": "The integration relies on standard, well-understood tools already used at enterprise scale — either a native Oracle-Salesforce adapter, MuleSoft (Salesforce's own iPaaS), or a custom API integration against both systems' REST APIs. No new platform purchase is required. A phased pilot (2–3 accounts) lets IT validate data mapping and business rules before full rollout.",
     "innFit": "This directly supports the quote-to-cash motion — a core, cross-functional sales operations priority — by removing friction between Sales, CSM, and Orders. It reduces operational cost through better resource allocation, improves partner/customer experience with faster order confirmation, and strengthens Salesforce as the single source of truth for pipeline status."
+  },
+  {
+    "id": "SUB-MSYKV6VQ-0BCJ",
+    "now": "18 August 2026 at 14:26",
+    "track": "inn",
+    "teamName": "Power saving initiative by System & Research",
+    "org": "R&D",
+    "leadName": "Yossi Barda",
+    "leadEmail": "yossiba@ceragon.com",
+    "leadPhone": "",
+    "members": [
+      {
+        "name": "Yoav Heiman",
+        "email": "yoavh@ceragon.com",
+        "role": "Manager, System Architecture"
+      },
+      {
+        "name": "Efi Dvir",
+        "email": "efid@ceragon.com",
+        "role": "Research Engineer"
+      },
+      {
+        "name": "Olga Gabaev Gilan",
+        "email": "olgag@ceragon.com",
+        "role": "System Architect"
+      }
+    ],
+    "title": "Intelligent Traffic-Aware Carrier reduction for Energy-Efficient Backhaul Links",
+    "abstract": "Implement dynamic carrier on/off switching to consolidate traffic onto theminimum number of carriers during low-utilization periods and restore capacityas demand increases, reducing energy consumption and operational costs. Thesolution leverages an FPGA-based edge AI engine located near the traffic sourcefor fast, real-time decision making.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Customer Benefits:\nReduced power consumption across microwave deployments,\nLower network operating costs (OPEX),\nImproved sustainability and ESG metrics\nExtended equipment lifespan through lower thermal stress.\nCeragon Benefits:\nDifferentiating Green Networking capability,\nStrong value proposition for operators seeking energy-efficient infrastructure,\nIncreased competitiveness in new opportunities and tenders.\nMeasured Lab Results:\nInitial PoC showed approximately 10.5W power reduction per node for IP-50CX,\nApproximately 21W power reduction per link in a 2+0 configuration,\nIn case of RFU-D-HP unit, the power saving reached to 25W, 50W per link,\nPotentially larger savings in higher-capacity configurations such as 8+0 and 12+0 systems.",
+    "innNovelty": "Unlike traditional microwave links that keep all carriers active regardless of traffic conditions, this approach introduces dynamic traffic-aware carrier management.\nThe combination of power savings, operational simplicity, and future AI readiness creates a unique Green Mode capability for Ceragon's portfolio.",
+    "innFeasibility": "PoC Validation:\nInitial laboratory testing has already been performed.\nDisabling a radio chain demonstrated measurable power reduction without system restart.\nMeasure power savings under real traffic conditions.\nImplement traffic-aware threshold-based switching.\nSuccess Criteria:\nZero impact on traffic availability.\nDemonstrated energy reduction.",
+    "innFit": "This initiative directly supports Ceragon's strategy of delivering innovative, efficient, and high-performance wireless transport solutions.\nThe feature is customer-facing, applicable across multiple product families, and aligns with both near-term product enhancement goals and long-term intelligent networking vision."
   }
 ]
