@@ -506,5 +506,28 @@
     "innNovelty": "Unlike traditional microwave links that keep all carriers active regardless of traffic conditions, this approach introduces dynamic traffic-aware carrier management.\nThe combination of power savings, operational simplicity, and future AI readiness creates a unique Green Mode capability for Ceragon's portfolio.",
     "innFeasibility": "PoC Validation:\nInitial laboratory testing has already been performed.\nDisabling a radio chain demonstrated measurable power reduction without system restart.\nMeasure power savings under real traffic conditions.\nImplement traffic-aware threshold-based switching.\nSuccess Criteria:\nZero impact on traffic availability.\nDemonstrated energy reduction.",
     "innFit": "This initiative directly supports Ceragon's strategy of delivering innovative, efficient, and high-performance wireless transport solutions.\nThe feature is customer-facing, applicable across multiple product families, and aligns with both near-term product enhancement goals and long-term intelligent networking vision."
+  },
+  {
+    "id": "SUB-MSYO6MWI-0ZVE",
+    "now": "18 August 2026 at 15:59",
+    "track": "ai",
+    "teamName": "404: Lead Not Lost",
+    "org": "Sales",
+    "leadName": "Daniela Saghin",
+    "leadEmail": "danielas@ceragon.com",
+    "leadPhone": "",
+    "members": [],
+    "title": "Lead & Partner Workflow Automation: AI-Assisted Follow-Up Across HubSpot, Salesforce & Outlook",
+    "abstract": "EMEA/LATAM Inside Sales handles too many leads across Salesforce, events, and outbound to track manually. This project uses AI to draft follow-up emails on unanswered leads, on a cadence I set, approved before sending — plus routes existing-client requests to account owners and gates new leads to company emails only.",
+    "aiCat": "Generative AI",
+    "repo": "",
+    "aiImpact": "Untracked leads across Salesforce, events, and outbound mean missed follow-ups and lost pipeline — with no system flagging who needs contact, or when. Automating follow-up ensures zero leads go cold, cuts existing-client routing from days to minutes, and gives Inside Sales a consistent, scalable process across EMEA and LATAM.",
+    "aiNovelty": "Unlike generic sales-cadence tools that auto-send on a fixed schedule, this approach keeps a human in the loop: AI drafts each follow-up using the lead's actual history and source context, but nothing sends without my review and approval. It also solves a root-cause gap most tools miss — the BCC email-to-Salesforce workaround that hides client replies — by replacing it with a clean CC alias, so the AI's \"no reply\" signal is actually accurate instead of guessed.",
+    "aiFeasibility": "Yes — this relies on capabilities Claude already supports natively: a Salesforce connector, a recurring task to check for unanswered leads, and human approval before sending, with no new platform purchase required. The scope is phased: Phase 1 connects Salesforce and defines cadence/approval rules, Phase 2 pilots on a subset of leads for 2–4 weeks, and only after that does IT add the configuration-only workflows (routing, email-domain gate, partner vetting).",
+    "aiFit": "This directly supports revenue growth in EMEA and LATAM by ensuring no lead goes untracked, while giving Inside Sales a repeatable, scalable process instead of manual tracking that doesn't grow with volume. It strengthens Salesforce as the single source of pipeline truth, reduces friction for existing clients reaching their account owner, and sets a consistent, auditable bar for who becomes a partner — all while keeping a human approving every customer-facing message.",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
