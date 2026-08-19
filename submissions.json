@@ -581,5 +581,28 @@
     "innNovelty": "Rather than adding another manual checkpoint or a generic ERP integration, this approach uses data Salesforce already holds (VAT, tax, currency) to eliminate re-entry entirely, and ties Salesforce's opportunity status directly to a real business event (PO receipt) instead of a manual update. The BOM Validation and Orders teams' manual steps are removed, not just streamlined.",
     "innFeasibility": "The integration relies on standard, well-understood tools already used at enterprise scale — either a native Oracle-Salesforce adapter, MuleSoft (Salesforce's own iPaaS), or a custom API integration against both systems' REST APIs. No new platform purchase is required. A phased pilot (2–3 accounts) lets IT validate data mapping and business rules before full rollout.",
     "innFit": "This directly supports the quote-to-cash motion — a core, cross-functional sales operations priority — by removing friction between Sales, CSM, and Orders. It reduces operational cost through better resource allocation, improves partner/customer experience with faster order confirmation, and strengthens Salesforce as the single source of truth for pipeline status."
+  },
+  {
+    "id": "SUB-MT09NB0S-6M26",
+    "now": "19 August 2026 at 18:48",
+    "track": "inn",
+    "teamName": "High-capacity transport aggregation node",
+    "org": "Product Marketing Team",
+    "leadName": "Boaz Rein",
+    "leadEmail": "boazr@ceragon.com",
+    "leadPhone": "+972544991590",
+    "members": [],
+    "title": "High-capacity transport aggregation node",
+    "abstract": "High-capacity transport aggregation node: modification of products like IP-50GP, IP-50GPX and similar future products (with higher-speed interfaces). Potential customers: CSPs and WISPs or  vendors that do not directly compete with us WITH similar needs: FSO providers, FWA vendors (like RADWIN, Mimosa, Ubiquity) and Private Networks using FSO, fiber, private 5G.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "We can aggregate traffic from multiple links, FWA solutions etc, and provide to them high-speed interface towards the network such as 25 GbE interfaces (50 GbE, 100 GbE in the future). We can split the traffic in a sophisticated way, provide redundancy etc.",
+    "innNovelty": "Generic Ethernet switch is probably not attractive, but a wireless-aware aggregation platform derived from IP-50GP/IP-50GPX could be a credible adjacent market for Ceragon, particularly targeting FSO and private network operators. Our radio-aware capabilities such as L1 aggregation or support in sync protocols may create a benefit here. Unlike the big generic switch vendors, we have the know-how and we may also \"tailor\" specific solutions to customers.",
+    "innFeasibility": "IP-50GP/IP-50GPX, our L1 aggregation (proved to work with third parties) and sync protocol support should be a great base.",
+    "innFit": "Additional revenues, low-hanging fruits, extremely relevant for CSPs/ISPs but also matches the end-to-end solutions that PN are looking for - also providing something integrators cannot do."
   }
 ]
