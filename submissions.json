@@ -604,5 +604,28 @@
     "innNovelty": "Generic Ethernet switch is probably not attractive, but a wireless-aware aggregation platform derived from IP-50GP/IP-50GPX could be a credible adjacent market for Ceragon, particularly targeting FSO and private network operators. Our radio-aware capabilities such as L1 aggregation or support in sync protocols may create a benefit here. Unlike the big generic switch vendors, we have the know-how and we may also \"tailor\" specific solutions to customers.",
     "innFeasibility": "IP-50GP/IP-50GPX, our L1 aggregation (proved to work with third parties) and sync protocol support should be a great base.",
     "innFit": "Additional revenues, low-hanging fruits, extremely relevant for CSPs/ISPs but also matches the end-to-end solutions that PN are looking for - also providing something integrators cannot do."
+  },
+  {
+    "id": "SUB-MT0AGIJB-2N0M",
+    "now": "19 August 2026 at 19:11",
+    "track": "inn",
+    "teamName": "E-Band to Smart Pol players",
+    "org": "Product Marketing Team",
+    "leadName": "Boaz Rein",
+    "leadEmail": "boazr@ceragon.com",
+    "leadPhone": "+972544991590",
+    "members": [],
+    "title": "E-Band to Smart Pol",
+    "abstract": "Cooperate with a leading Smart Pol vendor to easily integrate our E-Band solution as their preferred backhaul solution - some mechanical integration may take place, if needed - enough to increase stickiness but not too deep to limit us to a specific venfor etc..",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "smart pole deployment may require high-capacity backhaul without digging new fiber",
+    "innNovelty": "E-band is the ideal solution - especially our small light type of solutions.",
+    "innFeasibility": "Integration, possibly mechanical adjustment.",
+    "innFit": "Ceragon naturally fits one of the most critical layers inside a smart pole architecture: backhaul connectivity."
   }
 ]
