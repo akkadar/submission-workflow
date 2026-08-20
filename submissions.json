@@ -650,5 +650,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MT1LE45L-WD7K",
+    "now": "20 August 2026 at 19:34",
+    "track": "inn",
+    "teamName": "RMA",
+    "org": "RMA",
+    "leadName": "Laurel",
+    "leadEmail": "laurels@ceragon.com",
+    "leadPhone": "",
+    "members": [],
+    "title": "RMA tracking",
+    "abstract": "Live status of any open RMA case.\nIf tracking all the cases is an issue, we can track only the open cases and not the previously closed cases.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Real time information on the status of the RMA",
+    "innNovelty": "There is no real time data unless we manually check at every stage",
+    "innFeasibility": "Yes. All the required data is available but in different places. We need a cloud database to display this data at one place and refresh regularly to stay updated.",
+    "innFit": "Better visibility for anyone in Ceragon to check up on the current status of an RMA"
   }
 ]
