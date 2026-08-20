@@ -673,5 +673,34 @@
     "innNovelty": "There is no real time data unless we manually check at every stage",
     "innFeasibility": "Yes. All the required data is available but in different places. We need a cloud database to display this data at one place and refresh regularly to stay updated.",
     "innFit": "Better visibility for anyone in Ceragon to check up on the current status of an RMA"
+  },
+  {
+    "id": "SUB-MT1OJEK2-0GOK",
+    "now": "20 August 2026 at 11:33",
+    "track": "ai",
+    "teamName": "SDR",
+    "org": "North America",
+    "leadName": "Gregg Grisevich",
+    "leadEmail": "greggg@ceragon.com",
+    "leadPhone": "18605938869",
+    "members": [
+      {
+        "name": "Michael Bridge",
+        "email": "Michaelbr@ceragon.com",
+        "role": "Sales Director"
+      }
+    ],
+    "title": "Channel Partner AI Agent",
+    "abstract": "AI Agent to guide Channel Partners on how to find the proper resources within Ceragon.",
+    "aiCat": "Natural Language Processing",
+    "repo": "",
+    "aiImpact": "After Dec 31, 2026 the SDR position is eliminated and therefore the main point of contact for many inquiries will be lost. An AI agent could be more efficient than hiring staff or re-assigning the responsibilities",
+    "aiNovelty": "Using an AI agent partners can have access to our knowledge base, and receive fast answers to common questions 24x7x365",
+    "aiFeasibility": "I believe the scope can be narrow in the initial stages and perhaps expand as the technology improves",
+    "aiFit": "Success with our Sales Channels is a core Ceragon strategy",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
