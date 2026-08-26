@@ -702,5 +702,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MT9QVLI3-KLJD",
+    "now": "26 August 2026 at 12:30",
+    "track": "inn",
+    "teamName": "Individual",
+    "org": "Technical Support India",
+    "leadName": "Ashish Kumar jha",
+    "leadEmail": "ashishjha@ceragon.com",
+    "leadPhone": "+919810470366",
+    "members": [],
+    "title": "CeraOS _Distributed Software architecture _operational excellence",
+    "abstract": "we are going to solve contemporary software upgrade issues for Giant network.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Ceragon complete solution as operation excellency to manage giant network (Mostly deployed in India) \nOnly optimized resources is required to manage network upgrade ,reduction of 70% to 75% ,huge cost saving .\nLess time is required for upgrade activity ,to have most updated network and maintain \nFaster implementation of new function /Functionality ,customer no need to wait for 6 to 8 month for implementation and start using new functionality .\nUnique solution that will support giant network with operational excellency and easy maintenance .\nLess BW required for software download ,will increase faster download with (20MB patch)  existing setup  ,will eliminate requirement of 200MB PKG to individual units.",
+    "innNovelty": "as far as I know none of the OEM is having such capability",
+    "innFeasibility": "Example — INNO.LAB: first concept need to be evaluated along with our software team ,define feasibility .\n\tpost assessment concept need to formulate with time estimation and cost involvement \nOnce software is ready it can be tested in lab and later with POC in customer network.",
+    "innFit": "Example — INNO.LAB: A company-wide movement that strengthens the core and explores adjacencies across every region and function - sponsored by the CLT, governed by the Innovation Review Board (IRB), and aligned with the AOP to benefit employees, company, and customers\nIt will be inline with ceragon strategy for innovation \nNetwork management excellency  and software design state of the art \nSurly support for Managed services owned by ceragon ,cost effective solution with less resource requirement and improved efficiency to deliver services ."
   }
 ]
