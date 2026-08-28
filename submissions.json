@@ -748,5 +748,39 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MTCQ8AYH-I8CJ",
+    "now": "28 August 2026 at 14:35",
+    "track": "inn",
+    "teamName": "Finance & Accounting",
+    "org": "Accounts payable",
+    "leadName": "Arghadeep Das",
+    "leadEmail": "arghadeepd@ceragon.com",
+    "leadPhone": "+91 7709935008",
+    "members": [
+      {
+        "name": "Manjunath V S",
+        "email": "manjunathv@ceragon.com",
+        "role": "Bookkeeper"
+      },
+      {
+        "name": "Trimukha Hegde",
+        "email": "trimukhah@ceragon.com",
+        "role": "Bookkeeper"
+      }
+    ],
+    "title": "Evaluated ReEvaluated Receipt Settlement (ERS) in Accounts Payableceipt Settlement (ERS)",
+    "abstract": "I would like to propose the implementation of an Evaluated Receipt Settlement (ERS) process within Accounts Payable. Under this model, supplier invoices would be automatically generated in the AP system based on approved Purchase Orders (POs) and validated Goods Receipts (GRs).",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Problem Formulation\nSupplier invoices are uploaded through spreadsheet-based processes for invoice matching.\nVenture and Ionics invoices contain multiple PO line items.If even one line item has a pending Goods Receipt (GR), the entire invoice fails the matching process.\nPrice variances between the Purchase Order and supplier invoice also result in matching exceptions.\nAP teams spend significant time coordinating with Procurement, Receiving, and Suppliers to resolve discrepancies.\nPayment processing is delayed until all invoice exceptions are cleared.\nProposed Solution\nERS automatically generates supplier invoices based on approved Purchase Orders and validated Goods Receipts.",
+    "innNovelty": "Current: Supplier Invoice -> AP Review -> Uploading spreadsheet for Matching -> Invoice Validation & Reconciliation>Payment\n\nERS: PO -> Goods Receipt -> Auto Invoice -> Payment\n\n• Touchless AP processing\n• Reduced supplier dependency\n• Scalable finance operations",
+    "innFeasibility": "",
+    "innFit": "• Supports operational excellence\n• Accelerates digital transformation\n• Improves controls across P2P\n• Enables scalable growth\n• Enhances supplier relationships.\n• Contribution for Ceragon vision"
   }
 ]
