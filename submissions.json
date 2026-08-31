@@ -782,5 +782,28 @@
     "innNovelty": "Current: Supplier Invoice -> AP Review -> Uploading spreadsheet for Matching -> Invoice Validation & Reconciliation>Payment\n\nERS: PO -> Goods Receipt -> Auto Invoice -> Payment\n\n• Touchless AP processing\n• Reduced supplier dependency\n• Scalable finance operations",
     "innFeasibility": "",
     "innFit": "• Supports operational excellence\n• Accelerates digital transformation\n• Improves controls across P2P\n• Enables scalable growth\n• Enhances supplier relationships.\n• Contribution for Ceragon vision"
+  },
+  {
+    "id": "SUB-MTHB4A9R-APUB",
+    "now": "31 August 2026 at 19:31",
+    "track": "inn",
+    "teamName": "Individual",
+    "org": "Technical Support India",
+    "leadName": "Ashish Kumar jha",
+    "leadEmail": "ashishjha@ceragon.com",
+    "leadPhone": "+919810470366",
+    "members": [],
+    "title": "Simplified Installation All outdoor (XPIC) – OMT Integration with Antenna",
+    "abstract": "this will enable faster deployment of 1+0 (all outdoor -ready to convert remotely as XPIC)\nand XPIC.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Cost  saving and Partner do not require multiple visit .\nLess effort is required for XPIC installation \nWe will move from complex process to idiot- proof  process .\nThis will reduce our cost also and partner will be managed more preciously (without punch points ) .\nLess time for installation and commissioning ,will improve delivery precision \nLess issues will get report for rectification and will bring down inhouse team expences .",
+    "innNovelty": "It would be game changer for service delivery with FTR.\nAs of now no one offering such solution which is so easy for deployment",
+    "innFeasibility": "Post approval and new design POC can be performed .",
+    "innFit": "This will be applicable for all our outdoor solution \nThat will be deploy 1+0 and XPIC from day one \nAny new all outdoor product design also will fit this solution which will be easy for installation .\nMajority of the deployment is happening in 1+0 and XPIC \nLess challenges for installation issues \nFater deployment with FTR"
   }
 ]
