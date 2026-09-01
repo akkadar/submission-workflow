@@ -805,5 +805,28 @@
     "innNovelty": "It would be game changer for service delivery with FTR.\nAs of now no one offering such solution which is so easy for deployment",
     "innFeasibility": "Post approval and new design POC can be performed .",
     "innFit": "This will be applicable for all our outdoor solution \nThat will be deploy 1+0 and XPIC from day one \nAny new all outdoor product design also will fit this solution which will be easy for installation .\nMajority of the deployment is happening in 1+0 and XPIC \nLess challenges for installation issues \nFater deployment with FTR"
+  },
+  {
+    "id": "SUB-MTJ18Z5I-WQHB",
+    "now": "1 September 2026 at 22:00",
+    "track": "inn",
+    "teamName": "SW Embedded Infrastructure",
+    "org": "R&D",
+    "leadName": "Itsik Hadar",
+    "leadEmail": "itsikh@ceragon.com",
+    "leadPhone": "+972-52-2494318",
+    "members": [],
+    "title": "DAS - Distributed Antenna System",
+    "abstract": "Enter to a new segment of cellular system between the base station and the end user.\ndevelop distrinuter Antenna system for solving indoor capacity and coverage.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Cost of developing RF product\n12 billion dollars market\nThe same customers of backbone products",
+    "innNovelty": "Entering a new market with the knowledge and infrastructure at all levels of the company that we already have from R&D and marketing areas.",
+    "innFeasibility": "cerate a coverage at 2 rooms that currentlly do not have from the same cell and initiate phone call and use applications from both rooms at the same time.",
+    "innFit": "It is a subset of the products that we already have. it is the RF part."
   }
 ]
