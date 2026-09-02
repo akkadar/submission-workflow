@@ -828,5 +828,49 @@
     "innNovelty": "Entering a new market with the knowledge and infrastructure at all levels of the company that we already have from R&D and marketing areas.",
     "innFeasibility": "cerate a coverage at 2 rooms that currentlly do not have from the same cell and initiate phone call and use applications from both rooms at the same time.",
     "innFit": "It is a subset of the products that we already have. it is the RF part."
+  },
+  {
+    "id": "SUB-MTJVC16R-HX0Z",
+    "now": "2 September 2026 at 12:03",
+    "track": "inn",
+    "teamName": "Satellites",
+    "org": "Unknown",
+    "leadName": "Doron Nehoray",
+    "leadEmail": "doronn@ceragon.com",
+    "leadPhone": "+972528277455",
+    "members": [
+      {
+        "name": "Yoav Danieli",
+        "email": "yoavda@ceragon.com",
+        "role": "VP, Quality and Business Excellence"
+      },
+      {
+        "name": "Raquel Shmilovitz",
+        "email": "raquels@ceragon.com",
+        "role": "PM"
+      },
+      {
+        "name": "Moshe Libenson",
+        "email": "mosheli@ceragon.com",
+        "role": "Manager, Automatic Test Equipment"
+      },
+      {
+        "name": "Eytan Perso",
+        "email": "eytanp@ceragon.com",
+        "role": "Product Engineer"
+      }
+    ],
+    "title": "Satellite Ground Terminal & LEO-to-LEO Connectivity",
+    "abstract": "Satellite Ground Terminal and LEO-to-LEO Connectivity.\nThe opportunity is to enter the satellite connectivity market, where Ceragon is currently not active.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Enter the satellite connectivity market, where Ceragon is currently not active is a huge benefit.",
+    "innNovelty": "I guess no such solution that our competitors have.",
+    "innFeasibility": "The feasibility depends on the investment, resources, and strategic commitment that Ceragon is willing to allocate developing and supporting satellite connectivity solutions.",
+    "innFit": "No idea."
   }
 ]
