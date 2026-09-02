@@ -872,5 +872,28 @@
     "innNovelty": "I guess no such solution that our competitors have.",
     "innFeasibility": "The feasibility depends on the investment, resources, and strategic commitment that Ceragon is willing to allocate developing and supporting satellite connectivity solutions.",
     "innFit": "No idea."
+  },
+  {
+    "id": "SUB-MTK0NN8H-2HSB",
+    "now": "2 September 2026 at 13:32",
+    "track": "ai",
+    "teamName": "The Dolphin",
+    "org": "Global Presales / Sales Engineer",
+    "leadName": "Eduardo Alvarez",
+    "leadEmail": "Eduardo.Alvarez@ceragon.com",
+    "leadPhone": "+393409730998",
+    "members": [],
+    "title": "Chatbot Support for Customers based on IA",
+    "abstract": "To implement an IA Support in our website that help customers to resolve RTFM questions in a fast and efficient way, giving better focus to our Technical Support team, Sales Enginners and Sales Person.",
+    "aiCat": "Natural Language Processing",
+    "repo": "",
+    "aiImpact": "Efficiency, time usage, modernization, focus",
+    "aiNovelty": "We dont have this implemented",
+    "aiFeasibility": "Fully realistic",
+    "aiFit": "Improve experience either on Customers and Ceragon Employees",
+    "innImpact": "",
+    "innNovelty": "",
+    "innFeasibility": "",
+    "innFit": ""
   }
 ]
