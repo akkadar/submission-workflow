@@ -895,5 +895,28 @@
     "innNovelty": "",
     "innFeasibility": "",
     "innFit": ""
+  },
+  {
+    "id": "SUB-MTN5WP2P-RO41",
+    "now": "4 September 2026 at 13:22",
+    "track": "inn",
+    "teamName": "New processes",
+    "org": "Channel sales",
+    "leadName": "Mariano Chiesa",
+    "leadEmail": "marianoc@ceragon.com",
+    "leadPhone": "",
+    "members": [],
+    "title": "PO process - Control and approvals",
+    "abstract": "Use AI or automatic parameters (set by the approver) to skip the approval process for POs booked by our Orders Team.",
+    "aiCat": "",
+    "repo": "",
+    "aiImpact": "",
+    "aiNovelty": "",
+    "aiFeasibility": "",
+    "aiFit": "",
+    "innImpact": "Every PO booked needs to be approved by Sales Person and Finance, generating a lot of emails (with the request, with the order booked and with the approver confirmation -twice-). This will disappear.",
+    "innNovelty": "It will save time for both the finance and sales persons. This can be implemented through a ticket system or even over Oracle, giving the finance and the sales person permission to set thresholds or special conditions. If not, system should compare with the current price list and approve automatically everything that matches.",
+    "innFeasibility": "It is feasible and it will improve the daily work a lot.",
+    "innFit": "I don't know if this is a priority, but saving everyone's time to do more strategic planning should be important."
   }
 ]
